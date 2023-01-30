@@ -1,1 +1,1 @@
-This file will include information about the progress of the project and meeting summaries.
+#This file will include information about the progress of the project and meeting summaries.
