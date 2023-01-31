@@ -8,15 +8,17 @@ This file will include information about the progress of the project and meeting
 Iteration 1:
   - Adnan Fahad Faizi
     /* Task | (Estimation - Actual Time Spent) */
-    1. Task 1 | (2 days - 1 days )
+    1. Java Project Setup | (15 minutes - 1 days )
+    2. Seed Script for Reservation Data
     ...
   - Dexter King 
-  
+    1. GUI Desing and Implementation for Create Reservation user story
   - Humud Abdalla
-  
+    1. Seed Script for Hotel/Room data
   - James Ahn
-  
+    1. Reservation Object setup (Association it with customer object)
   - Miguel Graham
+    1. Stub research and interface setup
   
 =======================================================================================
 ** Major Design Decisions **
