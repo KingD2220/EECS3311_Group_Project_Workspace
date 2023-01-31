@@ -19,7 +19,7 @@ Iteration 1:
   - James Ahn
     1. Reservation Object setup (Association it with customer object)
   - Miguel Graham
-    1. Stub research and interface setup
+    1. Stub research and stub class setup
   
 =======================================================================================
 ** Major Design Decisions **
