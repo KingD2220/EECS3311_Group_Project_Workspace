@@ -1,7 +1,8 @@
 This file will include information about the progress of the project and meeting summaries.
 
 ** Meeting Summaries **
-
+1. Jan - 30 - 2023
+  The meeting took about 1hour and 30 mintues. In this meeting we give a quick demo of GitHub functionalities and version control for everyone to be on the same page. Furthermore, we setup the a working initial project for everyone so that everyone is on the same page and to avoid later confusions. We then gathered all ideas about and explored a few ways we could start our project. At the end of the meeting, we broke down the first big user story which is about Create Reservation into sevelar developer tasks where each team member bid for the tasks and setup a dealine for the tasks.
 =======================================================================================
 ** Task Assignments and Estimations **
 
