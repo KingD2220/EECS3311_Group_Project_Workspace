@@ -8,8 +8,8 @@ public class Test {
 		System.out.println(newRes.profile.getFirst_name());
 		System.out.println(newRes.profile.getAddress());
 		System.out.println(newRes.profile.getCredit_card());
+		System.out.println(newRes.getResNum());
 
-		System.out.println("James new branch test");
 	}
 	
 }
