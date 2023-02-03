@@ -8,6 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/kingd/OneDrive/Documents/GitHub/EECS3311_Group_Project_Workspace/Hotel Property Management System/lib/jcalendar-1.4.jar/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/james/myWorkspace/EECS3311_Group_Project_Workspace/Hotel Property Management System/lib/jcalendar-1.4.jar/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
