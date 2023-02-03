@@ -37,6 +37,8 @@ public abstract class Room {
 		return this.fixedRatePerNight;
 	}
 	
+	public abstract int getRoomsAvailable();
+	
 	// setterMethods
 	
 	void setRoomType(String roomType) {
@@ -62,4 +64,5 @@ public abstract class Room {
 	void setRate(double rate) {
 		this.fixedRatePerNight = rate;
 	}	
+	
 }
