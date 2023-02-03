@@ -6,6 +6,7 @@ import domain_objects.Reservation;
 import persistence.DatabaseStubs;
 
 public class ReservationLogic {
+	
 	public Reservation addReservation() {
 		return null;
 		
