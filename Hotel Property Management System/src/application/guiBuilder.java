@@ -1,4 +1,4 @@
-package GUI;
+package application;
 
 import domain_objects.Reservation;
 import java.util.ArrayList;
