@@ -1,6 +1,7 @@
 package application;
 
-import domain_objects.Reservation;
+import domain_objects.*;
+
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
@@ -21,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class guiBuilder {
 
@@ -133,7 +135,7 @@ public class guiBuilder {
 		frame.getContentPane().add(lblRoomType);
 		
 		JComboBox roomSelect = new JComboBox();
-		roomSelect.setModel(new DefaultComboBoxModel(new String[] {"King", "Queen", "Double"}));
+		roomSelect.setModel(new DefaultComboBoxModel(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
 		roomSelect.setBounds(30, 204, 134, 22);
 		frame.getContentPane().add(roomSelect);
 		
@@ -154,22 +156,33 @@ public class guiBuilder {
 		petCheck.setBounds(233, 276, 97, 23);
 		frame.getContentPane().add(petCheck);
 		
+		//Error message
+		JLabel lblError = new JLabel("");
+		lblError.setForeground(new Color(255, 0, 0));
+		lblError.setBounds(10, 486, 661, 14);
+		frame.getContentPane().add(lblError);
+		
 		//Create Reservation Button
 		JButton createButton = new JButton("Create Reservation");
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
 			//Create Reservation clicked
-			public void mouseClicked(MouseEvent e) {               
-				createReservation(checkInChooser, checkOutChooser);
+			public void mouseClicked(MouseEvent e) { 
+				Room room = RoomAvailable(roomSelect.getSelectedItem().toString());
+				if (room != null) { //room of selected type is available
+				createReservation(room, checkInChooser, checkOutChooser);
+				}
+				else { //room NOT available
+					lblError.setText("Error: Room not available");
+				}
 			}
 		});
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
-		
 	}
 	
 	//Creates reservation using input from GUI
-	private void createReservation(JDateChooser checkInChooser, JDateChooser checkOutChooser) {
+	private void createReservation(Room room, JDateChooser checkInChooser, JDateChooser checkOutChooser) {
 		//create reservation
 		Reservation newReservation = new Reservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText());
 		
@@ -178,7 +191,48 @@ public class guiBuilder {
 		newReservation.setArrival_date(ymd.format(checkInChooser.getDate()));
 		newReservation.setDeparture_date(ymd.format(checkOutChooser.getDate()));
 		
+		//Set Room
+		newReservation.setRoom(room);
+		room.roomReserved(); //decrements number of available rooms by 1
+		
 		//add reservation
 		Reservation.getList().add(newReservation);
+	}
+	
+	//checks if selected room is available
+	//returns room if available and null if not available
+	private Room RoomAvailable(String roomType) {
+		
+		Room room = null;
+		
+		switch(roomType) {
+		case "Standard":
+			StandardRoom standard = new StandardRoom();
+			if (standard.getRoomsAvailable() != 0)
+				room = standard;
+			break;
+		case "Deluxe":
+			DeluxeRoom deluxe = new DeluxeRoom();
+			if (deluxe.getRoomsAvailable() != 0) 
+				room = deluxe;
+			break;
+		case "Suite":
+			SuiteRoom suite = new SuiteRoom();
+			if (suite.getRoomsAvailable() != 0) 
+				room = suite;
+			break;
+		case "Executive":
+			ExecutiveSuite executive = new ExecutiveSuite();
+			if (executive.getRoomsAvailable() != 0) 
+				room = executive;
+			break;
+		case "Presidential":
+			PresidentialSuite presidential = new PresidentialSuite();
+			if (presidential.getRoomsAvailable() != 0) 
+				room = presidential;
+			break;
+		}
+		
+		return room;
 	}
 }
