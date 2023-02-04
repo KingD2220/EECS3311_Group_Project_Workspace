@@ -9,6 +9,8 @@ public class Reservation {
 	private String departure_date = "";
 	public Profile profile = new Profile();
 	
+	private Room room;
+	
 	public Reservation(String last_name, String first_name, String address, String phone_num, String credit_card) {
 		profile.setLast_name(last_name);
 		profile.setFirst_name(first_name);
@@ -31,6 +33,14 @@ public class Reservation {
 
 	public void setDeparture_date(String departure_date) {
 		this.departure_date = departure_date;
+	}
+	
+	public Room getRoom() {
+		return this.room;
+	}
+	
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 	
 	public static ArrayList<Reservation> getList() {
