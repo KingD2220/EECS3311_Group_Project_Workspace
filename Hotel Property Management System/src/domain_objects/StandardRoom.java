@@ -14,4 +14,8 @@ public class StandardRoom extends Room{
 	public int getRoomsAvailable() {
 		return StandardRoom.numberOfRooms;
 	}
+	
+	public void roomReserved() {
+		numberOfRooms--;
+	}
 }

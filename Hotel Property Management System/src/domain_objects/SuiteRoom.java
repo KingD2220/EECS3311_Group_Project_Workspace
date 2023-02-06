@@ -14,5 +14,9 @@ public class SuiteRoom extends Room{
 	public int getRoomsAvailable() {
 		return SuiteRoom.numberOfRooms;
 	}
+	
+	public void roomReserved() {
+		numberOfRooms--;
+	}
 
 }
