@@ -39,9 +39,5 @@ public class Reservation {
 		return resNum;
 	}
 	
-	public void changeDates(Reservation reservation, String newArrivalDate, String newDepartDate) {
-		reservation.arrival_date = newArrivalDate;
-		reservation.departure_date = newDepartDate;
-	}
 
 }
