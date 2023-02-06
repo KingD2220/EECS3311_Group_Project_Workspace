@@ -12,16 +12,24 @@ public class ReservationLogic {
 		
 	}
 
-public void removeReservation(String resNum) {
+	public void removeReservation(String resNum) {
+		
+	}
 	
-}
-public Reservation updatReservation(Reservation reservation){
-	return reservation;
+	public Reservation updatReservation(Reservation reservation){
+		return reservation;
 	
-}
-public List<Reservation> getAllReservations() {
-	return DatabaseStubs.getReservations();
+	}
 	
-}
+	public List<Reservation> getAllReservations() {
+		return DatabaseStubs.getReservations();
+		
+	}
+	
+	public Reservation changeResDates(Reservation reservation, String newArrivalDate, String newDepartDate) {
+		reservation.arrival_date = newArrivalDate;
+		reservation.departure_date = newDepartDate;
+		return reservation;
+	}
 
 }
