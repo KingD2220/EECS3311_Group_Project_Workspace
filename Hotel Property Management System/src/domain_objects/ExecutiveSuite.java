@@ -14,9 +14,6 @@ public class ExecutiveSuite extends Room{
 	public int getRoomsAvailable() {
 		return ExecutiveSuite.numberOfRooms;
 	}
-	
-	public void roomReserved() {
-		numberOfRooms--;
-	}
+
 
 }

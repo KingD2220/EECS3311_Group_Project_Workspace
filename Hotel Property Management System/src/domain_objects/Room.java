@@ -65,6 +65,4 @@ public abstract class Room {
 		this.fixedRatePerNight = rate;
 	}	
 	
-	public abstract void roomReserved();
-	
 }
