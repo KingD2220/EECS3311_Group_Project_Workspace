@@ -41,11 +41,6 @@ public class ReservationController implements ActionListener {
 		this.endDate = endDate;
 	}
 
-
-
-
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

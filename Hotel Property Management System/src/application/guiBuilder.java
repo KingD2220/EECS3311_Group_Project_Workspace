@@ -158,7 +158,7 @@ public class guiBuilder {
 		JButton createButton = new JButton("Create Reservation");
 		
 		
-	//	ActionListener resController = (ActionListener) new ReservationController(firstInput, lastInput, roomSelect,
+	//  resController = (ActionListener) new ReservationController(firstInput, lastInput, roomSelect,
 	//	checkInChooser, checkOutChooser);
 	//	createButton.addActionListener(resController);
 		
