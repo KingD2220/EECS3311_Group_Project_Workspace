@@ -24,25 +24,6 @@ public class ReservationController implements ActionListener {
 	private JComboBox<Object> roomtype;
 	private JDateChooser startDate;
 	private JDateChooser endDate;
-	ReservationLogic reservationLogic;
-	
-	//creates reservation and adds it to reservation list
-	public static Reservation createReservation(String lastInput, String firstInput, String addressInput, String phoneInput, String creditCardInput, Room room, JDateChooser checkInChooser, JDateChooser checkOutChooser) {
-			
-		//create reservation
-		Reservation newReservation = new Reservation(lastInput, firstInput, addressInput, phoneInput, creditCardInput);
-			
-		//set reservation dates
-		SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd"); //date format
-		newReservation.setArrival_date(ymd.format(checkInChooser.getDate()));
-		newReservation.setDeparture_date(ymd.format(checkOutChooser.getDate()));
-			
-		//add reservation
-		Reservation.getList().add(newReservation);
-				
-		return newReservation;
-	}
-
 
 
 
@@ -64,7 +45,8 @@ public class ReservationController implements ActionListener {
 
 		Reservation newRes = new Reservation(fName.getText(), lName.getText(), 
 		adress.getText(), phoneNum.getText(), creditCard.getText());
-        reservationLogic.addReservation(newRes);
+        ReservationLogic.addReservation(newRes);
+        System.out.println("Created");
 		
 	}
 

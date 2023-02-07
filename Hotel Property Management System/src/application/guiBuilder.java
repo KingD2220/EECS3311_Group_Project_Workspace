@@ -176,29 +176,11 @@ public class guiBuilder {
 		frame.getContentPane().add(lblDisplay);
 		
 		//Create Reservation Button
+		ActionListener create = new ReservationController(firstInput, lastInput, creditCardInput, 
+				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
 		JButton createButton = new JButton("Create Reservation");
-		createButton.addMouseListener(new MouseAdapter() {
-			@Override
-			//Create Reservation clicked
-			public void mouseClicked(MouseEvent e) { 
-				Room room = RoomController.roomAvailable(roomSelect.getSelectedItem().toString());
-				if (room != null) { //room of selected type is available
-					Reservation reservation = ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
-					displayReservation(lblOutput, reservation, roomSelect.getSelectedItem().toString());
-				}
-				else { //room NOT available
-					lblError.setText("Error: Room not available. Reservation not created.");
-				}
-			}
-		});
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
-		
-	}
-
-	//display reservation info on successful creation
-	private void displayReservation(JLabel output, Reservation reservation, String roomType) {
-		output.setText("<html>Reservation Created - " + "<br/>Name: " + firstInput.getText() + " " + lastInput.getText() + "<br/> Phone: " + phoneInput.getText() 
-		+ "<br/> Address: " + addressInput.getText()+ "<br/> Room Type:" + roomType);
+		createButton.addActionListener(create);
 	}
 }
