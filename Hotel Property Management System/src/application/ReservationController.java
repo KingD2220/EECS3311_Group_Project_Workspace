@@ -10,6 +10,9 @@ import com.toedter.calendar.JDateChooser;
 
 import business_logic.ReservationLogic;
 import domain_objects.Reservation;
+import domain_objects.Room;
+
+import java.text.SimpleDateFormat;
 
 public class ReservationController implements ActionListener {
 
@@ -23,7 +26,22 @@ public class ReservationController implements ActionListener {
 	private JDateChooser endDate;
 	ReservationLogic reservationLogic;
 	
-	
+	//creates reservation and adds it to reservation list
+	public static Reservation createReservation(String lastInput, String firstInput, String addressInput, String phoneInput, String creditCardInput, Room room, JDateChooser checkInChooser, JDateChooser checkOutChooser) {
+			
+		//create reservation
+		Reservation newReservation = new Reservation(lastInput, firstInput, addressInput, phoneInput, creditCardInput);
+			
+		//set reservation dates
+		SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd"); //date format
+		newReservation.setArrival_date(ymd.format(checkInChooser.getDate()));
+		newReservation.setDeparture_date(ymd.format(checkOutChooser.getDate()));
+			
+		//add reservation
+		Reservation.getList().add(newReservation);
+				
+		return newReservation;
+	}
 
 
 

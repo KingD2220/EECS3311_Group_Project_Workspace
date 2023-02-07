@@ -177,9 +177,9 @@ public class guiBuilder {
 			@Override
 			//Create Reservation clicked
 			public void mouseClicked(MouseEvent e) { 
-				Room room = RoomAvailable(roomSelect.getSelectedItem().toString());
+				Room room = RoomController.roomAvailable(roomSelect.getSelectedItem().toString());
 				if (room != null) { //room of selected type is available
-				createReservation(room, checkInChooser, checkOutChooser);
+					ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
 				}
 				else { //room NOT available
 					lblError.setText("Error: Room not available");
@@ -188,60 +188,5 @@ public class guiBuilder {
 		});
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
-	}
-	
-	//Creates reservation using input from GUI
-	private void createReservation(Room room, JDateChooser checkInChooser, JDateChooser checkOutChooser) {
-		//create reservation
-		Reservation newReservation = new Reservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText());
-		
-		//set reservation dates
-		SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd"); //date format
-		newReservation.setArrival_date(ymd.format(checkInChooser.getDate()));
-		newReservation.setDeparture_date(ymd.format(checkOutChooser.getDate()));
-		
-		//Set Room
-		newReservation.setRoom(room);
-		room.roomReserved(); //decrements number of available rooms by 1
-		
-		//add reservation
-		Reservation.getList().add(newReservation);
-	}
-	
-	//checks if selected room is available
-	//returns room if available and null if not available
-	private Room RoomAvailable(String roomType) {
-		
-		Room room = null;
-		
-		switch(roomType) {
-		case "Standard":
-			StandardRoom standard = new StandardRoom();
-			if (standard.getRoomsAvailable() != 0)
-				room = standard;
-			break;
-		case "Deluxe":
-			DeluxeRoom deluxe = new DeluxeRoom();
-			if (deluxe.getRoomsAvailable() != 0) 
-				room = deluxe;
-			break;
-		case "Suite":
-			SuiteRoom suite = new SuiteRoom();
-			if (suite.getRoomsAvailable() != 0) 
-				room = suite;
-			break;
-		case "Executive":
-			ExecutiveSuite executive = new ExecutiveSuite();
-			if (executive.getRoomsAvailable() != 0) 
-				room = executive;
-			break;
-		case "Presidential":
-			PresidentialSuite presidential = new PresidentialSuite();
-			if (presidential.getRoomsAvailable() != 0) 
-				room = presidential;
-			break;
-		}
-		
-		return room;
 	}
 }
