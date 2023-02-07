@@ -29,5 +29,10 @@ public List<Reservation> getAllReservations() {
 	return resList;
 	
 }
+public Reservation changeResDates(Reservation reservation, String newArrivalDate, String newDepartDate) {
+	reservation.arrival_date = newArrivalDate;
+	reservation.departure_date = newDepartDate;
+	return reservation;
+}
 
 }

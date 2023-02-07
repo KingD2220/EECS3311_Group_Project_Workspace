@@ -3,11 +3,10 @@ package domain_objects;
 import java.util.ArrayList;
 
 public class Reservation {
-	private static ArrayList<Reservation> reservationList = new ArrayList<>(); //List of reservations
 	
 	public String arrival_date = "";
 	public String departure_date = "";
-	public Profile profile = new Profile() {
+	public Profile profile = new Customer(){
 	};
 	
 	private Room room;
@@ -44,7 +43,4 @@ public class Reservation {
 		this.room = room;
 	}
 	
-	public static ArrayList<Reservation> getList() {
-		return reservationList;
-	}
 }
