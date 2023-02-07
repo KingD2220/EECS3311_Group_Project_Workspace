@@ -192,8 +192,6 @@ public class guiBuilder {
 		
 	}
 
-
-
 	//display reservation info on successful creation
 	private void displayReservation(JLabel output, Reservation reservation, String roomType) {
 		output.setText("<html>Reservation Created - " + "<br/>Name: " + firstInput.getText() + " " + lastInput.getText() + "<br/> Phone: " + phoneInput.getText() 
