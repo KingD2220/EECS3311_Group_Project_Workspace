@@ -7,7 +7,7 @@ import persistence.DatabaseStubs;
 
 public class ReservationLogic {
 
-	private static List<Reservation> resList = DatabaseStubs.getReservations();
+	private static List<Reservation> resList =DatabaseStubs.getReservations();
 	
 	public ReservationLogic() {
 		resList = DatabaseStubs.getReservations();
@@ -17,11 +17,12 @@ public class ReservationLogic {
 		resList.add(reso);
 	}
 
-public void removeReservation(String resNum) {
+	public void removeReservation(String resNum) {
+		
+	}
 	
-}
-public Reservation updatReservation(Reservation reservation){
-	return reservation;
+	public Reservation updatReservation(Reservation reservation){
+		return reservation;
 	
 }
 public List<Reservation> getAllReservations() {

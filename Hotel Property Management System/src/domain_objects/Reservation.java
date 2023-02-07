@@ -5,9 +5,10 @@ import java.util.ArrayList;
 public class Reservation {
 	private static ArrayList<Reservation> reservationList = new ArrayList<>(); //List of reservations
 	
-	private String arrival_date = "";
-	private String departure_date = "";
-	public Profile profile = new Profile();
+	public String arrival_date = "";
+	public String departure_date = "";
+	public Profile profile = new Profile() {
+	};
 	
 	private Room room;
 	
