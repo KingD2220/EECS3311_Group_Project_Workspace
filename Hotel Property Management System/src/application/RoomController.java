@@ -1,8 +1,11 @@
 package application;
 
-import domain_objects.DeluxeRoom;
 import domain_objects.Room;
 import domain_objects.StandardRoom;
+import domain_objects.DeluxeRoom;
+import domain_objects.SuiteRoom;
+import domain_objects.ExecutiveSuite;
+import domain_objects.PresidentialSuite;
 
 public class RoomController {
 	//returns room if available and null if not available
