@@ -7,16 +7,16 @@ public class Reservation {
 	
 	private String arrival_date = "";
 	private String departure_date = "";
-	public Profile profile = new Profile();
+	public Customer customer = new Customer();
 	
 	private Room room;
 	
 	public Reservation(String last_name, String first_name, String address, String phone_num, String credit_card) {
-		profile.setLast_name(last_name);
-		profile.setFirst_name(first_name);
-		profile.setAddress(address);
-		profile.setPhone_num(phone_num);
-		profile.setCredit_card(credit_card);
+		customer.setLast_name(last_name);
+		customer.setFirst_name(first_name);
+		customer.setAddress(address);
+		customer.setPhone_num(phone_num);
+		customer.setCredit_card(credit_card);
 	}
 
 	public String getArrival_date() {
