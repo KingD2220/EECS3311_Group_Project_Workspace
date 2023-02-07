@@ -1,4 +1,10 @@
-package GUI;
+package application;
+
+import domain_objects.Reservation;
+import domain_objects.Room;
+
+import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 import java.awt.EventQueue;
 
@@ -17,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class guiBuilder {
 
@@ -24,6 +31,8 @@ public class guiBuilder {
 	private JTextField firstInput;
 	private JTextField lastInput;
 	private JTextField phoneInput;
+	private JTextField addressInput;
+	private JTextField creditCardInput;
 
 	/**
 	 * Launch the application.
@@ -70,6 +79,14 @@ public class guiBuilder {
 		lblPhoneNum.setBounds(30, 83, 94, 14);
 		frame.getContentPane().add(lblPhoneNum);
 		
+		JLabel lblAddress = new JLabel("Address:");
+		lblAddress.setBounds(30, 108, 94, 14);
+		frame.getContentPane().add(lblAddress);
+		
+		JLabel lblCreditCard = new JLabel("Credit Card:");
+		lblCreditCard.setBounds(30, 133, 94, 14);
+		frame.getContentPane().add(lblCreditCard);
+		
 		//Customer Info Input
 		firstInput = new JTextField();
 		firstInput.setBounds(134, 30, 108, 20);
@@ -85,6 +102,16 @@ public class guiBuilder {
 		phoneInput.setColumns(10);
 		phoneInput.setBounds(134, 80, 108, 20);
 		frame.getContentPane().add(phoneInput);
+		
+		addressInput = new JTextField();
+		addressInput.setColumns(10);
+		addressInput.setBounds(134, 105, 427, 20);
+		frame.getContentPane().add(addressInput);
+		
+		creditCardInput = new JTextField();
+		creditCardInput.setColumns(10);
+		creditCardInput.setBounds(134, 130, 427, 20);
+		frame.getContentPane().add(creditCardInput);
 		
 		//Reservation Date Chooser
 		JLabel lblCheckinDate = new JLabel("Check-in Date:");
@@ -105,40 +132,73 @@ public class guiBuilder {
 		
 		//Room Type
 		JLabel lblRoomType = new JLabel("Room Type:");
-		lblRoomType.setBounds(30, 161, 94, 14);
+		lblRoomType.setBounds(30, 179, 94, 14);
 		frame.getContentPane().add(lblRoomType);
 		
 		JComboBox roomSelect = new JComboBox();
-		roomSelect.setModel(new DefaultComboBoxModel(new String[] {"King", "Queen", "Double"}));
-		roomSelect.setBounds(30, 186, 134, 22);
+		roomSelect.setModel(new DefaultComboBoxModel(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
+		roomSelect.setBounds(30, 204, 134, 22);
 		frame.getContentPane().add(roomSelect);
 		
 		//Services
 		JLabel lblServices = new JLabel("Services:");
-		lblServices.setBounds(30, 237, 94, 14);
+		lblServices.setBounds(30, 255, 94, 14);
 		frame.getContentPane().add(lblServices);
 		
 		JCheckBox parkCheck = new JCheckBox("Parking");
-		parkCheck.setBounds(30, 258, 97, 23);
+		parkCheck.setBounds(30, 276, 97, 23);
 		frame.getContentPane().add(parkCheck);
 		
 		JCheckBox wifiCheck = new JCheckBox("Wifi");
-		wifiCheck.setBounds(134, 258, 97, 23);
+		wifiCheck.setBounds(134, 276, 97, 23);
 		frame.getContentPane().add(wifiCheck);
 		
 		JCheckBox petCheck = new JCheckBox("Pets");
-		petCheck.setBounds(246, 258, 97, 23);
+		petCheck.setBounds(233, 276, 97, 23);
 		frame.getContentPane().add(petCheck);
+		
+		//Output message
+		JLabel lblOutput = new JLabel("");
+		lblOutput.setForeground(new Color(0, 0, 0));
+		lblOutput.setBounds(10, 376, 661, 124);
+		frame.getContentPane().add(lblOutput);
+		
+		//Error message
+		JLabel lblError = new JLabel("");
+		lblError.setForeground(new Color(255, 0, 0));
+		lblError.setBounds(10, 486, 661, 14);
+		frame.getContentPane().add(lblError);
+		
+		//Output Text
+		JLabel lblDisplay = new JLabel("");
+		lblDisplay.setForeground(new Color(0, 0, 0));
+		lblDisplay.setBounds(10, 376, 661, 124);
+		frame.getContentPane().add(lblDisplay);
 		
 		//Create Reservation Button
 		JButton createButton = new JButton("Create Reservation");
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {               //Create Reservation is clicked
-				System.out.print("it works");
+			//Create Reservation clicked
+			public void mouseClicked(MouseEvent e) { 
+				Room room = RoomController.roomAvailable(roomSelect.getSelectedItem().toString());
+				if (room != null) { //room of selected type is available
+					Reservation reservation = ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
+					displayReservation(lblOutput, reservation, roomSelect.getSelectedItem().toString());
+				}
+				else { //room NOT available
+					lblError.setText("Error: Room not available. Reservation not created.");
+				}
 			}
 		});
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
+		
+	}
+
+	//display reservation info on successful creation
+	private void displayReservation(JLabel output, Reservation reservation, String roomType) {
+		output.setText("<html>Reservation Created - " + "<br/>Name: " + firstInput.getText() + " " + lastInput.getText() + "<br/> Phone: " + phoneInput.getText() 
+		+ "<br/> Address: " + addressInput.getText()+ "<br/> Room Type:" + roomType);
 	}
 }

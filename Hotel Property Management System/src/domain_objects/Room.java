@@ -10,8 +10,6 @@ public abstract class Room {
 	int occupancy;
 	int roomSize;
 	double fixedRatePerNight;
-	int roomNumber;	// change made
-	String roomStatus;	// change made
 	
 	// getter methods
 	
@@ -37,14 +35,6 @@ public abstract class Room {
 	
 	double getRate() {
 		return this.fixedRatePerNight;
-	}
-	
-	int getRoomNumber() {
-		return this.roomNumber;
-	}
-	
-	String getRoomStatus() {
-		return this.roomStatus;
 	}
 	
 	public abstract int getRoomsAvailable();
@@ -75,12 +65,6 @@ public abstract class Room {
 		this.fixedRatePerNight = rate;
 	}	
 	
-	void setRoomNumber(int roomNumber) {
-		this.roomNumber = roomNumber;
-	}
-	
-	void setRoomStatus(String roomStatus) {
-		this.roomStatus = roomStatus;
-	}
+	public abstract void roomReserved();
 	
 }
