@@ -1,15 +1,11 @@
 package domain_objects;
 
-public class Profile {
-	private String last_name = "";
-	private String first_name = "";
-	private String address = "";
-	private String phone_num;
-	private String credit_card;
+public abstract class Profile {
+	protected String last_name = "";
+	protected String first_name = "";
+	protected String address = "";
+	protected String phone_num;
 	
-	public Profile() {
-
-	}
 	
 	public String getLast_name() {
 		return last_name;
