@@ -160,15 +160,10 @@ public class guiBuilder {
 		frame.getContentPane().add(lblError);
 		
 		//Output Text
-		JLabel lblDisplay = new JLabel("");
-		lblDisplay.setForeground(new Color(0, 0, 0));
-		lblDisplay.setBounds(10, 376, 661, 124);
-		frame.getContentPane().add(lblDisplay);
-		
-		// 
-		 feedback = new JTextArea();
+		feedback = new JTextArea();
 		feedback.setBounds(10, 376, 661, 124);
 		feedback.setLineWrap(true);
+		feedback.setEditable(false);
 		frame.getContentPane().add(feedback);
 		
 		//Create Reservation Button
