@@ -132,8 +132,8 @@ public class guiBuilder {
 		lblRoomType.setBounds(30, 179, 94, 14);
 		frame.getContentPane().add(lblRoomType);
 		
-		JComboBox roomSelect = new JComboBox();
-		roomSelect.setModel(new DefaultComboBoxModel(new String[] {"King", "Queen", "Double"}));
+		JComboBox<Object> roomSelect = new JComboBox<Object>();
+		roomSelect.setModel(new DefaultComboBoxModel<Object>(new String[] {"King", "Queen", "Double"}));
 		roomSelect.setBounds(30, 204, 134, 22);
 		frame.getContentPane().add(roomSelect);
 		
@@ -156,6 +156,15 @@ public class guiBuilder {
 		
 		//Create Reservation Button
 		JButton createButton = new JButton("Create Reservation");
+		
+		
+	//	ActionListener resController = (ActionListener) new ReservationController(firstInput, lastInput, roomSelect,
+	//	checkInChooser, checkOutChooser);
+	//	createButton.addActionListener(resController);
+		
+		
+		
+
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
 			//Create Reservation clicked
