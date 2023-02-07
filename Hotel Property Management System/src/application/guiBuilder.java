@@ -157,6 +157,12 @@ public class guiBuilder {
 		petCheck.setBounds(233, 276, 97, 23);
 		frame.getContentPane().add(petCheck);
 		
+		//Output message
+		JLabel lblOutput = new JLabel("");
+		lblOutput.setForeground(new Color(0, 0, 0));
+		lblOutput.setBounds(10, 376, 661, 124);
+		frame.getContentPane().add(lblOutput);
+		
 		//Error message
 		JLabel lblError = new JLabel("");
 		lblError.setForeground(new Color(255, 0, 0));
@@ -177,10 +183,8 @@ public class guiBuilder {
 			public void mouseClicked(MouseEvent e) { 
 				Room room = RoomController.roomAvailable(roomSelect.getSelectedItem().toString());
 				if (room != null) { //room of selected type is available
-					ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
-
-				Reservation reservation = ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
-				displayReservation(lblDisplay, reservation, roomSelect.getSelectedItem().toString());
+					Reservation reservation = ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
+					displayReservation(lblOutput, reservation, roomSelect.getSelectedItem().toString());
 				}
 				else { //room NOT available
 					lblError.setText("Error: Room not available. Reservation not created.");
