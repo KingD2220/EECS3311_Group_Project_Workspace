@@ -23,3 +23,8 @@ Iteration 1:
   
 =======================================================================================
 ** Major Design Decisions **
+=======================================================================================
+
+2. February 6, 2023 
+
+This meeting lasted for about 35 minutes. In this meeting we took a look at what progress has been made so far in our project. For example, we have implemented the GUI that will satisfy a requirement of our big user story "Create Reservations". Additionally we implemented a stub that uses a non-persistent storage such as an Array list. Furthermore we took a look at the code we currently have have and found there is a couple of design patterns that we can utilize such as the builder pattern, and decorator pattern. Lastly at the end of the meeting we found that the pace we are working at is consistent with the cost that we defined in our vision statement, and we assigned each team member additional tasks that needs to be done before the Iteration 1 Deadline.
