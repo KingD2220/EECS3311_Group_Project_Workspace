@@ -1,6 +1,7 @@
 package application;
+
 import domain_objects.Reservation;
-import domain_objects.*;
+import domain_objects.Room;
 
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
@@ -162,17 +163,14 @@ public class guiBuilder {
 		lblError.setBounds(10, 486, 661, 14);
 		frame.getContentPane().add(lblError);
 		
+		//Output Text
+		JLabel lblDisplay = new JLabel("");
+		lblDisplay.setForeground(new Color(0, 0, 0));
+		lblDisplay.setBounds(10, 376, 661, 124);
+		frame.getContentPane().add(lblDisplay);
+		
 		//Create Reservation Button
 		JButton createButton = new JButton("Create Reservation");
-		
-		
-	//  resController = (ActionListener) new ReservationController(firstInput, lastInput, roomSelect,
-	//	checkInChooser, checkOutChooser);
-	//	createButton.addActionListener(resController);
-		
-		
-		
-
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
 			//Create Reservation clicked
@@ -180,13 +178,25 @@ public class guiBuilder {
 				Room room = RoomController.roomAvailable(roomSelect.getSelectedItem().toString());
 				if (room != null) { //room of selected type is available
 					ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
+
+				Reservation reservation = ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
+				displayReservation(lblDisplay, reservation, roomSelect.getSelectedItem().toString());
 				}
 				else { //room NOT available
-					lblError.setText("Error: Room not available");
+					lblError.setText("Error: Room not available. Reservation not created.");
 				}
 			}
 		});
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
+		
+	}
+
+
+
+	//display reservation info on successful creation
+	private void displayReservation(JLabel output, Reservation reservation, String roomType) {
+		output.setText("<html>Reservation Created - " + "<br/>Name: " + firstInput.getText() + " " + lastInput.getText() + "<br/> Phone: " + phoneInput.getText() 
+		+ "<br/> Address: " + addressInput.getText()+ "<br/> Room Type:" + roomType);
 	}
 }
