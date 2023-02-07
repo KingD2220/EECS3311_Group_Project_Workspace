@@ -1,28 +1,17 @@
 package application;
 
-import domain_objects.Reservation;
-import domain_objects.Room;
-
-import java.util.ArrayList;
-import java.text.SimpleDateFormat;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JInternalFrame;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JList;
+import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.Color;
 
 public class guiBuilder {
@@ -33,6 +22,7 @@ public class guiBuilder {
 	private JTextField phoneInput;
 	private JTextField addressInput;
 	private JTextField creditCardInput;
+	public static  JTextArea feedback;
 
 	/**
 	 * Launch the application.
@@ -174,6 +164,12 @@ public class guiBuilder {
 		lblDisplay.setForeground(new Color(0, 0, 0));
 		lblDisplay.setBounds(10, 376, 661, 124);
 		frame.getContentPane().add(lblDisplay);
+		
+		// 
+		 feedback = new JTextArea();
+		feedback.setBounds(10, 376, 661, 124);
+		feedback.setLineWrap(true);
+		frame.getContentPane().add(feedback);
 		
 		//Create Reservation Button
 		ActionListener create = new ReservationController(firstInput, lastInput, creditCardInput, 

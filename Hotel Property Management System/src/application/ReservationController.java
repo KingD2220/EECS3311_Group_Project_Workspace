@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
@@ -25,6 +26,7 @@ public class ReservationController implements ActionListener {
 	private JDateChooser startDate;
 	private JDateChooser endDate;
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+    
 
 
 	public ReservationController(JTextField fName, JTextField lName, JTextField creditCard, JTextField adress,
@@ -49,6 +51,7 @@ public class ReservationController implements ActionListener {
 		newRes.setDeparture_date(date.format(endDate.getDate()));
         ReservationLogic.addReservation(newRes);
         System.out.println(newRes.getArrival_date());
+        guiBuilder.feedback.setText(newRes.toString());
 		
 	}
 

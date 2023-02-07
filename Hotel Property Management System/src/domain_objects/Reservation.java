@@ -1,22 +1,21 @@
 package domain_objects;
 
-import java.util.ArrayList;
-
 public class Reservation {
 	
 	public String arrival_date = "";
 	public String departure_date = "";
-	public Profile profile = new Customer(){
-	};
+	public Customer customer = new Customer();
 	
+	
+
 	private Room room;
 	
 	public Reservation(String last_name, String first_name, String address, String phone_num, String credit_card) {
-		profile.setLast_name(last_name);
-		profile.setFirst_name(first_name);
-		profile.setAddress(address);
-		profile.setPhone_num(phone_num);
-		profile.setCredit_card(credit_card);
+		customer.setLast_name(last_name);
+		customer.setFirst_name(first_name);
+		customer.setAddress(address);
+		customer.setPhone_num(phone_num);
+		customer.setCredit_card(credit_card);
 	}
 
 	public String getArrival_date() {
@@ -42,5 +41,9 @@ public class Reservation {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	
+	@Override
+	public String toString() {
+		return "Reservation [arrival_date=" + arrival_date + ", departure_date=" + departure_date + ", customer="
+				+ customer + "]";
+	}
 }

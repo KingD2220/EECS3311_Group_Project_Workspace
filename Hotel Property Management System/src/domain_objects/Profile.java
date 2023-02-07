@@ -65,6 +65,14 @@ public abstract class Profile {
 	public void setCredit_card(String credit_card) {
 		this.credit_card = credit_card;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Profile [last_name=" + last_name + ", first_name=" + first_name + ", address=" + address
+				+ ", phone_num=" + phone_num + "]";
+	}
 	
 	
 }
