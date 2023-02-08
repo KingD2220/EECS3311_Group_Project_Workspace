@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Reservation {
 	private static ArrayList<Reservation> reservationList = new ArrayList<>(); //List of reservations
 	
-	private String arrival_date = "";
-	private String departure_date = "";
+	public String arrival_date = "";
+	public String departure_date = "";
 	public Customer customer = new Customer();
 	
 	private Room room;
