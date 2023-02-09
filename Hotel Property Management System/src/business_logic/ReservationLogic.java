@@ -58,21 +58,25 @@ public class ReservationLogic {
 			DeluxeRoom deluxe = new DeluxeRoom();
 			if (deluxe.getRoomsAvailable() != 0) 
 				room = deluxe;
+			deluxe.roomReserved();
 			break;
 		case "Suite":
 			SuiteRoom suite = new SuiteRoom();
 			if (suite.getRoomsAvailable() != 0) 
 				room = suite;
+			suite.roomReserved();
 			break;
 		case "Executive":
 			ExecutiveSuite executive = new ExecutiveSuite();
 			if (executive.getRoomsAvailable() != 0) 
 				room = executive;
+			executive.roomReserved();
 			break;
 		case "Presidential":
 			PresidentialSuite presidential = new PresidentialSuite();
 			if (presidential.getRoomsAvailable() != 0) 
 				room = presidential;
+			presidential.roomReserved();
 			break;
 		}
 		return room;
