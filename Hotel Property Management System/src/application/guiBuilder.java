@@ -7,6 +7,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import com.toedter.calendar.JDateChooser;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
@@ -14,7 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 
-public class guiBuilder {
+public class guiBuilder implements ActionListener{
 
 	private JFrame frame;
 	private JTextField firstInput;
@@ -23,7 +25,7 @@ public class guiBuilder {
 	private JTextField addressInput;
 	private JTextField creditCardInput;
 	public static  JTextArea feedback;
-
+    public JButton updateButton;
 	/**
 	 * Launch the application.
 	 */
@@ -160,23 +162,33 @@ public class guiBuilder {
 		frame.getContentPane().add(lblError);
 		
 		//Output Text
-		JLabel lblDisplay = new JLabel("");
-		lblDisplay.setForeground(new Color(0, 0, 0));
-		lblDisplay.setBounds(10, 376, 661, 124);
-		frame.getContentPane().add(lblDisplay);
-		
-		// 
-		 feedback = new JTextArea();
+		feedback = new JTextArea();
 		feedback.setBounds(10, 376, 661, 124);
 		feedback.setLineWrap(true);
+		feedback.setEditable(false);
 		frame.getContentPane().add(feedback);
+		
+	    updateButton = new JButton("Find");
+		updateButton.setBounds(540, 6, 90, 15);
+		updateButton.addActionListener(this);
+		frame.getContentPane().add(updateButton);
+	
 		
 		//Create Reservation Button
 		ActionListener create = new ReservationController(firstInput, lastInput, creditCardInput, 
-				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
+		addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
 		JButton createButton = new JButton("Create Reservation");
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
 		createButton.addActionListener(create);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource()== updateButton) {
+			UpdateFrame upFrame = new UpdateFrame();
+			frame.setVisible(false);
+		}
+		
 	}
 }
