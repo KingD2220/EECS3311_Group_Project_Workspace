@@ -5,7 +5,7 @@ public class Reservation {
 	public String arrival_date = "";
 	public String departure_date = "";
 	public Customer customer = new Customer();
-	
+	private int resNumber;
 	
 
 	private Room room;
@@ -45,5 +45,13 @@ public class Reservation {
 	public String toString() {
 		return "Reservation [arrival_date=" + arrival_date + ", departure_date=" + departure_date + ", customer="
 				+ customer + "]";
+	}
+
+	public int getResNumber() {
+		return resNumber;
+	}
+
+	public void setResNumber(int resNumber) {
+		this.resNumber = resNumber;
 	}
 }

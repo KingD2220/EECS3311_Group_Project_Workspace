@@ -1,12 +1,16 @@
 package application;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class UpdateFrame {
-	
+public class UpdateFrame implements ActionListener {
+	protected JButton findButton;
+	protected JButton update; 
 	private JFrame frame  = new JFrame();
 	
 	public UpdateFrame() {
@@ -66,13 +70,23 @@ public class UpdateFrame {
 		addressInput.setBounds(134, 205, 427, 20);
 		frame.getContentPane().add(addressInput);
 		
-		JButton findButton = new JButton("Search");
+	    findButton = new JButton("Search");
 		findButton.setBounds(200, 9, 108, 20);
-		frame.getContentPane().add(findButton);		
+		frame.getContentPane().add(findButton);
+		findButton.addActionListener(this);
 		
-		JButton update = new JButton("Update Reservation");
+		update = new JButton("Update Reservation");
 		update.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(update);
+		update.addActionListener(this);
+		
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource()== findButton) {
+			
+		}
 		
 	}
 }

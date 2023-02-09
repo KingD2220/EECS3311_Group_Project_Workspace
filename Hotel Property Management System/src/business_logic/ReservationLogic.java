@@ -6,7 +6,10 @@ import domain_objects.Reservation;
 import persistence.DatabaseStubs;
 
 public class ReservationLogic {
-
+	
+	
+    private static int resNum = 0;
+    
 	private static List<Reservation> resList =DatabaseStubs.getReservations();
 	
 	public ReservationLogic() {
@@ -14,7 +17,9 @@ public class ReservationLogic {
 	}
 	
 	public static void addReservation(Reservation reso) {
+		reso.setResNumber(resNum);
 		resList.add(reso);
+		resNum++;
 	}
 
 	public void removeReservation(String resNum) {
