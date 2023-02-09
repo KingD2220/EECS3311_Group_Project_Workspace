@@ -2,6 +2,7 @@ package application;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle.Control;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -98,15 +99,18 @@ public class UpdateFrame implements ActionListener {
 		
 		
 	}
-	
+	ReservationController control = new ReservationController(firstInput, lastInput,
+			resNum, phoneInput, addressInput);
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(resNum.getText());
-		ReservationController control = new ReservationController(firstInput, lastInput,
-				resNum, phoneInput, addressInput);
+	
 		if (e.getSource()== findButton) {
 			control.searchAndDisplay();
+		}
+		if (e.getSource() == update) {
+			control.update();
 		}
 		
 	}
