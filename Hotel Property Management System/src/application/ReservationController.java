@@ -8,15 +8,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
-
 import business_logic.ReservationLogic;
-import domain_objects.DeluxeRoom;
-import domain_objects.ExecutiveSuite;
-import domain_objects.PresidentialSuite;
 import domain_objects.Reservation;
 import domain_objects.Room;
-import domain_objects.StandardRoom;
-import domain_objects.SuiteRoom;
+
 
 import java.text.SimpleDateFormat;
 
@@ -50,7 +45,7 @@ public class ReservationController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		Room room = roomAvailable(roomtype.getSelectedItem().toString()); //check if room is available
+		Room room = ReservationLogic.roomAvailable(roomtype.getSelectedItem().toString()); //check if room is available
 		
 		if (room != null) {
 
@@ -69,39 +64,4 @@ public class ReservationController implements ActionListener {
 		}
 		
 	}
-	
-	public static Room roomAvailable(String roomType) {
-		
-		Room room = null;
-		switch(roomType) {
-		case "Standard":
-			StandardRoom standard = new StandardRoom();
-			if (standard.getRoomsAvailable() != 0)
-				room = standard;
-			break;
-		case "Deluxe":
-			DeluxeRoom deluxe = new DeluxeRoom();
-			if (deluxe.getRoomsAvailable() != 0) 
-				room = deluxe;
-			break;
-		case "Suite":
-			SuiteRoom suite = new SuiteRoom();
-			if (suite.getRoomsAvailable() != 0) 
-				room = suite;
-			break;
-		case "Executive":
-			ExecutiveSuite executive = new ExecutiveSuite();
-			if (executive.getRoomsAvailable() != 0) 
-				room = executive;
-			break;
-		case "Presidential":
-			PresidentialSuite presidential = new PresidentialSuite();
-			if (presidential.getRoomsAvailable() != 0) 
-				room = presidential;
-			break;
-		}
-		
-		return room;
-	}
-
 }
