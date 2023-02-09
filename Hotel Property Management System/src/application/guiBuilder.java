@@ -128,7 +128,7 @@ public class guiBuilder implements ActionListener{
 		frame.getContentPane().add(lblRoomType);
 		
 		JComboBox roomSelect = new JComboBox();
-		roomSelect.setModel(new DefaultComboBoxModel(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
+		roomSelect.setModel(new DefaultComboBoxModel<Object>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
 		roomSelect.setBounds(30, 204, 134, 22);
 		frame.getContentPane().add(roomSelect);
 		

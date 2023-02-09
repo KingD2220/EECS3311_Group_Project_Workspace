@@ -6,12 +6,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import junit.framework.Protectable;
+
 public class UpdateFrame implements ActionListener {
-	protected JButton findButton;
-	protected JButton update; 
+	public JButton findButton;
+	public JButton update; 
+	public JTextField resNum;
+	public JTextField firstInput;
+	public JTextField lastInput;
+	public JTextField phoneInput;
+	public JTextField addressInput;
 	private JFrame frame  = new JFrame();
+	public JTextArea feedback;
 	
 	public UpdateFrame() {
 		frame.setVisible(true);
@@ -45,27 +54,27 @@ public class UpdateFrame implements ActionListener {
 		
 		
 		//Customer Info Input
-		JTextField resNum = new JTextField();
+	    resNum = new JTextField();
 		resNum.setBounds(84, 9, 108, 20);
 		frame.getContentPane().add(resNum);
 	    resNum.setColumns(10);
 		
-		JTextField firstInput = new JTextField();
+	    firstInput = new JTextField();
 		firstInput.setBounds(134, 130, 108, 20);
 		frame.getContentPane().add(firstInput);
 		firstInput.setColumns(10);
 				
-		JTextField lastInput = new JTextField();
+		lastInput = new JTextField();
 		lastInput.setColumns(10);
 		lastInput.setBounds(134, 155, 108, 20);
 		frame.getContentPane().add(lastInput);
 				
-		JTextField phoneInput = new JTextField();
+		phoneInput = new JTextField();
 		phoneInput.setColumns(10);
 		phoneInput.setBounds(134, 180, 108, 20);
 		frame.getContentPane().add(phoneInput);
 				
-		JTextField addressInput = new JTextField();
+		addressInput = new JTextField();
 		addressInput.setColumns(10);
 		addressInput.setBounds(134, 205, 427, 20);
 		frame.getContentPane().add(addressInput);
@@ -81,11 +90,23 @@ public class UpdateFrame implements ActionListener {
 		update.addActionListener(this);
 		
 		
+		feedback = new JTextArea();
+		feedback.setBounds(10, 376, 661, 124);
+		feedback.setLineWrap(true);
+		feedback.setEditable(false);
+		frame.getContentPane().add(feedback);
+		
+		
 	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println(resNum.getText());
+		ReservationController control = new ReservationController(firstInput, lastInput,
+				resNum, phoneInput, addressInput);
 		if (e.getSource()== findButton) {
-			
+			control.searchAndDisplay();
 		}
 		
 	}
