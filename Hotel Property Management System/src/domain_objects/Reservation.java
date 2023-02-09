@@ -44,6 +44,6 @@ public class Reservation {
 	@Override
 	public String toString() {
 		return "Reservation [arrival_date=" + arrival_date + ", departure_date=" + departure_date + ", customer="
-				+ customer + "]";
+				+ customer + ", roomType=" + this.room.roomType + "]";
 	}
 }
