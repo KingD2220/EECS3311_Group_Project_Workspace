@@ -31,7 +31,7 @@ This meeting lasted for about 35 minutes. In this meeting we took a look at what
 
 ========================================================================================
 
-2023-02-08 (19:00-19:30)
+3. 2023-02-08 (19:00-19:30)
 
 This was the group's final meeting prior to Itr1 submission. The team was updated on what has been accomplished so far and what is remaining for Itr1 requirements. 
 
