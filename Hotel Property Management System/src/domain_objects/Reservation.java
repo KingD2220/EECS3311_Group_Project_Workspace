@@ -1,14 +1,13 @@
 package domain_objects;
 
-import java.util.ArrayList;
-
 public class Reservation {
-	private static ArrayList<Reservation> reservationList = new ArrayList<>(); //List of reservations
 	
 	public String arrival_date = "";
 	public String departure_date = "";
 	public Customer customer = new Customer();
 	
+	
+
 	private Room room;
 	
 	public Reservation(String last_name, String first_name, String address, String phone_num, String credit_card) {
@@ -42,8 +41,9 @@ public class Reservation {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	
-	public static ArrayList<Reservation> getList() {
-		return reservationList;
+	@Override
+	public String toString() {
+		return "Reservation [arrival_date=" + arrival_date + ", departure_date=" + departure_date + ", customer="
+				+ customer + "]";
 	}
 }

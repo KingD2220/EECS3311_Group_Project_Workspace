@@ -1,28 +1,17 @@
 package application;
 
-import domain_objects.Reservation;
-import domain_objects.Room;
-
-import java.util.ArrayList;
-import java.text.SimpleDateFormat;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JInternalFrame;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JList;
+import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.Color;
 
 public class guiBuilder {
@@ -33,6 +22,7 @@ public class guiBuilder {
 	private JTextField phoneInput;
 	private JTextField addressInput;
 	private JTextField creditCardInput;
+	public static  JTextArea feedback;
 
 	/**
 	 * Launch the application.
@@ -175,30 +165,18 @@ public class guiBuilder {
 		lblDisplay.setBounds(10, 376, 661, 124);
 		frame.getContentPane().add(lblDisplay);
 		
+		// 
+		 feedback = new JTextArea();
+		feedback.setBounds(10, 376, 661, 124);
+		feedback.setLineWrap(true);
+		frame.getContentPane().add(feedback);
+		
 		//Create Reservation Button
+		ActionListener create = new ReservationController(firstInput, lastInput, creditCardInput, 
+				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
 		JButton createButton = new JButton("Create Reservation");
-		createButton.addMouseListener(new MouseAdapter() {
-			@Override
-			//Create Reservation clicked
-			public void mouseClicked(MouseEvent e) { 
-				Room room = RoomController.roomAvailable(roomSelect.getSelectedItem().toString());
-				if (room != null) { //room of selected type is available
-					Reservation reservation = ReservationController.createReservation(lastInput.getText(), firstInput.getText(), addressInput.getText(), phoneInput.getText(), creditCardInput.getText(), room, checkInChooser, checkOutChooser);
-					displayReservation(lblOutput, reservation, roomSelect.getSelectedItem().toString());
-				}
-				else { //room NOT available
-					lblError.setText("Error: Room not available. Reservation not created.");
-				}
-			}
-		});
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
-		
-	}
-
-	//display reservation info on successful creation
-	private void displayReservation(JLabel output, Reservation reservation, String roomType) {
-		output.setText("<html>Reservation Created - " + "<br/>Name: " + firstInput.getText() + " " + lastInput.getText() + "<br/> Phone: " + phoneInput.getText() 
-		+ "<br/> Address: " + addressInput.getText()+ "<br/> Room Type:" + roomType);
+		createButton.addActionListener(create);
 	}
 }

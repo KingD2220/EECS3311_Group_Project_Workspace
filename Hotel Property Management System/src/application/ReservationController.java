@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
@@ -24,26 +25,8 @@ public class ReservationController implements ActionListener {
 	private JComboBox<Object> roomtype;
 	private JDateChooser startDate;
 	private JDateChooser endDate;
-	ReservationLogic reservationLogic;
-	
-	//creates reservation and adds it to reservation list
-	public static Reservation createReservation(String lastInput, String firstInput, String addressInput, String phoneInput, String creditCardInput, Room room, JDateChooser checkInChooser, JDateChooser checkOutChooser) {
-			
-		//create reservation
-		Reservation newReservation = new Reservation(lastInput, firstInput, addressInput, phoneInput, creditCardInput);
-			
-		//set reservation dates
-		SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd"); //date format
-		newReservation.setArrival_date(ymd.format(checkInChooser.getDate()));
-		newReservation.setDeparture_date(ymd.format(checkOutChooser.getDate()));
-			
-		//add reservation
-		Reservation.getList().add(newReservation);
-				
-		return newReservation;
-	}
-
-
+    SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+    
 
 
 	public ReservationController(JTextField fName, JTextField lName, JTextField creditCard, JTextField adress,
@@ -64,7 +47,11 @@ public class ReservationController implements ActionListener {
 
 		Reservation newRes = new Reservation(fName.getText(), lName.getText(), 
 		adress.getText(), phoneNum.getText(), creditCard.getText());
-        reservationLogic.addReservation(newRes);
+		newRes.setArrival_date(date.format(startDate.getDate()));
+		newRes.setDeparture_date(date.format(endDate.getDate()));
+        ReservationLogic.addReservation(newRes);
+        System.out.println(newRes.getArrival_date());
+        guiBuilder.feedback.setText(newRes.toString());
 		
 	}
 
