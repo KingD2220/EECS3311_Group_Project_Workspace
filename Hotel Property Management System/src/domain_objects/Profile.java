@@ -5,7 +5,6 @@ public abstract class Profile {
 	protected String first_name = "";
 	protected String address = "";
 	protected String phone_num;
-	private String credit_card;
 	
 	
 	public String getLast_name() {
@@ -54,17 +53,6 @@ public abstract class Profile {
 		this.phone_num = phone_num;
 	}
 
-
-
-	public String getCredit_card() {
-		return credit_card;
-	}
-
-
-
-	public void setCredit_card(String credit_card) {
-		this.credit_card = credit_card;
-	}
 
 
 

@@ -10,7 +10,7 @@ public class Reservation {
 
 	private Room room;
 	
-	public Reservation(String last_name, String first_name, String address, String phone_num, String credit_card) {
+	public Reservation(String first_name, String last_name, String address, String phone_num, String credit_card) {
 		customer.setLast_name(last_name);
 		customer.setFirst_name(first_name);
 		customer.setAddress(address);
