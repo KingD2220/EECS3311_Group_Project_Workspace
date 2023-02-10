@@ -65,10 +65,12 @@ public class ReservationController implements ActionListener {
 	  
 	}
 	public void update() {
+		newRes =SearchingLogic.searchByResNum(Integer.parseInt(resNum.getText()));
 		newRes.customer.setFirst_name(fName.getText());
 		newRes.customer.setLast_name(lName.getText());
 		newRes.customer.setPhone_num(phoneNum.getText());
 		newRes.customer.setAddress(adress.getText());
+		UpdateFrame.feedback.setText(newRes.toString());
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

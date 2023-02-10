@@ -21,7 +21,7 @@ public class UpdateFrame implements ActionListener {
 	public JTextField phoneInput;
 	public JTextField addressInput;
 	private JFrame frame  = new JFrame();
-	public JTextArea feedback;
+	public static JTextArea feedback;
 	
 	public UpdateFrame() {
 		frame.setVisible(true);
@@ -99,11 +99,12 @@ public class UpdateFrame implements ActionListener {
 		
 		
 	}
-	ReservationController control = new ReservationController(firstInput, lastInput,
-			resNum, phoneInput, addressInput);
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		ReservationController control = new ReservationController(firstInput, lastInput,
+				resNum, phoneInput, addressInput);
 		System.out.println(resNum.getText());
 	
 		if (e.getSource()== findButton) {
