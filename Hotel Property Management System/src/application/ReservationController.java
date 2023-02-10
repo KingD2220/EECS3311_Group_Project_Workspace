@@ -63,6 +63,7 @@ public class ReservationController implements ActionListener {
 	  phoneNum.setText(newRes.customer.getPhone_num());
 	  adress.setText(newRes.customer.getAddress());
 	  
+	  
 	}
 	public void update() {
 		newRes =SearchingLogic.searchByResNum(Integer.parseInt(resNum.getText()));

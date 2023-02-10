@@ -28,8 +28,8 @@ public class ReservationLogic {
 		resNum++;
 	}
 
-	public void removeReservation(String resNum) {
-		
+	public void removeReservation(int resNum) {
+		resList.remove(SearchingLogic.searchByResNum(resNum));
 	}
 	
 	public Reservation updatReservation(Reservation reservation){
