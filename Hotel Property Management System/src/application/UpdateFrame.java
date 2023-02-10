@@ -1,10 +1,7 @@
 package application;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle.Control;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,8 +9,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-
-import junit.framework.Protectable;
 
 public class UpdateFrame implements ActionListener {
 	public JButton findButton;
@@ -111,7 +106,6 @@ public class UpdateFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		ReservationController control = new ReservationController(firstInput, lastInput,
 				resNum, phoneInput, addressInput);
-		System.out.println(resNum.getText());
 	
 		if (e.getSource()== findButton) {
 			control.searchAndDisplay();

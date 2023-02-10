@@ -43,8 +43,8 @@ public class Reservation {
 	}
 	@Override
 	public String toString() {
-		return "  Reservation arrival_date=" + arrival_date +  "\n" + "  Departure_date=" + departure_date + "\n" +"  Customer="
-				+ customer + "\n" + "  RoomType=" + this.room.roomType +"\n" + "  Reservation Number = " + resNumber  ;
+		return "  Reservation arrival_date:" + arrival_date +  "\n" + "  Departure_date:" + departure_date + "\n" +"  Customer="
+				+ customer + "\n" + "  RoomType:" + this.room.roomType +"\n" + "  Reservation Number:" + resNumber  ;
 	}
 
 	public int getResNumber() {

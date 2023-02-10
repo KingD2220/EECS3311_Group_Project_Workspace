@@ -58,8 +58,8 @@ public abstract class Profile {
 
 	@Override
 	public String toString() {
-		return "  Profile last_name=" + last_name +"\n" + "  First_name=" + first_name + "\n" +"  Address=" + address
-				+"\n" + "  Phone_num=" + phone_num;
+		return "  Profile last_name:" + last_name +"\n" + "  First_name:" + first_name + "\n" +"  Address:" + address
+				+"\n" + "  Phone_num:" + phone_num;
 	}
 	
 	
