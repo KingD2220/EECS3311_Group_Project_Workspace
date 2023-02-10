@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle.Control;
@@ -7,8 +8,10 @@ import java.util.ResourceBundle.Control;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import junit.framework.Protectable;
 
@@ -25,7 +28,7 @@ public class UpdateFrame implements ActionListener {
 	
 	public UpdateFrame() {
 		frame.setVisible(true);
-		frame.setBounds(100, 100, 697, 550);
+		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		window();
@@ -92,10 +95,13 @@ public class UpdateFrame implements ActionListener {
 		
 		
 		feedback = new JTextArea();
-		feedback.setBounds(10, 376, 661, 124);
+		feedback.setBounds(10, 376, 661, 180);
 		feedback.setLineWrap(true);
 		feedback.setEditable(false);
+		JScrollPane scroll = new JScrollPane(feedback);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		frame.getContentPane().add(feedback);
+		
 		
 		
 	}

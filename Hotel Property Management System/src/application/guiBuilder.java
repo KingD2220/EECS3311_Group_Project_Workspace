@@ -4,8 +4,11 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+
 import com.toedter.calendar.JDateChooser;
 
 import java.awt.event.ActionEvent;
@@ -54,7 +57,7 @@ public class guiBuilder implements ActionListener{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 697, 550);
+		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -163,10 +166,13 @@ public class guiBuilder implements ActionListener{
 		
 		//Output Text
 		feedback = new JTextArea();
-		feedback.setBounds(10, 376, 661, 124);
+		feedback.setBounds(10, 376, 661, 180);
 		feedback.setLineWrap(true);
 		feedback.setEditable(false);
+		JScrollPane scroll = new JScrollPane(feedback);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		frame.getContentPane().add(feedback);
+		
 		
 	    updateButton = new JButton("Find");
 		updateButton.setBounds(540, 6, 90, 15);
