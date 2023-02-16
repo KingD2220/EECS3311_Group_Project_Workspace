@@ -55,3 +55,15 @@ the credit card information whenever you pull up a reservation but do it in a wa
 
 =========================================================================================
 
+5. February 16, 2023 (13:00-13:15)
+  
+  - We met with our dev team (team 5) to discuss what we would like them to add to their planned implementations.
+  
+  - Presented user story A: As a user, I want to be able to search by course name, not just course code. 
+
+  - Presented user story B: As a user, I want to be able to see previous courses I have taken and the resources that I uploaded for those courses.
+
+  - Client team chose user story A.
+  
+=========================================================================================
+
