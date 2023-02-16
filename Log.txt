@@ -47,3 +47,11 @@ In-progress/to-be-completed:
 The meeting was concluded with a quick demo of our MVP.
 
 =========================================================================================
+
+4. February 16, 2023
+
+This meeting lasted approximately 30 minutes, and during this meeting we had the opportunity to meet with our client team (group 7) to provide some feedback on our current implementation and to provide additional user stories we can implement that are within the scope of our project. one feature they requested for us to implement is to display
+the credit card information whenever you pull up a reservation but do it in a way where we hide sensitive information such as the entire credit card number. For example instead of displaying credit card # 1234 5678 9123 4567, we should display it like 1234 **** **** 4567. Additionally another user story that the client team wants us to implement is to provide handicapped accessible rooms which will be well suited for guests with special accessibility needs and additional assistance. Lastly our client team requested a user story where we can remove a created reservation, however that has been already discussed by our development team and has been scheduled to be implemented in Iteration 2. 
+
+=========================================================================================
+
