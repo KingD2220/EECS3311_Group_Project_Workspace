@@ -1,17 +1,29 @@
 package application;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
-public class UpdateFrame {
-	
+public class UpdateFrame implements ActionListener {
+	public JButton findButton;
+	public JButton update; 
+	public JTextField resNum;
+	public JTextField firstInput;
+	public JTextField lastInput;
+	public JTextField phoneInput;
+	public JTextField addressInput;
 	private JFrame frame  = new JFrame();
+	public static JTextArea feedback;
 	
 	public UpdateFrame() {
 		frame.setVisible(true);
-		frame.setBounds(100, 100, 697, 550);
+		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		window();
@@ -41,38 +53,66 @@ public class UpdateFrame {
 		
 		
 		//Customer Info Input
-		JTextField resNum = new JTextField();
+	    resNum = new JTextField();
 		resNum.setBounds(84, 9, 108, 20);
 		frame.getContentPane().add(resNum);
 	    resNum.setColumns(10);
 		
-		JTextField firstInput = new JTextField();
+	    firstInput = new JTextField();
 		firstInput.setBounds(134, 130, 108, 20);
 		frame.getContentPane().add(firstInput);
 		firstInput.setColumns(10);
 				
-		JTextField lastInput = new JTextField();
+		lastInput = new JTextField();
 		lastInput.setColumns(10);
 		lastInput.setBounds(134, 155, 108, 20);
 		frame.getContentPane().add(lastInput);
 				
-		JTextField phoneInput = new JTextField();
+		phoneInput = new JTextField();
 		phoneInput.setColumns(10);
 		phoneInput.setBounds(134, 180, 108, 20);
 		frame.getContentPane().add(phoneInput);
 				
-		JTextField addressInput = new JTextField();
+		addressInput = new JTextField();
 		addressInput.setColumns(10);
 		addressInput.setBounds(134, 205, 427, 20);
 		frame.getContentPane().add(addressInput);
 		
-		JButton findButton = new JButton("Search");
+	    findButton = new JButton("Search");
 		findButton.setBounds(200, 9, 108, 20);
-		frame.getContentPane().add(findButton);		
+		frame.getContentPane().add(findButton);
+		findButton.addActionListener(this);
 		
-		JButton update = new JButton("Update Reservation");
+		update = new JButton("Update Reservation");
 		update.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(update);
+		update.addActionListener(this);
+		
+		
+		feedback = new JTextArea();
+		feedback.setBounds(10, 376, 661, 180);
+		feedback.setLineWrap(true);
+		feedback.setEditable(false);
+		JScrollPane scroll = new JScrollPane(feedback);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		frame.getContentPane().add(feedback);
+		
+		
+		
+	}
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		ReservationController control = new ReservationController(firstInput, lastInput,
+				resNum, phoneInput, addressInput);
+	
+		if (e.getSource()== findButton) {
+			control.searchAndDisplay();
+		}
+		if (e.getSource() == update) {
+			control.update();
+		}
 		
 	}
 }

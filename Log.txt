@@ -28,3 +28,42 @@ Iteration 1:
 2. February 6, 2023 
 
 This meeting lasted for about 35 minutes. In this meeting we took a look at what progress has been made so far in our project. For example, we have implemented the GUI that will satisfy a requirement of our big user story "Create Reservations". Additionally we implemented a stub that uses a non-persistent storage such as an Array list. Furthermore we took a look at the code we currently have have and found there is a couple of design patterns that we can utilize such as the builder pattern, and decorator pattern. Lastly at the end of the meeting we found that the pace we are working at is consistent with the cost that we defined in our vision statement, and we assigned each team member additional tasks that needs to be done before the Iteration 1 Deadline.
+
+========================================================================================
+
+3. 2023-02-08 (19:00-19:30)
+
+This was the group's final meeting prior to Itr1 submission. The team was updated on what has been accomplished so far and what is remaining for Itr1 requirements. 
+
+Complete: 
+   - Functioning MVP
+   - UML class diagrams
+
+In-progress/to-be-completed:
+   - Wiki
+   - Sketch of overall architecture
+   - Class diagram report
+
+The meeting was concluded with a quick demo of our MVP.
+
+=========================================================================================
+
+4. February 16, 2023
+
+This meeting lasted approximately 30 minutes, and during this meeting we had the opportunity to meet with our client team (group 7) to provide some feedback on our current implementation and to provide additional user stories we can implement that are within the scope of our project. one feature they requested for us to implement is to display
+the credit card information whenever you pull up a reservation but do it in a way where we hide sensitive information such as the entire credit card number. For example instead of displaying credit card # 1234 5678 9123 4567, we should display it like 1234 **** **** 4567. Additionally another user story that the client team wants us to implement is to provide handicapped accessible rooms which will be well suited for guests with special accessibility needs and additional assistance. Lastly our client team requested a user story where we can remove a created reservation, however that has been already discussed by our development team and has been scheduled to be implemented in Iteration 2. 
+
+=========================================================================================
+
+5. February 16, 2023 (13:00-13:15)
+  
+  - We met with our dev team (team 5) to discuss what we would like them to add to their planned implementations.
+  
+  - Presented user story A: As a user, I want to be able to search by course name, not just course code. 
+
+  - Presented user story B: As a user, I want to be able to see previous courses I have taken and the resources that I uploaded for those courses.
+
+  - Client team chose user story A.
+  
+=========================================================================================
+
