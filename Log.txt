@@ -67,3 +67,11 @@ the credit card information whenever you pull up a reservation but do it in a wa
   
 =========================================================================================
 
+6. February 20, 2023 
+
+This meeting lasted approximately 20 minutes, and during this meeting we took a look at what are the requirements of Iteration 2. 
+We decided to divide some of the tasks that need to be done.
+
+Miguel and Humud - Setup Database 
+
+James and Dexter - work on the back end and front end of authorizing and authentication users logging on to the system.
