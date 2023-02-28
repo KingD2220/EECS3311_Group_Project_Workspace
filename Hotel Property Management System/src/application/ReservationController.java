@@ -12,7 +12,7 @@ import domain_objects.Reservation;
 public class ReservationController {
 
 	public ReservationController() {
-		super();	// FIX ME: why we calling super()?
+		super();	
 	}
 	
 	/**
