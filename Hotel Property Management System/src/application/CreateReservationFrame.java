@@ -18,10 +18,6 @@ import javax.swing.ScrollPaneConstants;
 
 import com.toedter.calendar.JDateChooser;
 
-import business_logic.ReservationLogic;
-import domain_objects.Reservation;
-import domain_objects.Room;
-
 public class CreateReservationFrame implements ActionListener {
 	public JFrame frame = new JFrame();
 	private JTextField firstInput;
@@ -168,33 +164,18 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(updateButton);
 		
 		//create reservation button
+		ActionListener create = new ReservationController(firstInput, lastInput, creditCardInput, 
+				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
 		JButton createButton = new JButton("Create Reservation");
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
-		createButton.addActionListener(this);
+		createButton.addActionListener(create);
     }
     
     
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		Room room = ReservationLogic.roomAvailable(roomSelect.getSelectedItem().toString()); //check if room is available
-		
-		if (room != null) {
-
-			Reservation newRes = new Reservation(firstInput.getText(), lastInput.getText(), 
-			addressInput.getText(), phoneInput.getText(), creditCardInput.getText());
-			newRes.setArrival_date(date.format(checkInChooser.getDate()));
-			newRes.setDeparture_date(date.format(checkOutChooser.getDate()));
-			newRes.setRoom(room);
-			room.roomReserved();
-			ReservationLogic.addReservation(newRes);
-			feedback.setText(newRes.toString()); //*does not include room info
-		}
-		else {
-			feedback.setText("Error: Selected room is not available.");
-		}
 		
 		if (e.getSource() == updateButton) {
 			UpdateFrame upFrame = new UpdateFrame();

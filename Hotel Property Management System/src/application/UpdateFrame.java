@@ -106,19 +106,14 @@ public class UpdateFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ReservationController control = new ReservationController();
+		ReservationController control = new ReservationController(firstInput, lastInput,
+				resNum, phoneInput, addressInput);
 	
 		if (e.getSource()== findButton) {
-			Reservation newRes = control.search(resNum.getText());
-			
-			  firstInput.setText(newRes.customer.getFirst_name());
-			  lastInput.setText(newRes.customer.getLast_name());
-			  phoneInput.setText(newRes.customer.getPhone_num());
-			  addressInput.setText(newRes.customer.getAddress());
+			control.searchAndDisplay();
 		}
 		if (e.getSource() == update) {
-			Reservation updatedRes = control.update(resNum.getText(), firstInput.getText(), lastInput.getText(), phoneInput.getText(), addressInput.getText());
-			feedback.setText(updatedRes.toString());
+			control.update();
 		}
 		
 	}
