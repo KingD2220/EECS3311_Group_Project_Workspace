@@ -36,6 +36,9 @@ public class CreateReservationFrame implements ActionListener {
 	private JDateChooser checkOutChooser;
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     
+    /**
+     * launch reservation window
+     */
     CreateReservationFrame() {
     	frame.setVisible(true);
     	this.window();
