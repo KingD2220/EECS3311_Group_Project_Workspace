@@ -104,7 +104,7 @@ public class UpdateFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ReservationController control = new ReservationController(firstInput, lastInput,
+		CreateReservationFrame control = new CreateReservationFrame(firstInput, lastInput,
 				resNum, phoneInput, addressInput);
 	
 		if (e.getSource()== findButton) {

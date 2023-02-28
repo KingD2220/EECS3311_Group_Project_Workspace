@@ -56,6 +56,11 @@ public class guiBuilder implements ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		this.createCreateReservationFrame();
+	
+	}
+	
+	public void createCreateReservationFrame() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -178,15 +183,15 @@ public class guiBuilder implements ActionListener{
 		updateButton.setBounds(540, 6, 90, 15);
 		updateButton.addActionListener(this);
 		frame.getContentPane().add(updateButton);
-	
 		
 		//Create Reservation Button
-		ActionListener create = new ReservationController(firstInput, lastInput, creditCardInput, 
-		addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
+		ActionListener create = new CreateReservationFrame(firstInput, lastInput, creditCardInput, 
+				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
 		JButton createButton = new JButton("Create Reservation");
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
 		createButton.addActionListener(create);
+		
 	}
 
 	@Override
@@ -197,4 +202,5 @@ public class guiBuilder implements ActionListener{
 		}
 		
 	}
+	
 }
