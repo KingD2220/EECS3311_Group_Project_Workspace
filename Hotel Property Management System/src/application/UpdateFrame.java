@@ -10,6 +10,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import domain_objects.Reservation;
+
 public class UpdateFrame implements ActionListener {
 	public JButton findButton;
 	public JButton update; 
@@ -104,14 +106,19 @@ public class UpdateFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		CreateReservationFrame control = new CreateReservationFrame(firstInput, lastInput,
-				resNum, phoneInput, addressInput);
+		ReservationController control = new ReservationController();
 	
 		if (e.getSource()== findButton) {
-			control.searchAndDisplay();
+			Reservation newRes = control.search(resNum.getText());
+			
+			  firstInput.setText(newRes.customer.getFirst_name());
+			  lastInput.setText(newRes.customer.getLast_name());
+			  phoneInput.setText(newRes.customer.getPhone_num());
+			  addressInput.setText(newRes.customer.getAddress());
 		}
 		if (e.getSource() == update) {
-			control.update();
+			Reservation updatedRes = control.update(resNum.getText(), firstInput.getText(), lastInput.getText(), phoneInput.getText(), addressInput.getText());
+			feedback.setText(updatedRes.toString());
 		}
 		
 	}
