@@ -2,21 +2,25 @@ package application;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
+
 import business_logic.ReservationLogic;
 import business_logic.SearchingLogic;
 import domain_objects.Reservation;
 import domain_objects.Room;
 
-
-import java.text.SimpleDateFormat;
+/**
+ * ReservationController should only be used to take information from front-end and
+ * be the middleman for the model/database;
+ * should not be changing what the GUI does or looks like.
+ */
 
 public class ReservationController implements ActionListener {
-
 	private JTextField fName;
 	private JTextField lName;
 	private JTextField creditCard;
@@ -28,8 +32,6 @@ public class ReservationController implements ActionListener {
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
     Reservation newRes;
-   
-
 
 	public ReservationController(JTextField fName, JTextField lName, JTextField creditCard, JTextField adress,
 			JTextField phoneNum, JComboBox<Object> roomtype, JDateChooser startDate, JDateChooser endDate) {
@@ -43,6 +45,7 @@ public class ReservationController implements ActionListener {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
+	
 	public ReservationController(JTextField fName, JTextField lName, JTextField resNum,
 			JTextField phoneNum, JTextField adress) {
 		this.fName = fName;
@@ -52,8 +55,6 @@ public class ReservationController implements ActionListener {
 		this.adress = adress;
 	
 	}
-	
-	
 	
 	public void searchAndDisplay() {
 		System.out.println(resNum.getText());
@@ -73,9 +74,9 @@ public class ReservationController implements ActionListener {
 		newRes.customer.setAddress(adress.getText());
 		UpdateFrame.feedback.setText(newRes.toString());
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		Room room = ReservationLogic.roomAvailable(roomtype.getSelectedItem().toString()); //check if room is available
 		
 		if (room != null) {
@@ -87,11 +88,13 @@ public class ReservationController implements ActionListener {
 			newRes.setRoom(room);
 			room.roomReserved();
 			ReservationLogic.addReservation(newRes);
-			guiBuilder.feedback.setText(newRes.toString()); //*does not include room info
+			CreateReservationFrame.feedback.setText(newRes.toString()); //*does not include room info
 		}
 		else {
-			guiBuilder.feedback.setText("Error: Selected room is not available.");
+			CreateReservationFrame.feedback.setText("Error: Selected room is not available.");
 		}
 		
 	}
+		
+	
 }

@@ -10,6 +10,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import domain_objects.Reservation;
+
 public class UpdateFrame implements ActionListener {
 	public JButton findButton;
 	public JButton update; 
