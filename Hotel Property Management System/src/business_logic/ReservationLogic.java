@@ -51,32 +51,28 @@ public class ReservationLogic {
 		switch(roomType) {
 		case "Standard":
 			StandardRoom standard = new StandardRoom();
-			if (standard.getRoomsAvailable() != 0)
+			if (standard.getRoomsAvailable() > 0)
 				room = standard;
 			break;
 		case "Deluxe":
 			DeluxeRoom deluxe = new DeluxeRoom();
-			if (deluxe.getRoomsAvailable() != 0) 
+			if (deluxe.getRoomsAvailable() > 0) 
 				room = deluxe;
-			deluxe.roomReserved();
 			break;
 		case "Suite":
 			SuiteRoom suite = new SuiteRoom();
-			if (suite.getRoomsAvailable() != 0) 
+			if (suite.getRoomsAvailable() > 0) 
 				room = suite;
-			suite.roomReserved();
 			break;
 		case "Executive":
 			ExecutiveSuite executive = new ExecutiveSuite();
-			if (executive.getRoomsAvailable() != 0) 
+			if (executive.getRoomsAvailable() > 0) 
 				room = executive;
-			executive.roomReserved();
 			break;
 		case "Presidential":
 			PresidentialSuite presidential = new PresidentialSuite();
-			if (presidential.getRoomsAvailable() != 0) 
+			if (presidential.getRoomsAvailable() > 0) 
 				room = presidential;
-			presidential.roomReserved();
 			break;
 		}
 		return room;
