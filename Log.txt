@@ -75,3 +75,16 @@ We decided to divide some of the tasks that need to be done.
 Miguel and Humud - Setup Database 
 
 James and Dexter - work on the back end and front end of authorizing and authentication users logging on to the system.
+
+=========================================================================================
+
+Mar. 1, 2023 (19:00-19:30)
+
+- The team went over the feedback from Itr1 and discussed further who is responsible for which tasks for Itr2. 
+- From Itr1, everyone needs to review their code and add proper comments. 
+- From Itr1, input fields (e.g., phone number, credit card) needs proper restrictions on what data type can be entered. (Dexter)
+- From Itr1, break up long methods into smaller, more focused methods (e.g., CreateReservationFrame Class & UpdateFrame Class). (Dexter)
+- New user story: hide middle part of credit card information once entered. Either in this iteration or next, a button or way to reveal and hide the 
+  X's will be a nice feature. (Dexter)
+- For Itr2, database implementation (Miguel & Humud)
+- For Itr2, additional user story - user authentication (James)
