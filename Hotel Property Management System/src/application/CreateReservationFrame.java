@@ -15,8 +15,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JPasswordField;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JToggleButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CreateReservationFrame implements ActionListener {
 	public JFrame frame = new JFrame();
@@ -24,7 +28,7 @@ public class CreateReservationFrame implements ActionListener {
 	private JTextField lastInput;
 	private JTextField phoneInput;
 	private JTextField addressInput;
-	private JTextField creditCardInput;
+	private JPasswordField creditInput;
 	public static  JTextArea feedback;
     public JButton updateButton;
 	private JComboBox<Object> roomSelect;
@@ -87,10 +91,10 @@ public class CreateReservationFrame implements ActionListener {
 		addressInput.setBounds(134, 105, 427, 20);
 		frame.getContentPane().add(addressInput);
 		
-		creditCardInput = new JTextField();
-		creditCardInput.setColumns(10);
-		creditCardInput.setBounds(134, 130, 427, 20);
-		frame.getContentPane().add(creditCardInput);
+		creditInput = new JPasswordField();
+		creditInput.setBounds(134, 130, 427, 20);
+		creditInput.setEchoChar('\u25cf');
+		frame.getContentPane().add(creditInput);
 		
 		//Reservation Date Chooser
 		JLabel lblCheckinDate = new JLabel("Check-in Date:");
@@ -153,22 +157,38 @@ public class CreateReservationFrame implements ActionListener {
 		feedback.setBounds(10, 376, 661, 180);
 		feedback.setLineWrap(true);
 		feedback.setEditable(false);
-		JScrollPane scroll = new JScrollPane(feedback);
+		JScrollPane scroll = new JScrollPane();
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		frame.getContentPane().add(feedback);
 		
-		//update button
+		//Update Button
 	    updateButton = new JButton("Find");
 		updateButton.setBounds(540, 6, 90, 15);
 		updateButton.addActionListener(this);
 		frame.getContentPane().add(updateButton);
 		
-		//create reservation button
-		ActionListener create = new ReservationController(firstInput, lastInput, creditCardInput, 
+		//Create Reservation Button
+		ActionListener create = new ReservationController(firstInput, lastInput, creditInput, 
 				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
 		JButton createButton = new JButton("Create Reservation");
 		createButton.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(createButton);
+		
+		//Show/Hide Credit Card Button
+		JToggleButton showCreditButton = new JToggleButton("Show");
+		showCreditButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (showCreditButton.isSelected()) {
+					creditInput.setEchoChar((char)0);
+				}
+				else {
+					creditInput.setEchoChar('\u25cf');
+				}
+			}
+		});
+		showCreditButton.setBounds(571, 129, 100, 23);
+		frame.getContentPane().add(showCreditButton);
 		createButton.addActionListener(create);
     }
     

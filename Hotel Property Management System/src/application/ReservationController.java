@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -23,7 +24,7 @@ import domain_objects.Room;
 public class ReservationController implements ActionListener {
 	private JTextField fName;
 	private JTextField lName;
-	private JTextField creditCard;
+	private JPasswordField creditCard;
 	private JTextField adress;
 	private JTextField phoneNum;
 	private JComboBox<Object> roomtype;
@@ -33,7 +34,7 @@ public class ReservationController implements ActionListener {
     private JTextField resNum; 
     Reservation newRes;
 
-	public ReservationController(JTextField fName, JTextField lName, JTextField creditCard, JTextField adress,
+	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
 			JTextField phoneNum, JComboBox<Object> roomtype, JDateChooser startDate, JDateChooser endDate) {
 		super();
 		this.fName = fName;
@@ -74,26 +75,49 @@ public class ReservationController implements ActionListener {
 		newRes.customer.setAddress(adress.getText());
 		UpdateFrame.feedback.setText(newRes.toString());
 	}
-
+	
+	//Create Reservation Button Pressed
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Room room = ReservationLogic.roomAvailable(roomtype.getSelectedItem().toString()); //check if room is available
 		
-		if (room != null) {
-
-			newRes = new Reservation(fName.getText(), lName.getText(), 
-			adress.getText(), phoneNum.getText(), creditCard.getText());
-			newRes.setArrival_date(date.format(startDate.getDate()));
-			newRes.setDeparture_date(date.format(endDate.getDate()));
-			newRes.setRoom(room);
-			room.roomReserved();
-			ReservationLogic.addReservation(newRes);
-			CreateReservationFrame.feedback.setText(newRes.toString()); //*does not include room info
+		String credit = new String(creditCard.getPassword()); //convert credit card into string
+		
+		if (inputValid(credit)) { //checks input validity
+			Room room = ReservationLogic.roomAvailable(roomtype.getSelectedItem().toString()); //check if room is available
+		
+			if (room != null) {
+				newRes = new Reservation(fName.getText(), lName.getText(), 
+						adress.getText(), phoneNum.getText(), credit);
+				newRes.setArrival_date(date.format(startDate.getDate()));
+				newRes.setDeparture_date(date.format(endDate.getDate()));
+				newRes.setRoom(room);
+				room.roomReserved();
+				ReservationLogic.addReservation(newRes);
+				CreateReservationFrame.feedback.setText(newRes.toString()); //*does not include room info
+			}
+			else {
+				CreateReservationFrame.feedback.setText("Error: Selected room is not available.");
+			}
 		}
-		else {
-			CreateReservationFrame.feedback.setText("Error: Selected room is not available.");
+	}
+	
+	//Check if reservation input is valid
+	private boolean inputValid(String credit) {
+		boolean valid = true;
+		
+		//Check phone number
+		if (!phoneNum.getText().matches("^[0-9]{10}$")) {
+			CreateReservationFrame.feedback.setText("Error: Phone number is not valid");
+			valid = false;
 		}
 		
+		//Check credit card number
+		if (!credit.matches("^[0-9]{16}$")) {
+			CreateReservationFrame.feedback.setText("Error: Credit card is not valid");
+			valid = false;
+		}
+		
+		return valid;
 	}
 		
 	
