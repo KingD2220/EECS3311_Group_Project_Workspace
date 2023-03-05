@@ -12,7 +12,9 @@ import javax.swing.JTextField;
 public class LoginFrame implements ActionListener {
 	private JTextField usernameInput;
 	private JTextField passwordInput;
+	private JButton registerButton;
 	private JButton loginButton;
+	JLabel loginFailedMsg;
 	private JFrame frame  = new JFrame();
 	
 	public LoginFrame() {
@@ -43,18 +45,40 @@ public class LoginFrame implements ActionListener {
 		frame.getContentPane().add(passwordInput);
 	    usernameInput.setColumns(10);
 	    
+	    registerButton = new JButton("Register");
+	    registerButton.setBounds(400, 342, 100, 23);
+	    frame.getContentPane().add(registerButton);
+	    registerButton.addActionListener(this);
+	   
 	    loginButton = new JButton("Login");
-		loginButton.setBounds(273, 342, 155, 23);
+		loginButton.setBounds(273, 342, 100, 23);
 		frame.getContentPane().add(loginButton);
 		loginButton.addActionListener(this);
+		loginFailedMsg = new JLabel();
+		loginFailedMsg.setBounds(273, 542, 350, 23);
+		frame.getContentPane().add(loginFailedMsg);
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		CreateReservationFrame createFrame = new CreateReservationFrame();
-	
+			
 		if (e.getSource() == loginButton) {
+			if (AccountsController.accountVerification(usernameInput.getText(), passwordInput.getText())) {
+				CreateReservationFrame createFrame = new CreateReservationFrame();
+				frame.setVisible(false);
+			}
+			else {
+				loginFailedMsg.setText("The username or password is incorrect!");
+				
+			
+			}
+			
+		}
+		
+		if (e.getSource() == registerButton) {
+			loginFailedMsg.setText(AccountsController.registerAccount(usernameInput.getText(), passwordInput.getText())); 
+				
 		}
 		
 	}

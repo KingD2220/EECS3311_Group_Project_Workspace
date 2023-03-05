@@ -11,6 +11,8 @@ import javax.swing.JScrollPane;
 
 import com.toedter.calendar.JDateChooser;
 
+import persistence.DummyData;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextArea;
@@ -29,7 +31,7 @@ public class guiBuilder implements ActionListener{
 			public void run() {
 				try {
 					guiBuilder window = new guiBuilder();
-					ActionListener create = new CreateReservationFrame();
+					ActionListener loginFrame  = new LoginFrame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -48,14 +50,10 @@ public class guiBuilder implements ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		this.createCreateReservationFrame();
+		DummyData.createDummyAccounts();
 	
 	}
 	
-	public void createCreateReservationFrame() {
-
-	
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
