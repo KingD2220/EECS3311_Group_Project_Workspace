@@ -37,7 +37,7 @@ public class CreateReservationFrame implements ActionListener {
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     
     /**
-     * launch reservation window
+     * Launch reservation window
      */
     CreateReservationFrame() {
     	frame.setVisible(true);

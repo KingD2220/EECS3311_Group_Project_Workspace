@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,9 +18,12 @@ public class LoginFrame implements ActionListener {
 	private JPasswordField passwordInput;
 	private JButton registerButton;
 	private JButton loginButton;
-	JLabel loginMsg;
+	private JLabel loginMsg;
 	private JFrame frame  = new JFrame();
 	
+	/**
+	 * Launch login window
+	 */
 	public LoginFrame() {
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 697, 600);
@@ -28,6 +32,9 @@ public class LoginFrame implements ActionListener {
 		window();
 	}
 	
+	/**
+	 * Create contents of frame.
+	 */
 	private void window() {
 		
 		ImageIcon image = new ImageIcon("src/application/hotel.png");
@@ -47,6 +54,11 @@ public class LoginFrame implements ActionListener {
 		lblPassword.setFont(new Font(null, Font.BOLD, 14));
 		lblPassword.setBounds(250, 265, 94, 20);
 		frame.getContentPane().add(lblPassword);
+		
+		loginMsg = new JLabel();
+		loginMsg.setBounds(175, 320, 500, 30);
+		loginMsg.setFont(new Font(null, Font.ITALIC, 12));
+		frame.getContentPane().add(loginMsg);
 		
 		// user input fields
 		usernameInput = new JTextField();
@@ -69,11 +81,6 @@ public class LoginFrame implements ActionListener {
 		loginButton.setBounds(342, 295, 90, 25);
 		frame.getContentPane().add(loginButton);
 		loginButton.addActionListener(this);
-	   		
-		loginMsg = new JLabel();
-		loginMsg.setBounds(175, 320, 500, 30);
-		loginMsg.setFont(new Font(null, Font.ITALIC, 12));
-		frame.getContentPane().add(loginMsg);
 		
 	}
 	
@@ -82,11 +89,14 @@ public class LoginFrame implements ActionListener {
 			
 		if (e.getSource() == loginButton) {
 			try {
+				// check if user input is valid
 				if (AccountsController.accountVerification(usernameInput.getText(), new String(passwordInput.getPassword()))) {
 					CreateReservationFrame createFrame = new CreateReservationFrame();
 					frame.setVisible(false);
 				}
 				else {
+					// display error msg
+					loginMsg.setForeground(Color.RED);
 					loginMsg.setText("The credentials you entered are either not registered or incorrect!");
 					
 				
@@ -99,6 +109,9 @@ public class LoginFrame implements ActionListener {
 		
 		if (e.getSource() == registerButton) {
 			loginMsg.setBounds(300, 320, 150, 30);
+			loginMsg.setForeground(Color.BLACK);
+			
+			// register new user and display appropriate text
 			try {
 				loginMsg.setText(AccountsController.registerAccount(usernameInput.getText(), new String(passwordInput.getPassword())));
 			} catch (Exception e1) {

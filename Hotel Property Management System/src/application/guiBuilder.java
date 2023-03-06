@@ -39,25 +39,17 @@ public class guiBuilder implements ActionListener {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public guiBuilder() throws Exception {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() throws Exception {
 		DummyData.createDummyAccounts();
-	
 	}
 	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		
 	}
 	
