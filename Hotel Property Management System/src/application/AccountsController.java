@@ -11,6 +11,11 @@ public class AccountsController {
 		
 	}
 	
+	/**
+	 * Verifies if login username and password (hashed) is correct by 
+	 * checking the accounts database.
+	 * @return boolean true or false.
+	 */
 	public static boolean accountVerification(String username, String password) throws Exception {
 		List<Account> accounts = DatabaseStubs.getAccounts();
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -28,6 +33,10 @@ public class AccountsController {
 		
 	}
 	
+	/**
+	 * Checks if username already exists. 
+	 * If not, a new account is created and added to the accounts database
+	 */
 	public static String registerAccount(String username, String password) throws Exception {
 		
 		for (Account a : DatabaseStubs.getAccounts()) {

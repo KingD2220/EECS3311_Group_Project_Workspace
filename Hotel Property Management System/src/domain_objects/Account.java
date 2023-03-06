@@ -9,8 +9,8 @@ public class Account {
 	
 
 	public Account(String userName, String password) throws Exception {
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		hash = md.digest(password.getBytes());
+		MessageDigest md = MessageDigest.getInstance("SHA-256");	
+		hash = md.digest(password.getBytes());					// encrypt password
 		this.password = new String(hash);
 		this.userName = userName;
 	}
