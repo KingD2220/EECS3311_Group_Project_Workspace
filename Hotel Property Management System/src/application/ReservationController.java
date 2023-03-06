@@ -106,13 +106,13 @@ public class ReservationController implements ActionListener {
 		boolean valid = true;
 		
 		//Check phone number
-		if (!phoneNum.getText().matches("^[0-9]{10}$")) {
+		if (!phoneNum.getText().matches("^[0-9]{10}$")) { //Invalid if not 10 digit number
 			CreateReservationFrame.feedback.setText("Error: Phone number is not valid");
 			valid = false;
 		}
 		
 		//Check credit card number
-		if (!credit.matches("^[0-9]{16}$")) {
+		if (!credit.matches("^[0-9]{16}$")) { //Invalid if not 16 digit number
 			CreateReservationFrame.feedback.setText("Error: Credit card is not valid");
 			valid = false;
 		}
