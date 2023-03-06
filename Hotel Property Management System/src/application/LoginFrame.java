@@ -17,7 +17,7 @@ public class LoginFrame implements ActionListener {
 	private JPasswordField passwordInput;
 	private JButton registerButton;
 	private JButton loginButton;
-	JLabel loginFailedMsg;
+	JLabel loginMsg;
 	private JFrame frame  = new JFrame();
 	
 	public LoginFrame() {
@@ -70,10 +70,10 @@ public class LoginFrame implements ActionListener {
 		frame.getContentPane().add(loginButton);
 		loginButton.addActionListener(this);
 	   		
-		loginFailedMsg = new JLabel();
-		loginFailedMsg.setBounds(175, 320, 500, 30);
-		loginFailedMsg.setFont(new Font(null, Font.ITALIC, 12));
-		frame.getContentPane().add(loginFailedMsg);
+		loginMsg = new JLabel();
+		loginMsg.setBounds(175, 320, 500, 30);
+		loginMsg.setFont(new Font(null, Font.ITALIC, 12));
+		frame.getContentPane().add(loginMsg);
 		
 	}
 	
@@ -87,7 +87,7 @@ public class LoginFrame implements ActionListener {
 					frame.setVisible(false);
 				}
 				else {
-					loginFailedMsg.setText("The credentials you entered are either not registered or incorrect!");
+					loginMsg.setText("The credentials you entered are either not registered or incorrect!");
 					
 				
 				}
@@ -98,9 +98,9 @@ public class LoginFrame implements ActionListener {
 		}
 		
 		if (e.getSource() == registerButton) {
-			loginFailedMsg.setBounds(300, 320, 150, 30);
+			loginMsg.setBounds(300, 320, 150, 30);
 			try {
-				loginFailedMsg.setText(AccountsController.registerAccount(usernameInput.getText(), new String(passwordInput.getPassword())));
+				loginMsg.setText(AccountsController.registerAccount(usernameInput.getText(), new String(passwordInput.getPassword())));
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			} 

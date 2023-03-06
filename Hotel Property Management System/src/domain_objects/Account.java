@@ -7,12 +7,12 @@ public class Account {
 	private String password;
 	private byte[] hash;
 	
-	MessageDigest md = MessageDigest.getInstance("SHA-256");
-	
+
 	public Account(String userName, String password) throws Exception {
-		this.userName = userName;
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		hash = md.digest(password.getBytes());
 		this.password = new String(hash);
+		this.userName = userName;
 	}
 
 	public String getUserName() {
