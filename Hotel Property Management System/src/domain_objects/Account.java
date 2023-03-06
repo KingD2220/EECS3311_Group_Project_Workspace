@@ -1,12 +1,18 @@
 package domain_objects;
 
+import java.security.MessageDigest;
+
 public class Account {
 	private String userName;
 	private String password;
+	private byte[] hash;
 	
-	public Account(String userName, String password) {
+	MessageDigest md = MessageDigest.getInstance("SHA-256");
+	
+	public Account(String userName, String password) throws Exception {
 		this.userName = userName;
-		this.password = password;
+		hash = md.digest(password.getBytes());
+		this.password = new String(hash);
 	}
 
 	public String getUserName() {
@@ -26,5 +32,4 @@ public class Account {
 	}
 	
 	
-
 }

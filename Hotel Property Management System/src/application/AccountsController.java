@@ -1,5 +1,6 @@
 package application;
 
+import java.security.MessageDigest;
 import java.util.List;
 
 import domain_objects.Account;
@@ -10,11 +11,14 @@ public class AccountsController {
 		
 	}
 	
-	public static boolean accountVerification(String username, String password) {
+	public static boolean accountVerification(String username, String password) throws Exception {
 		List<Account> accounts = DatabaseStubs.getAccounts();
-				
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		byte[] hash = md.digest(password.getBytes());
+		String pwHash = new String(hash);
+		
 		for (Account a : accounts) {
-			if (username.equals(a.getUserName()) && password.equals(a.getPassword())) {
+			if (username.equals(a.getUserName()) && pwHash.equals(a.getPassword())) {
 				return true;
 			}
 
@@ -24,7 +28,7 @@ public class AccountsController {
 		
 	}
 	
-	public static String registerAccount(String username, String password) {
+	public static String registerAccount(String username, String password) throws Exception {
 		
 		for (Account a : DatabaseStubs.getAccounts()) {
 			if (username.equals(a.getUserName())) {

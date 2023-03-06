@@ -1,17 +1,19 @@
 package application;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class LoginFrame implements ActionListener {
 	private JTextField usernameInput;
-	private JTextField passwordInput;
+	private JPasswordField passwordInput;
 	private JButton registerButton;
 	private JButton loginButton;
 	JLabel loginFailedMsg;
@@ -26,36 +28,43 @@ public class LoginFrame implements ActionListener {
 	}
 	
 	private void window() {
+		
+		// labels
 		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setBounds(30, 133, 94, 14);
+		lblUsername.setFont(new Font(null, Font.BOLD, 14));
+		lblUsername.setBounds(250, 175, 94, 20);
 		frame.getContentPane().add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(30, 155, 94, 14);
+		lblPassword.setFont(new Font(null, Font.BOLD, 14));
+		lblPassword.setBounds(250, 200, 94, 20);
 		frame.getContentPane().add(lblPassword);
 		
-		//user input fields
+		// user input fields
 		usernameInput = new JTextField();
-		usernameInput.setBounds(134, 130, 108, 20);
+		usernameInput.setBounds(325, 175, 108, 25);
 		frame.getContentPane().add(usernameInput);
 	    usernameInput.setColumns(10);
 	    
-	    passwordInput = new JTextField();
-		passwordInput.setBounds(134, 155, 108, 20);
+	    passwordInput = new JPasswordField();
+		passwordInput.setBounds(325, 200, 108, 25);
 		frame.getContentPane().add(passwordInput);
 	    usernameInput.setColumns(10);
 	    
+	    // buttons    
 	    registerButton = new JButton("Register");
-	    registerButton.setBounds(400, 342, 100, 23);
+	    registerButton.setBounds(250, 230, 90, 25);
 	    frame.getContentPane().add(registerButton);
 	    registerButton.addActionListener(this);
-	   
+	    
 	    loginButton = new JButton("Login");
-		loginButton.setBounds(273, 342, 100, 23);
+		loginButton.setBounds(345, 230, 90, 25);
 		frame.getContentPane().add(loginButton);
 		loginButton.addActionListener(this);
+	   		
 		loginFailedMsg = new JLabel();
-		loginFailedMsg.setBounds(273, 542, 350, 23);
+		loginFailedMsg.setBounds(175, 260, 500, 30);
+		loginFailedMsg.setFont(new Font(null, Font.ITALIC, 12));
 		frame.getContentPane().add(loginFailedMsg);
 		
 	}
@@ -64,20 +73,29 @@ public class LoginFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 			
 		if (e.getSource() == loginButton) {
-			if (AccountsController.accountVerification(usernameInput.getText(), passwordInput.getText())) {
-				CreateReservationFrame createFrame = new CreateReservationFrame();
-				frame.setVisible(false);
-			}
-			else {
-				loginFailedMsg.setText("The username or password is incorrect!");
+			try {
+				if (AccountsController.accountVerification(usernameInput.getText(), new String(passwordInput.getPassword()))) {
+					CreateReservationFrame createFrame = new CreateReservationFrame();
+					frame.setVisible(false);
+				}
+				else {
+					loginFailedMsg.setText("The credentials you entered are either not registered or incorrect!");
+					
 				
-			
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
 			
 		}
 		
 		if (e.getSource() == registerButton) {
-			loginFailedMsg.setText(AccountsController.registerAccount(usernameInput.getText(), passwordInput.getText())); 
+			loginFailedMsg.setBounds(300, 260, 150, 30);
+			try {
+				loginFailedMsg.setText(AccountsController.registerAccount(usernameInput.getText(), new String(passwordInput.getPassword())));
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			} 
 				
 		}
 		

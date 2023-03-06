@@ -21,7 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 
-public class guiBuilder implements ActionListener{
+public class guiBuilder implements ActionListener {
 
 	/**
 	 * Launch the application.
@@ -42,14 +42,14 @@ public class guiBuilder implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public guiBuilder() {
+	public guiBuilder() throws Exception {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() throws Exception {
 		DummyData.createDummyAccounts();
 	
 	}
