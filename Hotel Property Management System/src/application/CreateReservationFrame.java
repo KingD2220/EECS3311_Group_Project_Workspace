@@ -176,8 +176,8 @@ public class CreateReservationFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() == updateButton) {
+		// if the button pressed is the update button
+		if (e.getSource()== updateButton) {
 			UpdateFrame upFrame = new UpdateFrame();
 			frame.setVisible(false);
 		}
