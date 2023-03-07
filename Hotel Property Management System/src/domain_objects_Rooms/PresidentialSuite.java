@@ -1,4 +1,4 @@
-package domain_objects;
+package domain_objects_Rooms;
 
 public class PresidentialSuite extends Room{
 	static int numberOfRooms = 10;

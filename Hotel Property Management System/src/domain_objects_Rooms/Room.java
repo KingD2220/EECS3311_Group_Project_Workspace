@@ -1,4 +1,4 @@
-package domain_objects;
+package domain_objects_Rooms;
 
 public abstract class Room {
 	// Attributes of a room 
