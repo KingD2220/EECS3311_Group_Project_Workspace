@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain_objects.Account;
-import domain_objects.Profile;
-import domain_objects.Reservation;
+import domain_objects_Rooms.Reservation;
+import domain_objects_Users.Profile;
 
 public class DatabaseStubs {
 	private static List<Profile> customers = new ArrayList<>();

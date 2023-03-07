@@ -2,13 +2,13 @@ package business_logic;
 
 import java.util.List;
 
-import domain_objects.Reservation;
-import domain_objects.Room;
-import domain_objects.StandardRoom;
-import domain_objects.DeluxeRoom;
-import domain_objects.SuiteRoom;
-import domain_objects.ExecutiveSuite;
-import domain_objects.PresidentialSuite;
+import domain_objects_Rooms.DeluxeRoom;
+import domain_objects_Rooms.ExecutiveSuite;
+import domain_objects_Rooms.PresidentialSuite;
+import domain_objects_Rooms.Reservation;
+import domain_objects_Rooms.Room;
+import domain_objects_Rooms.StandardRoom;
+import domain_objects_Rooms.SuiteRoom;
 import persistence.DatabaseStubs;
 
 public class ReservationLogic {
