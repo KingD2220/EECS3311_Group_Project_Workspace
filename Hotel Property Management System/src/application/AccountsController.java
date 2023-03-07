@@ -41,7 +41,7 @@ public class AccountsController {
 		
 		for (Account a : DatabaseStubs.getAccounts()) {
 			if (username.equals(a.getUserName())) {
-				return "username already exists!";
+				return "User already exists!";
 			}	
 
 		}

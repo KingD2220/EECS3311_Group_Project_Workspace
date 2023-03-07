@@ -56,7 +56,6 @@ public class LoginFrame implements ActionListener {
 		frame.getContentPane().add(lblPassword);
 		
 		loginMsg = new JLabel();
-		loginMsg.setBounds(175, 320, 500, 30);
 		loginMsg.setFont(new Font(null, Font.ITALIC, 12));
 		frame.getContentPane().add(loginMsg);
 		
@@ -90,16 +89,17 @@ public class LoginFrame implements ActionListener {
 		if (e.getSource() == loginButton) {
 			try {
 				// check if user input is valid
-				if (AccountsController.accountVerification(usernameInput.getText(), new String(passwordInput.getPassword()))) {
+				if (AccountsController.accountVerification(usernameInput.getText(), String.valueOf(passwordInput.getPassword()))) {
 					CreateReservationFrame createFrame = new CreateReservationFrame();
 					frame.setVisible(false);
 				}
 				else {
 					// display error msg
+					loginMsg.setBounds(175, 320, 500, 30);
 					loginMsg.setForeground(Color.RED);
 					loginMsg.setText("The credentials you entered are either not registered or incorrect!");
-					
-				
+					usernameInput.setText("");
+					passwordInput.setText("");
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -109,11 +109,20 @@ public class LoginFrame implements ActionListener {
 		
 		if (e.getSource() == registerButton) {
 			loginMsg.setBounds(300, 320, 150, 30);
-			loginMsg.setForeground(Color.BLACK);
 			
 			// register new user and display appropriate text
 			try {
-				loginMsg.setText(AccountsController.registerAccount(usernameInput.getText(), new String(passwordInput.getPassword())));
+				if (!usernameInput.getText().equals("") || !String.valueOf(passwordInput.getPassword()).equals("")) {
+					loginMsg.setForeground(Color.BLACK);
+					loginMsg.setText(AccountsController.registerAccount(usernameInput.getText(), String.valueOf(passwordInput.getPassword())));
+					usernameInput.setText("");
+					passwordInput.setText("");
+				}
+				else {
+					loginMsg.setForeground(Color.RED);
+					loginMsg.setText("Invalid entry!");
+				}
+				
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			} 
