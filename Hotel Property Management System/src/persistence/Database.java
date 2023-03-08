@@ -1,8 +1,7 @@
 package persistence;
 
 import domain_objects.Account;
-import domain_objects.Reservation;
-
+import domain_objects_Rooms.*;
 public interface Database {
 	
 	public boolean getUser(String userName, byte[] passHash);
