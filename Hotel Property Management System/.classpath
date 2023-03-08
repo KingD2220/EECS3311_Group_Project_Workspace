@@ -9,6 +9,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alienware/OneDrive/Documents/GitHub/mysql-connector-j-8.0.31.jar"/>
+	<classpathentry kind="lib" path="/Users/Humud/Documents/EECS3311_Group_Project_Workspace/Hotel Property Management System/src/persistence/mysql-connector-j-8.0.32.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
