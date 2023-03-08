@@ -160,16 +160,5 @@ public class RealDatabase implements Database {
 	}
 	
 	
-  public static void main(String[] args) {
-		/*
-		 * Reservation reso = new Reservation("Miguel" , "Graham","Home", "647","1234"
-		 * ); reso.setArrival_date("112011"); reso.setDeparture_date("12345");
-		 * RealDatabase database = new RealDatabase(); database.addReservation(reso);
-		 */
-	Reservation res; 
-	RealDatabase database = new RealDatabase(); 
-	res = database.getReservation(1); 
-	System.out.println(res.toString());
 
-}
 }
