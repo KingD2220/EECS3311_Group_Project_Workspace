@@ -49,107 +49,30 @@ public class CreateReservationFrame implements ActionListener {
     	phoneNumber();
     	address();
 		creditCard();
+		
+		//Reservation Date Chooser
+		dateChooser();
+		
+		//Room Type Selector
+		roomSelector();
+		
+		//Services Checks
+		services();
+		
+		//Feedback Text Window
+		feedbackWindow();
+		
+		//Buttons
+		createReservationButton();
+		updateButton();
+		showCreditCardButton();
     }
-
+    
+    //Initialize Frame
     private void window() {
 		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		//Reservation Date Chooser
-		JLabel lblCheckinDate = new JLabel("Check-in Date:");
-		lblCheckinDate.setBounds(335, 33, 108, 14);
-		frame.getContentPane().add(lblCheckinDate);
-		
-		JLabel lblCheckoutDate = new JLabel("Check-out Date:");
-		lblCheckoutDate.setBounds(335, 58, 108, 14);
-		frame.getContentPane().add(lblCheckoutDate);
-		
-		checkInChooser = new JDateChooser();
-		checkInChooser.setBounds(453, 33, 108, 20);
-		frame.getContentPane().add(checkInChooser);
-		
-		checkOutChooser = new JDateChooser();
-		checkOutChooser.setBounds(453, 58, 108, 20);
-		frame.getContentPane().add(checkOutChooser);
-		
-		//Room Type
-		JLabel lblRoomType = new JLabel("Room Type:");
-		lblRoomType.setBounds(30, 179, 94, 14);
-		frame.getContentPane().add(lblRoomType);
-		
-		roomSelect = new JComboBox<Object>();
-		roomSelect.setModel(new DefaultComboBoxModel<Object>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
-		roomSelect.setBounds(30, 204, 134, 22);
-		frame.getContentPane().add(roomSelect);
-		
-		//Services
-		JLabel lblServices = new JLabel("Services:");
-		lblServices.setBounds(30, 255, 94, 14);
-		frame.getContentPane().add(lblServices);
-		
-		JCheckBox parkCheck = new JCheckBox("Parking");
-		parkCheck.setBounds(30, 276, 97, 23);
-		frame.getContentPane().add(parkCheck);
-		
-		JCheckBox wifiCheck = new JCheckBox("Wifi");
-		wifiCheck.setBounds(134, 276, 97, 23);
-		frame.getContentPane().add(wifiCheck);
-		
-		JCheckBox petCheck = new JCheckBox("Pets");
-		petCheck.setBounds(233, 276, 97, 23);
-		frame.getContentPane().add(petCheck);
-		
-		//Output message
-		JLabel lblOutput = new JLabel("");
-		lblOutput.setForeground(new Color(0, 0, 0));
-		lblOutput.setBounds(10, 376, 661, 124);
-		frame.getContentPane().add(lblOutput);
-		
-		//Error message
-		JLabel lblError = new JLabel("");
-		lblError.setForeground(new Color(255, 0, 0));
-		lblError.setBounds(10, 486, 661, 14);
-		frame.getContentPane().add(lblError);
-		
-		//Output Text
-		feedback = new JTextArea();
-		feedback.setBounds(10, 376, 661, 180);
-		feedback.setLineWrap(true);
-		feedback.setEditable(false);
-		JScrollPane scroll = new JScrollPane();
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		frame.getContentPane().add(feedback);
-		
-		//Update Button
-	    updateButton = new JButton("Find");
-		updateButton.setBounds(540, 6, 90, 15);
-		updateButton.addActionListener(this);
-		frame.getContentPane().add(updateButton);
-		
-		//Create Reservation Button
-		ActionListener create = new ReservationController(firstInput, lastInput, creditInput, 
-				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
-		JButton createButton = new JButton("Create Reservation");
-		createButton.setBounds(273, 342, 155, 23);
-		frame.getContentPane().add(createButton);
-		
-		//Show/Hide Credit Card Button
-		JToggleButton showCreditButton = new JToggleButton("Show");
-		showCreditButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (showCreditButton.isSelected()) {
-					creditInput.setEchoChar((char)0);
-				}
-				else {
-					creditInput.setEchoChar('\u25cf');
-				}
-			}
-		});
-		showCreditButton.setBounds(571, 129, 100, 23);
-		frame.getContentPane().add(showCreditButton);
-		createButton.addActionListener(create);
     }
     
     //First name input
@@ -200,6 +123,7 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(addressInput);
     }
     
+    //Credit Card Input
     public void creditCard() {
 		JLabel lblCreditCard = new JLabel("Credit Card:");
 		lblCreditCard.setBounds(30, 133, 94, 14);
@@ -208,11 +132,110 @@ public class CreateReservationFrame implements ActionListener {
 		creditInput = new JPasswordField();
 		creditInput.setBounds(134, 130, 427, 20);
 		creditInput.setEchoChar('\u25cf');
-		frame.getContentPane().add(creditInput);
+		frame.getContentPane().add(this.creditInput);
+    }
+    
+    //Reservation Date Chooser
+    void dateChooser() {
+    	//Check-in Date
+		JLabel lblCheckinDate = new JLabel("Check-in Date:");
+		lblCheckinDate.setBounds(335, 33, 108, 14);
+		frame.getContentPane().add(lblCheckinDate);
+		
+		checkInChooser = new JDateChooser();
+		checkInChooser.setBounds(453, 33, 108, 20);
+		frame.getContentPane().add(checkInChooser);
+		
+		//Check-out Date
+		JLabel lblCheckoutDate = new JLabel("Check-out Date:");
+		lblCheckoutDate.setBounds(335, 58, 108, 14);
+		frame.getContentPane().add(lblCheckoutDate);
+		
+		checkOutChooser = new JDateChooser();
+		checkOutChooser.setBounds(453, 58, 108, 20);
+		frame.getContentPane().add(checkOutChooser);
+    }
+    
+    //Room Type Selector
+    void roomSelector() {
+    	JLabel lblRoomType = new JLabel("Room Type:");
+		lblRoomType.setBounds(30, 179, 94, 14);
+		frame.getContentPane().add(lblRoomType);
+		
+		roomSelect = new JComboBox<Object>();
+		roomSelect.setModel(new DefaultComboBoxModel<Object>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
+		roomSelect.setBounds(30, 204, 134, 22);
+		frame.getContentPane().add(roomSelect);
+    }
+    
+    //Services Checkboxes
+    public void services() {
+    	JLabel lblServices = new JLabel("Services:");
+		lblServices.setBounds(30, 255, 94, 14);
+		frame.getContentPane().add(lblServices);
+		
+		JCheckBox parkCheck = new JCheckBox("Parking");
+		parkCheck.setBounds(30, 276, 97, 23);
+		frame.getContentPane().add(parkCheck);
+		
+		JCheckBox wifiCheck = new JCheckBox("Wifi");
+		wifiCheck.setBounds(134, 276, 97, 23);
+		frame.getContentPane().add(wifiCheck);
+		
+		JCheckBox petCheck = new JCheckBox("Pets");
+		petCheck.setBounds(233, 276, 97, 23);
+		frame.getContentPane().add(petCheck);
+    }
+    
+    //Feedback Text Window
+    public void feedbackWindow() {
+		feedback = new JTextArea();
+		feedback.setBounds(10, 376, 661, 180);
+		feedback.setLineWrap(true);
+		feedback.setEditable(false);
+		JScrollPane scroll = new JScrollPane();
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		frame.getContentPane().add(feedback);
+    }
+
+    //Create Reservation Button
+    public void createReservationButton() {
+		ActionListener create = new ReservationController(firstInput, lastInput, creditInput, //create new reservation controller when pressed
+				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
+		JButton createButton = new JButton("Create Reservation");
+		createButton.setBounds(273, 342, 155, 23);
+		frame.getContentPane().add(createButton);
+		createButton.addActionListener(create);
+    }
+    
+    //Update Reservation Button
+    public void updateButton() {
+	    updateButton = new JButton("Find");
+		updateButton.setBounds(540, 6, 90, 15);
+		updateButton.addActionListener(this);
+		frame.getContentPane().add(updateButton);
+    }
+    
+    //Show/Hide Credit Card Button
+    public void showCreditCardButton() {
+    	JToggleButton showCreditButton = new JToggleButton("Show");
+		showCreditButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (showCreditButton.isSelected()) {
+					creditInput.setEchoChar((char)0);
+				}
+				else {
+					creditInput.setEchoChar('\u25cf');
+				}
+			}
+		});
+		showCreditButton.setBounds(571, 129, 100, 23);
+		frame.getContentPane().add(showCreditButton);
     }
     
     
-	//If update button is pressed
+	//Update Button Pressed
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// if the button pressed is the update button
