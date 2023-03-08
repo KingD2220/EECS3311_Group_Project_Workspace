@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import domain_objects.Reservation;
+import domain_objects_Rooms.Reservation;
 
 public class UpdateFrame implements ActionListener {
 	public JButton findButton;
@@ -24,73 +24,107 @@ public class UpdateFrame implements ActionListener {
 	public static JTextArea feedback;
 	
 	public UpdateFrame() {
+		window();
+		
+		//Customer Info Input
+		reservationNumber();
+		firstName();
+		lastName();
+		phoneNumber();
+		address();
+		
+		//Buttons
+		findButton();
+		updateButton();
+		
+		//Feedback Text Window
+		feedbackWindow();
+	}
+	private void window() {
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		window();
-		
 	}
-	private void window() {
+	
+	//Reservation Number Input
+	public void reservationNumber() {
 		JLabel find = new JLabel("Res #"); 
 		find.setBounds(30, 9, 94, 14);
 		frame.getContentPane().add(find);
 		
-		
-		JLabel lblFirstName = new JLabel("First Name:");
-		lblFirstName.setBounds(30, 133, 94, 14);
-		frame.getContentPane().add(lblFirstName);
-		
-		JLabel lblLastName = new JLabel("Last Name:");
-		lblLastName.setBounds(30, 158, 94, 14);
-		frame.getContentPane().add(lblLastName);
-		
-		JLabel lblPhoneNum = new JLabel("Phone Num:");
-		lblPhoneNum.setBounds(30, 183, 94, 14);
-		frame.getContentPane().add(lblPhoneNum);
-		
-		JLabel lblAddress = new JLabel("Address:");
-		lblAddress.setBounds(30, 208, 94, 14);
-		frame.getContentPane().add(lblAddress);
-		
-		
-		//Customer Info Input
 	    resNum = new JTextField();
 		resNum.setBounds(84, 9, 108, 20);
 		frame.getContentPane().add(resNum);
 	    resNum.setColumns(10);
+	}
+	
+	//First Name Input
+	public void firstName() {
+		JLabel lblFirstName = new JLabel("First Name:");
+		lblFirstName.setBounds(30, 133, 94, 14);
+		frame.getContentPane().add(lblFirstName);
 		
 	    firstInput = new JTextField();
 		firstInput.setBounds(134, 130, 108, 20);
 		frame.getContentPane().add(firstInput);
 		firstInput.setColumns(10);
-				
+	}
+	
+	//Last Name Input
+	public void lastName() {
+		JLabel lblLastName = new JLabel("Last Name:");
+		lblLastName.setBounds(30, 158, 94, 14);
+		frame.getContentPane().add(lblLastName);
+		
 		lastInput = new JTextField();
 		lastInput.setColumns(10);
 		lastInput.setBounds(134, 155, 108, 20);
 		frame.getContentPane().add(lastInput);
-				
+	}
+	
+	//Phone Number Input
+	public void phoneNumber() {
+		JLabel lblPhoneNum = new JLabel("Phone Num:");
+		lblPhoneNum.setBounds(30, 183, 94, 14);
+		frame.getContentPane().add(lblPhoneNum);
+		
 		phoneInput = new JTextField();
 		phoneInput.setColumns(10);
 		phoneInput.setBounds(134, 180, 108, 20);
 		frame.getContentPane().add(phoneInput);
+	}
+	
+	//Address Input
+	public void address() {
+		JLabel lblAddress = new JLabel("Address:");
+		lblAddress.setBounds(30, 208, 94, 14);
+		frame.getContentPane().add(lblAddress);
 				
 		addressInput = new JTextField();
 		addressInput.setColumns(10);
 		addressInput.setBounds(134, 205, 427, 20);
 		frame.getContentPane().add(addressInput);
-		
-	    findButton = new JButton("Search");
+	}
+	
+	//Find Reservation Button
+	public void findButton() {
+		findButton = new JButton("Search");
 		findButton.setBounds(200, 9, 108, 20);
 		frame.getContentPane().add(findButton);
 		findButton.addActionListener(this);
-		
+	}
+	
+	//Update Reservation Button
+	public void updateButton() {
 		update = new JButton("Update Reservation");
 		update.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(update);
 		update.addActionListener(this);
-		
-		
+	}
+	
+	//Feedback Text Window
+	public void feedbackWindow() {
 		feedback = new JTextArea();
 		feedback.setBounds(10, 376, 661, 180);
 		feedback.setLineWrap(true);
@@ -98,12 +132,9 @@ public class UpdateFrame implements ActionListener {
 		JScrollPane scroll = new JScrollPane(feedback);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		frame.getContentPane().add(feedback);
-		
-		
-		
 	}
 	
-	
+	//Button handler
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		ReservationController control = new ReservationController(firstInput, lastInput,

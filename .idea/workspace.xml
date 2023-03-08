@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e73de1db-a3b2-4c9b-8e69-33f7c9c0cdc4" name="Changes" comment="" />
+    <list default="true" id="e73de1db-a3b2-4c9b-8e69-33f7c9c0cdc4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Hotel Property Management System/src/persistence/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hotel Property Management System/src/persistence/RealDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/b/2b37eb15894d20c2347884c3a8536f69f43e0f09" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/7/779b0ad66a3cab39b91ec5a3efdc13b220b0aa8c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +41,7 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -48,6 +56,9 @@
       <workItem from="1675222960484" duration="583000" />
       <workItem from="1675223824984" duration="1146000" />
       <workItem from="1675273446635" duration="17000" />
+      <workItem from="1678139523133" duration="292000" />
+      <workItem from="1678139829181" duration="819000" />
+      <workItem from="1678166009350" duration="18000" />
     </task>
     <servers />
   </component>

@@ -1,4 +1,4 @@
-package domain_objects;
+package domain_objects_Users;
 
 public abstract class Profile {
 	protected String last_name = "";

@@ -88,3 +88,17 @@ Mar. 1, 2023 (19:00-19:30)
   X's will be a nice feature. (Dexter)
 - For Itr2, database implementation (Miguel & Humud)
 - For Itr2, additional user story - user authentication (James)
+
+=========================================================================================
+
+March 7, 2023  (11:30 - 12:00)
+
+- During this meeting we took a look at what we completed since our last meeting, and what else needs to be done to prepare for submission 
+
+- everyone needs to continue reviewing their code and to add comments as well as refractoring.
+
+- include modified planning document
+
+- Add J unit tests for the methods we have implemented. 
+
+=========================================================================================
