@@ -1,4 +1,4 @@
-package domain_objects;
+package domain_objects_Users;
 
 public class Customer extends Profile {
 	protected String credit_card;

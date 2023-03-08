@@ -2,7 +2,7 @@ package business_logic;
 
 import java.util.List;
 
-import domain_objects.Reservation;
+import domain_objects_Rooms.Reservation;
 import persistence.DatabaseStubs;
 
 public class SearchingLogic {

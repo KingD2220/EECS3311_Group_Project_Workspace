@@ -1,4 +1,6 @@
-package domain_objects;
+package domain_objects_Rooms;
+
+import domain_objects_Users.Customer;
 
 public class Reservation {
 	

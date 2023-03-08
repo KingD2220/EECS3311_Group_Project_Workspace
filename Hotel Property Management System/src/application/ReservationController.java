@@ -12,8 +12,8 @@ import com.toedter.calendar.JDateChooser;
 
 import business_logic.ReservationLogic;
 import business_logic.SearchingLogic;
-import domain_objects.Reservation;
-import domain_objects.Room;
+import domain_objects_Rooms.Reservation;
+import domain_objects_Rooms.Room;
 
 /**
  * ReservationController should only be used to take information from front-end and
