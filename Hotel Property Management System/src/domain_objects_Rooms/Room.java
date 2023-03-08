@@ -13,27 +13,27 @@ public abstract class Room {
 	
 	// getter methods
 	
-	String getRoomType() {
+	public String getRoomType() {
 		return this.roomType;
 	}
 	
-	String bedType() {
+	public String getBedType() {
 		return this.bedType;
 	}
 	
-	int getNumberOfBeds() {
+	public int getNumberOfBeds() {
 		return this.numberOfBeds;
 	}
 	
-	int getOccupancy() {
+	public int getOccupancy() {
 		return this.occupancy;
 	}
 	
-	int getRoomSize() {
+	public int getRoomSize() {
 		return this.roomSize;
 	}
 	
-	double getRate() {
+	public double getRate() {
 		return this.fixedRatePerNight;
 	}
 	
