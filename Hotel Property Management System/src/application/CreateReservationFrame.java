@@ -42,59 +42,19 @@ public class CreateReservationFrame implements ActionListener {
     CreateReservationFrame() {
     	frame.setVisible(true);
     	this.window();
+    	
+    	//Customer Info Input
+    	firstName();
+    	lastName();
+    	phoneNumber();
+    	address();
+		creditCard();
     }
 
     private void window() {
 		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		//Customer Info
-		JLabel lblFirstName = new JLabel("First Name:");
-		lblFirstName.setBounds(30, 33, 94, 14);
-		frame.getContentPane().add(lblFirstName);
-		
-		JLabel lblLastName = new JLabel("Last Name:");
-		lblLastName.setBounds(30, 58, 94, 14);
-		frame.getContentPane().add(lblLastName);
-		
-		JLabel lblPhoneNum = new JLabel("Phone Num:");
-		lblPhoneNum.setBounds(30, 83, 94, 14);
-		frame.getContentPane().add(lblPhoneNum);
-		
-		JLabel lblAddress = new JLabel("Address:");
-		lblAddress.setBounds(30, 108, 94, 14);
-		frame.getContentPane().add(lblAddress);
-		
-		JLabel lblCreditCard = new JLabel("Credit Card:");
-		lblCreditCard.setBounds(30, 133, 94, 14);
-		frame.getContentPane().add(lblCreditCard);
-		
-		//Customer Info Input
-		firstInput = new JTextField();
-		firstInput.setBounds(134, 30, 108, 20);
-		frame.getContentPane().add(firstInput);
-		firstInput.setColumns(10);
-		
-		lastInput = new JTextField();
-		lastInput.setColumns(10);
-		lastInput.setBounds(134, 55, 108, 20);
-		frame.getContentPane().add(lastInput);
-		
-		phoneInput = new JTextField();
-		phoneInput.setColumns(10);
-		phoneInput.setBounds(134, 80, 108, 20);
-		frame.getContentPane().add(phoneInput);
-		
-		addressInput = new JTextField();
-		addressInput.setColumns(10);
-		addressInput.setBounds(134, 105, 427, 20);
-		frame.getContentPane().add(addressInput);
-		
-		creditInput = new JPasswordField();
-		creditInput.setBounds(134, 130, 427, 20);
-		creditInput.setEchoChar('\u25cf');
-		frame.getContentPane().add(creditInput);
 		
 		//Reservation Date Chooser
 		JLabel lblCheckinDate = new JLabel("Check-in Date:");
@@ -192,8 +152,67 @@ public class CreateReservationFrame implements ActionListener {
 		createButton.addActionListener(create);
     }
     
+    //First name input
+    public void firstName() {
+    	JLabel lblFirstName = new JLabel("First Name:");
+		lblFirstName.setBounds(30, 33, 94, 14);
+		frame.getContentPane().add(lblFirstName);
+		
+		firstInput = new JTextField();
+		firstInput.setBounds(134, 30, 108, 20);
+		frame.getContentPane().add(firstInput);
+		firstInput.setColumns(10);
+    }
     
-	
+    //Last name input
+    public void lastName() {
+    	JLabel lblLastName = new JLabel("Last Name:");
+		lblLastName.setBounds(30, 58, 94, 14);
+		frame.getContentPane().add(lblLastName);
+		
+		lastInput = new JTextField();
+		lastInput.setColumns(10);
+		lastInput.setBounds(134, 55, 108, 20);
+		frame.getContentPane().add(lastInput);
+    }
+    
+    //Phone Number Input
+    public void phoneNumber() {
+    	JLabel lblPhoneNum = new JLabel("Phone Num:");
+		lblPhoneNum.setBounds(30, 83, 94, 14);
+		frame.getContentPane().add(lblPhoneNum);
+		
+		phoneInput = new JTextField();
+		phoneInput.setColumns(10);
+		phoneInput.setBounds(134, 80, 108, 20);
+		frame.getContentPane().add(phoneInput);
+    }
+    
+    //Address Input
+    public void address() {
+    	JLabel lblAddress = new JLabel("Address:");
+		lblAddress.setBounds(30, 108, 94, 14);
+		frame.getContentPane().add(lblAddress);
+		
+		addressInput = new JTextField();
+		addressInput.setColumns(10);
+		addressInput.setBounds(134, 105, 427, 20);
+		frame.getContentPane().add(addressInput);
+    }
+    
+    public void creditCard() {
+		JLabel lblCreditCard = new JLabel("Credit Card:");
+		lblCreditCard.setBounds(30, 133, 94, 14);
+		frame.getContentPane().add(lblCreditCard);
+		
+		creditInput = new JPasswordField();
+		creditInput.setBounds(134, 130, 427, 20);
+		creditInput.setEchoChar('\u25cf');
+		frame.getContentPane().add(creditInput);
+    }
+    
+    
+	//If update button is pressed
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// if the button pressed is the update button
@@ -202,5 +221,4 @@ public class CreateReservationFrame implements ActionListener {
 			frame.setVisible(false);
 		}
 	}
-	
 }
