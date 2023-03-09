@@ -33,7 +33,7 @@ public class ReservationLogic {
 		return reservation;
 	}
 	
-   public Reservation geReservation(int resNum) {
+   public Reservation getReservation(int resNum) {
 	   return database.getReservation(resNum);
 }
 	

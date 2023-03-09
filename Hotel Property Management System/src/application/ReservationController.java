@@ -64,7 +64,7 @@ public class ReservationController implements ActionListener {
 	
 	public void searchAndDisplay() {
 		System.out.println(resNum.getText());
-	  newRes =reservationLogic.geReservation(Integer.parseInt(resNum.getText()));
+	  newRes =reservationLogic.getReservation(Integer.parseInt(resNum.getText()));
 	  fName.setText(newRes.customer.getFirst_name());
 	  lName.setText(newRes.customer.getLast_name());
 	  phoneNum.setText(newRes.customer.getPhone_num());
@@ -73,11 +73,12 @@ public class ReservationController implements ActionListener {
 	  
 	}
 	public void update() {
-		newRes =reservationLogic.geReservation(Integer.parseInt(resNum.getText()));
+		newRes =reservationLogic.getReservation(Integer.parseInt(resNum.getText()));
 		newRes.customer.setFirst_name(fName.getText());
 		newRes.customer.setLast_name(lName.getText());
 		newRes.customer.setPhone_num(phoneNum.getText());
 		newRes.customer.setAddress(adress.getText());
+		reservationLogic.addReservation(newRes);
 		UpdateFrame.feedback.setText(newRes.toString());
 	}
 	
