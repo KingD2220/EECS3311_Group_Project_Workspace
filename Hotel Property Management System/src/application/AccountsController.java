@@ -23,7 +23,7 @@ public class AccountsController {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		byte[] passHash = md.digest(password.getBytes());
 		
-	  return db.getUser(username, passHash);
+	  //return db.getUser(username, passHash);
 	}
 	
 	/**
