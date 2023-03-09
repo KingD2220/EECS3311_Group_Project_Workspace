@@ -35,7 +35,6 @@ public class LoginFrame implements ActionListener {
 	 * Create contents of frame.
 	 */
 	private void window() {	
-		ImageIcon image = new ImageIcon("src/application/hotel.png");
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,6 +43,7 @@ public class LoginFrame implements ActionListener {
 	
 	// labels
 	private void labels() {	
+		ImageIcon image = new ImageIcon("src/application/hotel.png");
 		JLabel lblImage = new JLabel();
 		lblImage.setIcon(image);
 		lblImage.setBounds(215, 20, 250, 250);
