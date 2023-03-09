@@ -81,8 +81,10 @@ public class RealDatabase implements Database {
 	public boolean getUser(String userName, String passHash) {
 		
 		try  { 
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(String.format("SELECT userName FROM Account WHERE hashPassWord=%s AND userName = %s", passHash, userName ));
+			PreparedStatement statement = connection.prepareStatement(String.format("SELECT userName FROM Account WHERE hashPassWord= ? AND userName = ?"));
+			statement.setString(1, passHash);
+		    statement.setString(2, userName);
+			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				if (rs.getString("userName").equals(userName)) {
 					return true;
@@ -101,7 +103,9 @@ public class RealDatabase implements Database {
 	public boolean addUser(String userName, String passHash) {
 	   
 	    try {
-			PreparedStatement prepared = connection.prepareStatement(String.format("INSERT INTO Account VALUES(%s, %s)", userName, passHash));
+			PreparedStatement prepared = connection.prepareStatement(String.format("INSERT INTO Account VALUES(?, ?)"));
+			prepared.setString(1, userName);
+			prepared.setString(2, passHash);
 			int changedrows = prepared.executeUpdate();
 			prepared.close();
 			//this implementation eliminates an if statement
@@ -222,6 +226,8 @@ public class RealDatabase implements Database {
 		RealDatabase database = new RealDatabase(); 
 		res = database.getReservation(1); 
 		System.out.println(res.toString());
+		//database.addUser("miguel","12345");
+		database.getUser("miguel","12345");
 
 	}
 
