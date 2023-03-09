@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -34,7 +35,7 @@ public class ReservationController implements ActionListener {
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
     Reservation newRes;
-    private boolean datesValid;
+
 
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
 			JTextField phoneNum, JComboBox<Object> roomtype, JDateChooser startDate, JDateChooser endDate) {
@@ -83,25 +84,16 @@ public class ReservationController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		String credit = new String(creditCard.getPassword()); //convert credit card into string
-		String strStartDate = date.format(startDate.getDate());
-		String strEndDate = date.format(endDate.getDate());
 
-		// check dates are entered correctly
-		try {
-			datesValid = date.parse(strStartDate).before(date.parse(strEndDate));
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-			CreateReservationFrame.feedback.setText("Error: Check-in date must be earlier than check-out date.");
-		}
 		//checks input validity
-		if (inputValid(credit) && datesValid) { 
+		if (inputValid(credit)) { 
 			Room room = ReservationLogic.roomAvailable(roomtype.getSelectedItem().toString()); //check if room is available
 		
 			if (room != null) {
 				newRes = new Reservation(fName.getText(), lName.getText(), 
 						adress.getText(), phoneNum.getText(), credit);
-				newRes.setArrival_date(strStartDate);
-				newRes.setDeparture_date(strEndDate);
+				newRes.setArrival_date(date.format(startDate.getDate()));
+				newRes.setDeparture_date(date.format(endDate.getDate()));
 				newRes.setRoom(room);
 				room.roomReserved();
 				ReservationLogic.addReservation(newRes);
@@ -116,7 +108,23 @@ public class ReservationController implements ActionListener {
 	
 	//Check if reservation input is valid
 	private boolean inputValid(String credit) {
+		String strStartDate = date.format(startDate.getDate());
+		String strEndDate = date.format(endDate.getDate());
+		String currentDate = date.format(new Date());
+		boolean datesOK = true;
 		boolean valid = true;
+		
+		//check arrival date is before departure date && arrival date is not before today's date.
+		try {
+			datesOK = (date.parse(strStartDate).before(date.parse(strEndDate)) && !(date.parse(strStartDate).before(date.parse(currentDate))));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		if (!datesOK) {
+			CreateReservationFrame.feedback.setText("Error: Dates are invalid.");
+			valid = false;
+		}
 		
 		//Check phone number
 		if (!phoneNum.getText().matches("^[0-9]{10}$")) { //Invalid if not 10 digit number
