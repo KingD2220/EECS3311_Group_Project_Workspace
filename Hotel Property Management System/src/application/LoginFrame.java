@@ -81,11 +81,13 @@ public class LoginFrame implements ActionListener {
 	private void buttons() {
 	    registerButton = new JButton("Register");
 	    registerButton.setBounds(250, 295, 90, 25);
+	    registerButton.setFocusable(false);
 	    frame.getContentPane().add(registerButton);
 	    registerButton.addActionListener(this);
 	    
 	    loginButton = new JButton("Login");
 		loginButton.setBounds(342, 295, 90, 25);
+		loginButton.setFocusable(false);
 		frame.getContentPane().add(loginButton);
 		loginButton.addActionListener(this);
 	}

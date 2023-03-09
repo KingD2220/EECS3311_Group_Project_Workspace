@@ -212,13 +212,14 @@ public class CreateReservationFrame implements ActionListener {
     public void updateButton() {
 	    updateButton = new JButton("Find");
 		updateButton.setBounds(540, 6, 90, 15);
+		updateButton.setFocusable(false);
 		updateButton.addActionListener(this);
 		frame.getContentPane().add(updateButton);
     }
     
     //Show/Hide Credit Card Button
     public void showCreditCardButton() {
-    	JToggleButton showCreditButton = new JToggleButton("Show");
+    	JCheckBox showCreditButton = new JCheckBox("Show/Hide");
 		showCreditButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
