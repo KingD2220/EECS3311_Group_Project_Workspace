@@ -118,7 +118,7 @@ public class RealDatabase implements Database {
 			// though using rs.next() it is only expected to return one tuple as resNum is a primary key
 			while (rs.next()) {
 				Reservation reservation = new Reservation(rs.getString("first_name"), rs.getString("last_name"),
-						rs.getString("address"), Integer.toString(rs.getInt("phone_num")), Integer.toString(rs.getInt("credit_card")));
+						rs.getString("address"), rs.getString("phone_num"), rs.getString("credit_card"));
 				reservation.setArrival_date(rs.getString("arrival_date"));
 				reservation.setDeparture_date(rs.getString("departure_date"));
 				reservation.setResNumber(resNum);
@@ -149,8 +149,8 @@ public class RealDatabase implements Database {
 		prepared.setString(3, reservation.customer.getLast_name());
 		prepared.setString(4, reservation.customer.getFirst_name());
 		prepared.setString(5, reservation.customer.getAddress());
-		prepared.setInt(6, Integer.parseInt(reservation.customer.getPhone_num()));
-		prepared.setInt(7, Integer.parseInt(reservation.customer.getCredit_card()));
+		prepared.setString(6, reservation.customer.getPhone_num());
+		prepared.setString(7, reservation.customer.getCredit_card());
 		changedRows= prepared.executeUpdate();
 		prepared.close();
 		System.out.println("Success "+ changedRows);
@@ -158,12 +158,15 @@ public class RealDatabase implements Database {
 		addCustomer(reservation);
 	    return retunedRows(changedRows);
 	} catch (Exception e) {
+		e.printStackTrace();
 		return retunedRows(changedRows);
 	}
 	}
-	//Helper method to insert the information into the Customer table
+	
+	/*Helper method to insert the information into the Customer table
+	 * the reservation is passed to avoid creating a a new reservation instance*/
 	public void addCustomer(Reservation reservation) {
-		String query = String.format("INSERT INTO RESERVATION (%s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?)",
+		String query = String.format("INSERT INTO CUSTOMER (%s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?)",
 				"last_name","first_name","address","phone_num","credit_card");
 		
 	try {
@@ -172,8 +175,8 @@ public class RealDatabase implements Database {
 		prepared.setString(1, reservation.customer.getLast_name());
 		prepared.setString(2, reservation.customer.getFirst_name());
 		prepared.setString(3, reservation.customer.getAddress());
-		prepared.setInt(4, Integer.parseInt(reservation.customer.getPhone_num()));
-		prepared.setInt(5, Integer.parseInt(reservation.customer.getCredit_card()));
+		prepared.setString(4, reservation.customer.getPhone_num());
+		prepared.setString(5, reservation.customer.getCredit_card());
 		int changedRows= prepared.executeUpdate();
 		prepared.close();
 		System.out.println("Success "+ changedRows);
@@ -194,6 +197,9 @@ public class RealDatabase implements Database {
 	}
 		
 		}
+	
+	/*This is a helper method that helps to determine how many rows were changed, returns
+	 * true if one or more lines were changed*/
 	public boolean retunedRows(int changedRows) {
 		if(changedRows > 0) {
 			return true;
