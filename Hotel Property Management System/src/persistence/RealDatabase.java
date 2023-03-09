@@ -24,14 +24,6 @@ public class RealDatabase implements Database {
 		getConnection();
 	}
 	
-	/*Allows users to set credentials for their database*/
-	public boolean establiishConnection(String host, String port, String password, String username) {
-		setHOST(host);
-		setPASSWORD(password);
-		setPORT(port);
-		setUSERNAME(username);
-		return getConnection();
-	}
 
 
 	public boolean getConnection() {
@@ -60,6 +52,7 @@ public class RealDatabase implements Database {
 	}
 	
 	/*This method returns the last reservation number in the database*/
+	@Override
 	public int getLastResNum() {
 		int resNum = 0; 
 		try {
@@ -116,7 +109,7 @@ public class RealDatabase implements Database {
 	}
 	}
 
- 
+ /*Returns the matching reservation for the reservation number, returns null otherwise*/
 	@Override
 	public Reservation getReservation(int resNum) {
 		try {
@@ -190,30 +183,20 @@ public class RealDatabase implements Database {
 		e.printStackTrace();
 	}
 	}
+	@Override
+	public boolean removeReservation(int resNum) {
+		String query = String.format("DELETE FROM RESERVATION WHERE resNum = ?");
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, resNum);
+			return statement.executeUpdate() > 0;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
 	
-	  public void setHOST(String hOST) {
-		HOST = hOST;
-	}
-
-
-	public void setPORT(String pORT) {
-		PORT = pORT;
-	}
-
-
-	public void setPASSWORD(String pASSWORD) {
-		PASSWORD = pASSWORD;
-	}
-
-
-	public void setUSERNAME(String uSERNAME) {
-		USERNAME = uSERNAME;
-	}
-
-
-	public void setHOST_URL(String hOST_URL) {
-		HOST_URL = hOST_URL;
-	}
 
 
 	public static void main(String[] args) {
@@ -230,5 +213,6 @@ public class RealDatabase implements Database {
 		database.getUser("miguel","12345");
 
 	}
+
 
 }

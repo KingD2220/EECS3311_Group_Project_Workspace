@@ -13,9 +13,9 @@ import javax.swing.JPasswordField;
 import com.toedter.calendar.JDateChooser;
 
 import business_logic.ReservationLogic;
-import business_logic.SearchingLogic;
 import domain_objects_Rooms.Reservation;
 import domain_objects_Rooms.Room;
+import persistence.RealDatabase;
 
 /**
  * ReservationController should only be used to take information from front-end and
@@ -35,6 +35,8 @@ public class ReservationController implements ActionListener {
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
     Reservation newRes;
+    RealDatabase database = new RealDatabase();
+    ReservationLogic reservationLogic = new ReservationLogic(database);
 
 
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
@@ -62,7 +64,7 @@ public class ReservationController implements ActionListener {
 	
 	public void searchAndDisplay() {
 		System.out.println(resNum.getText());
-	  newRes =SearchingLogic.searchByResNum(Integer.parseInt(resNum.getText()));
+	  newRes =reservationLogic.geReservation(Integer.parseInt(resNum.getText()));
 	  fName.setText(newRes.customer.getFirst_name());
 	  lName.setText(newRes.customer.getLast_name());
 	  phoneNum.setText(newRes.customer.getPhone_num());
@@ -71,7 +73,7 @@ public class ReservationController implements ActionListener {
 	  
 	}
 	public void update() {
-		newRes =SearchingLogic.searchByResNum(Integer.parseInt(resNum.getText()));
+		newRes =reservationLogic.geReservation(Integer.parseInt(resNum.getText()));
 		newRes.customer.setFirst_name(fName.getText());
 		newRes.customer.setLast_name(lName.getText());
 		newRes.customer.setPhone_num(phoneNum.getText());
@@ -87,6 +89,7 @@ public class ReservationController implements ActionListener {
 
 		//checks input validity
 		if (inputValid(credit)) { 
+    
 			Room room = ReservationLogic.roomAvailable(roomtype.getSelectedItem().toString()); //check if room is available
 		
 			if (room != null) {
@@ -96,7 +99,7 @@ public class ReservationController implements ActionListener {
 				newRes.setDeparture_date(date.format(endDate.getDate()));
 				newRes.setRoom(room);
 				room.roomReserved();
-				ReservationLogic.addReservation(newRes);
+				reservationLogic.addReservation(newRes);
 				CreateReservationFrame.feedback.setText(newRes.toString()); //*does not include room info
 			}
 			else {

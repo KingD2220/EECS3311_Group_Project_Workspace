@@ -1,7 +1,5 @@
 package business_logic;
 
-import java.util.List;
-
 import domain_objects_Rooms.DeluxeRoom;
 import domain_objects_Rooms.ExecutiveSuite;
 import domain_objects_Rooms.PresidentialSuite;
@@ -9,36 +7,35 @@ import domain_objects_Rooms.Reservation;
 import domain_objects_Rooms.Room;
 import domain_objects_Rooms.StandardRoom;
 import domain_objects_Rooms.SuiteRoom;
-import persistence.DatabaseStubs;
+import persistence.Database;
 
 public class ReservationLogic {
 	
 	
     private static int resNum = 0;
     
-	private static List<Reservation> resList =DatabaseStubs.getReservations();
+	private final Database database;
 	
-	public ReservationLogic() {
-		resList = DatabaseStubs.getReservations();
+	public ReservationLogic(Database database) {
+		this.database = database;
 	}
 	
-	public static void addReservation(Reservation reso) {
-		reso.setResNumber(resNum);
-		resList.add(reso);
-		resNum++;
+	public void addReservation(Reservation reso) {
+		database.addReservation(reso);
+		reso.setResNumber(database.getLastResNum()+1);
 	}
 
 	public void removeReservation(int resNum) {
-		resList.remove(SearchingLogic.searchByResNum(resNum));
+		database.removeReservation(resNum);
 	}
 	
 	public Reservation updatReservation(Reservation reservation){
 		return reservation;
 	}
 	
-	public List<Reservation> getAllReservations() {
-		return resList;
-	}
+   public Reservation geReservation(int resNum) {
+	   return database.getReservation(resNum);
+}
 	
 	public Reservation changeResDates(Reservation reservation, String newArrivalDate, String newDepartDate) {
 		reservation.arrival_date = newArrivalDate;

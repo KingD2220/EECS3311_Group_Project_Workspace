@@ -7,6 +7,8 @@ public interface Database {
 	public boolean addUser(String userName, String passHash);
 	public Reservation getReservation(int resNum);
 	public boolean addReservation(Reservation reservation);
+	public boolean removeReservation(int resNum);
+	public int getLastResNum();
 	
 
 }
