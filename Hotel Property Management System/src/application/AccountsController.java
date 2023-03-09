@@ -32,11 +32,10 @@ public class AccountsController {
 		byte[] hash = md.digest(password.getBytes());
 		String passHash = new String(hash);
 		
-		if (db.getUser(username, passHash)) {
+		if (!db.addUser(username, passHash)) {
 			return "User already exists!";
 		}else {	
-
-		db.addUser(username, passHash);
+	
 		return "Account created!";
 		}
 	}
