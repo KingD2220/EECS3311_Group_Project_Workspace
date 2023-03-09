@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -18,7 +17,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JPasswordField;
 
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JToggleButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -212,13 +210,14 @@ public class CreateReservationFrame implements ActionListener {
     public void updateButton() {
 	    updateButton = new JButton("Find");
 		updateButton.setBounds(540, 6, 90, 15);
+		updateButton.setFocusable(false);
 		updateButton.addActionListener(this);
 		frame.getContentPane().add(updateButton);
     }
     
     //Show/Hide Credit Card Button
     public void showCreditCardButton() {
-    	JToggleButton showCreditButton = new JToggleButton("Show");
+    	JCheckBox showCreditButton = new JCheckBox("Show/Hide");
 		showCreditButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

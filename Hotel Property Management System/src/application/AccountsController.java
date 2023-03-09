@@ -17,10 +17,10 @@ public class AccountsController {
 	 */
 	public static boolean accountVerification(String username, String password) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		byte[] passHash = md.digest(password.getBytes());
-		password= passHash.toString();
+		byte[] hash = md.digest(password.getBytes());
+		String passHash = new String(hash);
 		
-	  return db.getUser(username, password);
+		return db.getUser(username, passHash);
 	}
 	
 	/**
@@ -29,12 +29,12 @@ public class AccountsController {
 	 */
 	public static String registerAccount(String username, String password) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		byte[] passHash = md.digest(password.getBytes());
-		password = passHash.toString();
+		byte[] hash = md.digest(password.getBytes());
+		String passHash = new String(hash);
 		
-			if (db.getUser(username, password)) {
-				return "User already exists!";
-			}	
+    if (db.getUser(username, password)) {
+      return "User already exists!";
+    }	
 
 		db.addUser(username, password);
 		return "Account created!";
