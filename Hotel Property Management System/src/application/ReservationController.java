@@ -2,6 +2,7 @@ package application;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JComboBox;
@@ -33,6 +34,7 @@ public class ReservationController implements ActionListener {
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
     Reservation newRes;
+    private boolean datesValid;
 
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
 			JTextField phoneNum, JComboBox<Object> roomtype, JDateChooser startDate, JDateChooser endDate) {
@@ -81,15 +83,25 @@ public class ReservationController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		String credit = new String(creditCard.getPassword()); //convert credit card into string
-		
-		if (inputValid(credit)) { //checks input validity
+		String strStartDate = date.format(startDate.getDate());
+		String strEndDate = date.format(endDate.getDate());
+
+		// check dates are entered correctly
+		try {
+			datesValid = date.parse(strStartDate).before(date.parse(strEndDate));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+			CreateReservationFrame.feedback.setText("Error: Check-in date must be earlier than check-out date.");
+		}
+		//checks input validity
+		if (inputValid(credit) && datesValid) { 
 			Room room = ReservationLogic.roomAvailable(roomtype.getSelectedItem().toString()); //check if room is available
 		
 			if (room != null) {
 				newRes = new Reservation(fName.getText(), lName.getText(), 
 						adress.getText(), phoneNum.getText(), credit);
-				newRes.setArrival_date(date.format(startDate.getDate()));
-				newRes.setDeparture_date(date.format(endDate.getDate()));
+				newRes.setArrival_date(strStartDate);
+				newRes.setDeparture_date(strEndDate);
 				newRes.setRoom(room);
 				room.roomReserved();
 				ReservationLogic.addReservation(newRes);
@@ -99,6 +111,7 @@ public class ReservationController implements ActionListener {
 				CreateReservationFrame.feedback.setText("Error: Selected room is not available.");
 			}
 		}
+		
 	}
 	
 	//Check if reservation input is valid
@@ -113,7 +126,7 @@ public class ReservationController implements ActionListener {
 		
 		//Check credit card number
 		if (!credit.matches("^[0-9]{16}$")) { //Invalid if not 16 digit number
-			CreateReservationFrame.feedback.setText("Error: Credit card is not valid");
+			CreateReservationFrame.feedback.setText("Error: Credit card entry needs to be 16 digits");
 			valid = false;
 		}
 		

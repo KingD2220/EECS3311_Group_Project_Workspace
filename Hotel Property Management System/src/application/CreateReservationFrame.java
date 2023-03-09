@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -18,7 +17,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JPasswordField;
 
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JToggleButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
