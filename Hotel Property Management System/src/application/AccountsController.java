@@ -1,10 +1,6 @@
 package application;
 
 import java.security.MessageDigest;
-import java.util.List;
-
-import domain_objects.Account;
-import persistence.DatabaseStubs;
 import persistence.RealDatabase;
 
 public class AccountsController {
@@ -21,9 +17,10 @@ public class AccountsController {
 	 */
 	public static boolean accountVerification(String username, String password) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		byte[] passHash = md.digest(password.getBytes());
+		byte[] hash = md.digest(password.getBytes());
+		String passHash = new String(hash);
 		
-	  return db.getUser(username, passHash);
+		return db.getUser(username, passHash);
 	}
 	
 	/**
@@ -32,7 +29,8 @@ public class AccountsController {
 	 */
 	public static String registerAccount(String username, String password) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		byte[] passHash = md.digest(password.getBytes());
+		byte[] hash = md.digest(password.getBytes());
+		String passHash = new String(hash);
 		
 			if (db.getUser(username, passHash)) {
 				return "User already exists!";
