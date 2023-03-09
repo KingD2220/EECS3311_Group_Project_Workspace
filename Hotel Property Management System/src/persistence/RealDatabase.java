@@ -162,7 +162,9 @@ public class RealDatabase implements Database {
 		return retunedRows(changedRows);
 	}
 	}
-	//Helper method to insert the information into the Customer table
+	
+	/*Helper method to insert the information into the Customer table
+	 * the reservation is passed to avoid creating a a new reservation instance*/
 	public void addCustomer(Reservation reservation) {
 		String query = String.format("INSERT INTO CUSTOMER (%s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?)",
 				"last_name","first_name","address","phone_num","credit_card");
@@ -195,6 +197,9 @@ public class RealDatabase implements Database {
 	}
 		
 		}
+	
+	/*This is a helper method that helps to determine how many rows were changed, returns
+	 * true if one or more lines were changed*/
 	public boolean retunedRows(int changedRows) {
 		if(changedRows > 0) {
 			return true;
