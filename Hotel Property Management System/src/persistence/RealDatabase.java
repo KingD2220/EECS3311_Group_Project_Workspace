@@ -94,18 +94,17 @@ public class RealDatabase implements Database {
 /*Adds user to the Account table in the database to allow registration*/
 	@Override
 	public boolean addUser(String userName, String passHash) {
-	   
+		int changedrows=0;
 	    try {
 			PreparedStatement prepared = connection.prepareStatement(String.format("INSERT INTO Account VALUES(?, ?)"));
 			prepared.setString(1, userName);
 			prepared.setString(2, passHash);
-			int changedrows = prepared.executeUpdate();
+			changedrows = prepared.executeUpdate();
 			prepared.close();
-			//this implementation eliminates an if statement
-			return changedrows > 0;
+			
+			return retunedRows(changedrows);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			return retunedRows(changedrows);
 	}
 	}
 
@@ -141,7 +140,7 @@ public class RealDatabase implements Database {
 		// separated the query for readability
 		String query = String.format("INSERT INTO RESERVATION (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)","arrival_date",
 				"departure_date","last_name","first_name","address","phone_num","credit_card");
-		
+		int changedRows= 0;
 	try {
 		PreparedStatement prepared = connection.prepareStatement(query); 
 		//added the values after for readability and testing
@@ -152,15 +151,14 @@ public class RealDatabase implements Database {
 		prepared.setString(5, reservation.customer.getAddress());
 		prepared.setInt(6, Integer.parseInt(reservation.customer.getPhone_num()));
 		prepared.setInt(7, Integer.parseInt(reservation.customer.getCredit_card()));
-		int changedRows= prepared.executeUpdate();
+		changedRows= prepared.executeUpdate();
 		prepared.close();
 		System.out.println("Success "+ changedRows);
 		//Inserts relevant info into the customer table
 		addCustomer(reservation);
-		return changedRows > 0;
+	    return retunedRows(changedRows);
 	} catch (Exception e) {
-		e.printStackTrace();
-		return false;
+		return retunedRows(changedRows);
 	}
 	}
 	//Helper method to insert the information into the Customer table
@@ -189,30 +187,18 @@ public class RealDatabase implements Database {
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, resNum);
-			return statement.executeUpdate() > 0;
+			return statement.executeUpdate() > 0 ;
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-		}
 		return false;
 	}
-	
-
-
-	public static void main(String[] args) {
-			/*
-			 * Reservation reso = new Reservation("Miguel" , "Graham","Home", "647","1234"
-			 * ); reso.setArrival_date("112011"); reso.setDeparture_date("12345");
-			 * RealDatabase database = new RealDatabase(); database.addReservation(reso);
-			 */
-		Reservation res; 
-		RealDatabase database = new RealDatabase(); 
-		res = database.getReservation(1); 
-		System.out.println(res.toString());
-		//database.addUser("miguel","12345");
-		database.getUser("miguel","12345");
-
+		
+		}
+	public boolean retunedRows(int changedRows) {
+		if(changedRows > 0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
-
-
 }

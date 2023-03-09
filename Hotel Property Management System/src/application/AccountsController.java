@@ -6,8 +6,8 @@ import persistence.RealDatabase;
 public class AccountsController {
 	static RealDatabase db = new RealDatabase();
 	
-	public AccountsController() {
-		
+	private AccountsController() {
+		db.getConnection();
 	}
 	
 	/**
@@ -32,12 +32,13 @@ public class AccountsController {
 		byte[] hash = md.digest(password.getBytes());
 		String passHash = new String(hash);
 		
-		if (db.getUser(username, password)) {
+		if (db.getUser(username, passHash)) {
 			return "User already exists!";
-		}	
+		}else {	
 
-		db.addUser(username, password);
+		db.addUser(username, passHash);
 		return "Account created!";
+		}
 	}
 
 }
