@@ -14,7 +14,6 @@ public class ReservationLogicTest {
 	Reservation mockRes;
 	DatabaseStubs stubs = new DatabaseStubs();
 	ReservationLogic test  = new ReservationLogic(stubs);
-	DatabaseStubs data = new DatabaseStubs();
 	
 	@Before
 	public void setUp() throws Exception {

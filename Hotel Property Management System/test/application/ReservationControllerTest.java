@@ -37,14 +37,14 @@ public class ReservationControllerTest {
 		CreateReservationFrame.feedback = new JTextArea();
 		roomtype.setModel(new DefaultComboBoxModel<Object>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
 		
-		//Setup mock data
+		//Setup valid mock data
 		fName.setText("Bob");
 		lName.setText("Smith");
 		creditCard.setText("1234123412341234");
 		adress.setText("123 Home");
 		phoneNum.setText("1231234567");
 		
-		//Setup mock dates
+		//Setup valid mock dates
 		Calendar calendar = Calendar.getInstance();
 		
 		calendar.set(2024, 1, 1);
