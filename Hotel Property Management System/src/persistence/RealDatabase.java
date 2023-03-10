@@ -159,6 +159,7 @@ public class RealDatabase implements Database {
 		String query = String.format("UPDATE RESERVATION SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE resNum = ?","arrival_date",
 				"departure_date","last_name","first_name","address","phone_num","credit_card");
 		queryPerformed = reserVationHelper(changed, query, caller);
+		updateCustomer(changed);
 		return queryPerformed;
 	}
 	
@@ -167,21 +168,15 @@ public class RealDatabase implements Database {
 	public void addCustomer(Reservation reservation) {
 		String query = String.format("INSERT INTO CUSTOMER (%s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?)",
 				"last_name","first_name","address","phone_num","credit_card");
-		
-	try {
-		PreparedStatement prepared = connection.prepareStatement(query); 
-		//added the values after for readability and testing
-		prepared.setString(1, reservation.customer.getLast_name());
-		prepared.setString(2, reservation.customer.getFirst_name());
-		prepared.setString(3, reservation.customer.getAddress());
-		prepared.setString(4, reservation.customer.getPhone_num());
-		prepared.setString(5, reservation.customer.getCredit_card());
-		int changedRows= prepared.executeUpdate();
-		prepared.close();
-		System.out.println("Success "+ changedRows);
-	} catch (Exception e) {
-		e.printStackTrace();
+		customerHelper(reservation, query, "");
+	
 	}
+	
+	public void updateCustomer(Reservation changedReservation) {
+		String caller= "UPDATE_CUSTOMER";
+		String query = String.format("UPDATE CUSTOMER SET %s=?, %s=?, %s=?, %s=?, %s=? WHERE phone_num = ?",
+				"last_name","first_name","address","phone_num","credit_card");
+		customerHelper(changedReservation, query, caller);
 	}
 	@Override
 	public boolean removeReservation(int resNum) {
@@ -207,6 +202,25 @@ public class RealDatabase implements Database {
 		}
 	}
 
+	public void customerHelper(Reservation reservation, String query, String caller ) {
+		try {
+			PreparedStatement prepared = connection.prepareStatement(query); 
+			//added the values after for readability and testing
+			prepared.setString(1, reservation.customer.getLast_name());
+			prepared.setString(2, reservation.customer.getFirst_name());
+			prepared.setString(3, reservation.customer.getAddress());
+			prepared.setString(4, reservation.customer.getPhone_num());
+			prepared.setString(5, reservation.customer.getCredit_card());
+			if (caller.equals("UPDATE_CUSTOMER")) {
+				prepared.setString(6, reservation.customer.getPhone_num());	
+			}
+			int changedRows= prepared.executeUpdate();
+			prepared.close();
+			System.out.println("Success "+ changedRows);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public boolean reserVationHelper(Reservation reservation, String query, String caller){
 	
