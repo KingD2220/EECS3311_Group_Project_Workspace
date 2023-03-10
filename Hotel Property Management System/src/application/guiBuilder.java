@@ -20,9 +20,6 @@ public class guiBuilder {
 					e.printStackTrace();
 				}
 			}
-		}
-	});
-
-
-	
+		});
+	}
 }
