@@ -100,8 +100,12 @@ public class ReservationController implements ActionListener {
 				newRes.setDeparture_date(date.format(endDate.getDate()));
 				newRes.setRoom(room);
 				room.roomReserved();
-				reservationLogic.addReservation(newRes);
+				if(reservationLogic.addReservation(newRes)) {
 				CreateReservationFrame.feedback.setText(newRes.toString()); //*does not include room info
+				}else {
+					CreateReservationFrame.feedback.setText("Reservation not Created Please ensure Phone number "
+							+ "is not associated with another reservation");
+				}
 			}
 			else {
 				CreateReservationFrame.feedback.setText("Error: Selected room is not available.");
@@ -111,7 +115,7 @@ public class ReservationController implements ActionListener {
 	}
 	
 	//Check if reservation input is valid
-	private boolean inputValid(String credit) {
+	public boolean inputValid(String credit) {
 		String strStartDate = date.format(startDate.getDate());
 		String strEndDate = date.format(endDate.getDate());
 		String currentDate = date.format(new Date());
