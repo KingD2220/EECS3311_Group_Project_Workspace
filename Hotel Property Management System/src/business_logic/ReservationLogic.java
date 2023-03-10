@@ -21,9 +21,11 @@ public class ReservationLogic {
 	}
 	/*This adds a reservation into the database this acts as a middleman
 	 * and removes the need for other classes to add reservations to the database directly*/
-	public void addReservation(Reservation reso) {
-		database.addReservation(reso);
-		reso.setResNumber(database.getLastResNum()+1);
+	public boolean addReservation(Reservation reso) {
+		if(database.addReservation(reso)) {
+		reso.setResNumber(database.getLastResNum());
+		return true;
+		}else return false;
 	}
 
 	/*This method removes a reservation of given reservation number and returns 
