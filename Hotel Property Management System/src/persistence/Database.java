@@ -9,6 +9,7 @@ public interface Database {
 	public boolean addReservation(Reservation reservation);
 	public boolean removeReservation(int resNum);
 	public int getLastResNum();
+	public boolean updateReservation(Reservation changedReservation);
 	
 
 }

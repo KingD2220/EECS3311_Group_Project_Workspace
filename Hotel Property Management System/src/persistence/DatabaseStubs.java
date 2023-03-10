@@ -62,11 +62,22 @@ public class DatabaseStubs implements Database {
 	public int getLastResNum() {
 		int lastResNum = 0;
 		if (!reservations.isEmpty()) {
+			return lastResNum;
 		  }
 		for (Reservation reservation : reservations) {
 			lastResNum = reservation.getResNumber();
 		}
 		return lastResNum;
+	}
+	@Override
+	public boolean updateReservation(Reservation changedReservation) {
+		for (Reservation reservation : reservations) {
+			if (changedReservation.getResNumber() == reservation.getResNumber()) {
+				reservation = changedReservation;
+				return true;
+			}
+		}
+		return false;
 	}
 }
 

@@ -137,30 +137,29 @@ public class RealDatabase implements Database {
 
 	@Override
 	public boolean addReservation(Reservation reservation) {
-		// separated the query for readability
+		String caller = "ADD";
+		boolean queryPerfomed = false;
 		String query = String.format("INSERT INTO RESERVATION (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)","arrival_date",
 				"departure_date","last_name","first_name","address","phone_num","credit_card");
-		int changedRows= 0;
-	try {
-		PreparedStatement prepared = connection.prepareStatement(query); 
-		//added the values after for readability and testing
-		prepared.setString(1, reservation.getArrival_date());    
-		prepared.setString(2, reservation.getDeparture_date());
-		prepared.setString(3, reservation.customer.getLast_name());
-		prepared.setString(4, reservation.customer.getFirst_name());
-		prepared.setString(5, reservation.customer.getAddress());
-		prepared.setString(6, reservation.customer.getPhone_num());
-		prepared.setString(7, reservation.customer.getCredit_card());
-		changedRows= prepared.executeUpdate();
-		prepared.close();
-		System.out.println("Success "+ changedRows);
-		//Inserts relevant info into the customer table
-		addCustomer(reservation);
-	    return retunedRows(changedRows);
-	} catch (Exception e) {
-		e.printStackTrace();
-		return retunedRows(changedRows);
+	 	queryPerfomed  = reserVationHelper(reservation, query, caller);
+	 	if (queryPerfomed) {
+	 		//Inserts relevant info into the customer table
+	 		addCustomer(reservation);
+	 		return queryPerfomed;
+		}
+	 	else {
+			return false;
+		}
 	}
+	
+	@Override
+	public boolean updateReservation(Reservation changed) {
+		String caller = "UPDATE";
+		boolean queryPerformed = false; 
+		String query = String.format("UPDATE RESERVATION SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE resNum = ?","arrival_date",
+				"departure_date","last_name","first_name","address","phone_num","credit_card");
+		queryPerformed = reserVationHelper(changed, query, caller);
+		return queryPerformed;
 	}
 	
 	/*Helper method to insert the information into the Customer table
@@ -207,4 +206,33 @@ public class RealDatabase implements Database {
 			return false;
 		}
 	}
+
+	
+	public boolean reserVationHelper(Reservation reservation, String query, String caller){
+	
+		int changedRows= 0;
+	try {
+		PreparedStatement prepared = connection.prepareStatement(query); 
+		//added the values after for readability and testing
+		prepared.setString(1, reservation.getArrival_date());    
+		prepared.setString(2, reservation.getDeparture_date());
+		prepared.setString(3, reservation.customer.getLast_name());
+		prepared.setString(4, reservation.customer.getFirst_name());
+		prepared.setString(5, reservation.customer.getAddress());
+		prepared.setString(6, reservation.customer.getPhone_num());
+		prepared.setString(7, reservation.customer.getCredit_card());
+		if (caller.equalsIgnoreCase("UPDATE")) {
+		prepared.setInt(8, reservation.getResNumber());
+		}
+		changedRows= prepared.executeUpdate();
+		prepared.close();
+		System.out.println("Success "+ changedRows);
+	    return retunedRows(changedRows);
+	} catch (Exception e) {
+		e.printStackTrace();
+		return retunedRows(changedRows);
+	}
 }
+}
+
+  

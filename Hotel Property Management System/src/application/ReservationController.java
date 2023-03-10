@@ -78,8 +78,12 @@ public class ReservationController implements ActionListener {
 		newRes.customer.setLast_name(lName.getText());
 		newRes.customer.setPhone_num(phoneNum.getText());
 		newRes.customer.setAddress(adress.getText());
-		reservationLogic.addReservation(newRes);
+		if(reservationLogic.updatReservation(newRes)) {
 		UpdateFrame.feedback.setText(newRes.toString());
+		}
+	else {
+		UpdateFrame.feedback.setText("Reservation not Updated please Try Again");
+	}
 	}
 	
 	//Create Reservation Button Pressed
