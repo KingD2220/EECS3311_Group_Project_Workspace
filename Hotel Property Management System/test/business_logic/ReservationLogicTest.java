@@ -11,38 +11,38 @@ import persistence.DatabaseStubs;
 
 public class ReservationLogicTest {
 	
-	Reservation mockRes;
+	Reservation Res;
 	DatabaseStubs stubs = new DatabaseStubs();
 	ReservationLogic test  = new ReservationLogic(stubs);
 	
 	@Before
 	public void setUp() throws Exception {
-		mockRes = new Reservation("","","","","");
+		Res = new Reservation("","","","","");
 	}
 	
 	@Test
 	public void testAddReservation() {
-		test.addReservation(mockRes);
-		assertEquals(mockRes, stubs.getReservation(mockRes.getResNumber()));	
+		test.addReservation(Res);
+		assertEquals(Res, stubs.getReservation(Res.getResNumber()));	
 	}
 	
 	@Test
 	public void testRemoveReservation() {
-		test.addReservation(mockRes);
-		test.removeReservation(mockRes.getResNumber());
-		assertNull(stubs.getReservation(mockRes.getResNumber()));
+		test.addReservation(Res);
+		test.removeReservation(Res.getResNumber());
+		assertNull(stubs.getReservation(Res.getResNumber()));
 	}
 	
 	@Test
 	public void testChangeResDatesArrival() {
-		test.changeResDates(mockRes, "02-02-23", "");
-		assertEquals(mockRes.getArrival_date(), "02-02-23");
+		test.changeResDates(Res, "02-02-23", "");
+		assertEquals(Res.getArrival_date(), "02-02-23");
 	}
 	
 	@Test
 	public void testChangeResDatesDeparture() {
-		test.changeResDates(mockRes, "", "03-03-23");
-		assertEquals(mockRes.getDeparture_date(), "03-03-23");
+		test.changeResDates(Res, "", "03-03-23");
+		assertEquals(Res.getDeparture_date(), "03-03-23");
 	}
 	
 	@Test
