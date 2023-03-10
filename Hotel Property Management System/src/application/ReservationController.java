@@ -111,7 +111,7 @@ public class ReservationController implements ActionListener {
 	}
 	
 	//Check if reservation input is valid
-	private boolean inputValid(String credit) {
+	public boolean inputValid(String credit) {
 		String strStartDate = date.format(startDate.getDate());
 		String strEndDate = date.format(endDate.getDate());
 		String currentDate = date.format(new Date());
