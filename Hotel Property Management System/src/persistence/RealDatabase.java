@@ -31,7 +31,6 @@ public class RealDatabase implements Database {
 			return false;
 		}
 		try {
-			System.out.println("Opening connection");
             connection = DriverManager.getConnection(HOST_URL, USERNAME, PASSWORD);
             return true;
 		} catch (Exception e) {
@@ -85,8 +84,7 @@ public class RealDatabase implements Database {
 			}
 			rs.close();
 			statement.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {;
 			return false;
 		}
 		return false;
@@ -127,21 +125,22 @@ public class RealDatabase implements Database {
 			statement.close();
 			rs.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return null;
 		}
 		return null;
 		
 	}
 	
-
+/*Adds a reservation to the database, uses a helper method to reduce duplicated code also updates the customer table 
+ * as they work together*/
 	@Override
 	public boolean addReservation(Reservation reservation) {
 		String caller = "ADD";
 		boolean queryPerfomed = false;
 		String query = String.format("INSERT INTO RESERVATION (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)","arrival_date",
 				"departure_date","last_name","first_name","address","phone_num","credit_card");
-	 	queryPerfomed  = reserVationHelper(reservation, query, caller);
+	 	queryPerfomed  = reserVationHelper(reservation, query, caller);//Helper method
 	 	if (queryPerfomed) {
 	 		//Inserts relevant info into the customer table
 	 		addCustomer(reservation);
@@ -151,7 +150,8 @@ public class RealDatabase implements Database {
 			return false;
 		}
 	}
-	
+	/*updates a reservation and adds any changes to the database uses a helper method for readability and 
+	 * reduction of duplicate code*/
 	@Override
 	public boolean updateReservation(Reservation changed) {
 		String caller = "UPDATE";
@@ -172,12 +172,14 @@ public class RealDatabase implements Database {
 	
 	}
 	
+	
 	public void updateCustomer(Reservation changedReservation) {
 		String caller= "UPDATE_CUSTOMER";
 		String query = String.format("UPDATE CUSTOMER SET %s=?, %s=?, %s=?, %s=?, %s=? WHERE phone_num = ?",
 				"last_name","first_name","address","phone_num","credit_card");
 		customerHelper(changedReservation, query, caller);
 	}
+	/*With a giver reservation number any reservation matching that number gets deleted*/
 	@Override
 	public boolean removeReservation(int resNum) {
 		String query = String.format("DELETE FROM RESERVATION WHERE resNum = ?");
@@ -201,7 +203,8 @@ public class RealDatabase implements Database {
 			return false;
 		}
 	}
-
+/*this is a helper method that extracts duplicate code from the customer methods
+ * and does the heavy lifting after receiving a query*/
 	public void customerHelper(Reservation reservation, String query, String caller ) {
 		try {
 			PreparedStatement prepared = connection.prepareStatement(query); 
@@ -211,17 +214,17 @@ public class RealDatabase implements Database {
 			prepared.setString(3, reservation.customer.getAddress());
 			prepared.setString(4, reservation.customer.getPhone_num());
 			prepared.setString(5, reservation.customer.getCredit_card());
-			if (caller.equals("UPDATE_CUSTOMER")) {
+			if (caller.equals("UPDATE_CUSTOMER")) {//if it is the update customer method that calls
 				prepared.setString(6, reservation.customer.getPhone_num());	
 			}
 			int changedRows= prepared.executeUpdate();
 			prepared.close();
 			System.out.println("Success "+ changedRows);
 		} catch (Exception e) {
-			e.printStackTrace();
+		  System.out.println("ERROR");
 		}
 	}
-	
+	/*Helper method that gets the query and does the actual execution*/
 	public boolean reserVationHelper(Reservation reservation, String query, String caller){
 	
 		int changedRows= 0;
@@ -235,7 +238,7 @@ public class RealDatabase implements Database {
 		prepared.setString(5, reservation.customer.getAddress());
 		prepared.setString(6, reservation.customer.getPhone_num());
 		prepared.setString(7, reservation.customer.getCredit_card());
-		if (caller.equalsIgnoreCase("UPDATE")) {
+		if (caller.equalsIgnoreCase("UPDATE")) {//if it is the update method that calls
 		prepared.setInt(8, reservation.getResNumber());
 		}
 		changedRows= prepared.executeUpdate();
@@ -243,7 +246,6 @@ public class RealDatabase implements Database {
 		System.out.println("Success "+ changedRows);
 	    return retunedRows(changedRows);
 	} catch (Exception e) {
-		e.printStackTrace();
 		return retunedRows(changedRows);
 	}
 }
