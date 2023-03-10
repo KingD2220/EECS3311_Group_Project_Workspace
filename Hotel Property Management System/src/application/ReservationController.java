@@ -61,11 +61,15 @@ public class ReservationController implements ActionListener {
 	public void searchAndDisplay() {
 		//System.out.println(resNum.getText());
 	  newRes =reservationLogic.getReservation(Integer.parseInt(resNum.getText()));
+	  if(newRes != null){
+		  
 	  fName.setText(newRes.customer.getFirst_name());
 	  lName.setText(newRes.customer.getLast_name());
 	  phoneNum.setText(newRes.customer.getPhone_num());
 	  adress.setText(newRes.customer.getAddress());
-	  
+	  }else {
+		  UpdateFrame.feedback.setText("Reservation not found please Try Again");
+	}
 	  
 	}
 	/*Updates all the relevant fields, changed and unchanged to prevent saving and comparing fields
