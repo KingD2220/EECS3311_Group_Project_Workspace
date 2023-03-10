@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import domain_objects_Rooms.Reservation;
 public class UpdateFrame implements ActionListener {
 	public JButton findButton;
 	public JButton update; 
+	public JButton returnButton;
 	public JTextField resNum;
 	public JTextField firstInput;
 	public JTextField lastInput;
@@ -36,6 +38,7 @@ public class UpdateFrame implements ActionListener {
 		//Buttons
 		findButton();
 		updateButton();
+		returnButton();
 		
 		//Feedback Text Window
 		feedbackWindow();
@@ -49,12 +52,12 @@ public class UpdateFrame implements ActionListener {
 	
 	//Reservation Number Input
 	public void reservationNumber() {
-		JLabel find = new JLabel("Res #"); 
-		find.setBounds(30, 9, 94, 14);
+		JLabel find = new JLabel("Res. #"); 
+		find.setBounds(55, 9, 94, 14);
 		frame.getContentPane().add(find);
 		
 	    resNum = new JTextField();
-		resNum.setBounds(84, 9, 108, 20);
+		resNum.setBounds(134, 9, 108, 20);
 		frame.getContentPane().add(resNum);
 	    resNum.setColumns(10);
 	}
@@ -110,7 +113,7 @@ public class UpdateFrame implements ActionListener {
 	//Find Reservation Button
 	public void findButton() {
 		findButton = new JButton("Search");
-		findButton.setBounds(200, 9, 108, 20);
+		findButton.setBounds(275, 9, 108, 20);
 		frame.getContentPane().add(findButton);
 		findButton.addActionListener(this);
 	}
@@ -121,6 +124,16 @@ public class UpdateFrame implements ActionListener {
 		update.setBounds(273, 342, 155, 23);
 		frame.getContentPane().add(update);
 		update.addActionListener(this);
+	}
+	
+	//Return to previous screen
+	public void returnButton() {
+		returnButton = new JButton("<<");
+		returnButton.setBounds(10, 9, 35, 18);
+		returnButton.setFocusable(false);
+		returnButton.setFont(new Font(null, Font.BOLD, 10));
+		frame.getContentPane().add(returnButton);
+		returnButton.addActionListener(this);
 	}
 	
 	//Feedback Text Window
@@ -140,11 +153,15 @@ public class UpdateFrame implements ActionListener {
 		ReservationController control = new ReservationController(firstInput, lastInput,
 				resNum, phoneInput, addressInput);
 	
-		if (e.getSource()== findButton) {
+		if (e.getSource() == findButton) {
 			control.searchAndDisplay();
 		}
 		if (e.getSource() == update) {
 			control.update();
+		}
+		if (e.getSource() == returnButton) {
+			CreateReservationFrame createFrame = new CreateReservationFrame();
+			frame.dispose();
 		}
 		
 	}

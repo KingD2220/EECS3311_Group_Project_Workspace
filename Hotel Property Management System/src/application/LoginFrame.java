@@ -101,7 +101,7 @@ public class LoginFrame implements ActionListener {
 				// check if user input is valid
 				if (AccountsController.accountVerification(usernameInput.getText(), String.valueOf(passwordInput.getPassword()))) {
 					CreateReservationFrame createFrame = new CreateReservationFrame();
-					frame.setVisible(false);
+					frame.dispose();
 				}
 				else {
 					// display error msg
