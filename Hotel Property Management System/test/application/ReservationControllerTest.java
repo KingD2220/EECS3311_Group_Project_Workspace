@@ -29,7 +29,7 @@ public class ReservationControllerTest {
 	JDateChooser endDate = new JDateChooser();
 
 	
-	ReservationController mockController = new ReservationController(fName, lName, creditCard, adress, phoneNum, roomtype, startDate, endDate);
+	ReservationController testController = new ReservationController(fName, lName, creditCard, adress, phoneNum, roomtype, startDate, endDate);
 		
 	@Before
 	public void setUp() throws Exception {
@@ -37,14 +37,14 @@ public class ReservationControllerTest {
 		CreateReservationFrame.feedback = new JTextArea();
 		roomtype.setModel(new DefaultComboBoxModel<Object>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
 		
-		//Setup valid mock data
+		//Setup valid test data
 		fName.setText("Bob");
 		lName.setText("Smith");
 		creditCard.setText("1234123412341234");
 		adress.setText("123 Home");
 		phoneNum.setText("1231234567");
 		
-		//Setup valid mock dates
+		//Setup valid test dates
 		Calendar calendar = Calendar.getInstance();
 		
 		calendar.set(2024, 1, 1);
@@ -61,9 +61,9 @@ public class ReservationControllerTest {
 	public void buttonPressed() {
 		roomtype.setSelectedItem("Deluxe");
 		
-		mockController.actionPerformed(null);
+		testController.actionPerformed(null);
 		
-		assertNotNull(mockController.newRes);
+		assertNotNull(testController.newRes);
 	}
 	
 	//Case when create reservation is pressed and there is no room available for selected type (no reservation should be created)
@@ -78,15 +78,15 @@ public class ReservationControllerTest {
 		
 		roomtype.setSelectedItem("Standard");
 		
-		mockController.actionPerformed(null);
+		testController.actionPerformed(null);
 		
-		assertNull(mockController.newRes);
+		assertNull(testController.newRes);
 	}
 	
 	//Tests input valid when input is valid
 	@Test
 	public void inputValid() {
-		assertTrue("Error: Valid input is recognized as invalid", mockController.inputValid("1234123412341234"));
+		assertTrue("Error: Valid input is recognized as invalid", testController.inputValid("1234123412341234"));
 	}
 		
 	//Tests inputValid when phone input not valid (not 10 digit number)
@@ -94,13 +94,13 @@ public class ReservationControllerTest {
 	public void inputPhoneNotValid() {
 		phoneNum.setText("123");
 			
-		assertFalse("Error: Invalid phone input is recognized as valid", mockController.inputValid("1234123412341234"));
+		assertFalse("Error: Invalid phone input is recognized as valid", testController.inputValid("1234123412341234"));
 	}
 		
 	//Tests inputValid when credit card input not valid (not 16 digit number)
 	@Test
 	public void inputCardNotValid() {	
-		assertFalse("Error: Invalid phone input is recognized as valid", mockController.inputValid("123"));
+		assertFalse("Error: Invalid phone input is recognized as valid", testController.inputValid("123"));
 	}
 	
 	//Tests inputValid when start date is after end date (invalid)
@@ -117,7 +117,7 @@ public class ReservationControllerTest {
 		tempDate = calendar.getTime();
 		endDate.setDate(tempDate);	
 			
-		assertFalse("Error: Start date cannot be after end date", mockController.inputValid("1234123412341234"));
+		assertFalse("Error: Start date cannot be after end date", testController.inputValid("1234123412341234"));
 	}
 		
 	//Tests inputValid when start date is after end date (invalid)
@@ -130,7 +130,7 @@ public class ReservationControllerTest {
 		Date tempDate = calendar.getTime();
 		startDate.setDate(tempDate);
 					
-		assertFalse("Error: Start date cannot be before current date", mockController.inputValid("1234123412341234"));
+		assertFalse("Error: Start date cannot be before current date", testController.inputValid("1234123412341234"));
 	}
 }
 
