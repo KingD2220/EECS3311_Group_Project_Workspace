@@ -59,7 +59,7 @@ public class ReservationController implements ActionListener {
 	/*To display a saved reservation, we first have to get the reservation, then display 
 	 * it in the corresponding fields*/
 	public void searchAndDisplay() {
-		System.out.println(resNum.getText());
+		//System.out.println(resNum.getText());
 	  newRes =reservationLogic.getReservation(Integer.parseInt(resNum.getText()));
 	  fName.setText(newRes.customer.getFirst_name());
 	  lName.setText(newRes.customer.getLast_name());
