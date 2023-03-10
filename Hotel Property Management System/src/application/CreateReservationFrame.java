@@ -1,10 +1,12 @@
 package application;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -28,7 +30,8 @@ public class CreateReservationFrame implements ActionListener {
 	private JTextField addressInput;
 	private JPasswordField creditInput;
 	public static  JTextArea feedback;
-    public JButton updateButton;
+    public	JButton updateButton;
+    private JButton logOutButton;
 	private JComboBox<Object> roomSelect;
 	private JDateChooser checkInChooser;
 	private JDateChooser checkOutChooser;
@@ -64,6 +67,7 @@ public class CreateReservationFrame implements ActionListener {
 		createReservationButton();
 		updateButton();
 		showCreditCardButton();
+		logoutButton();
     }
     
     //Initialize Frame
@@ -209,10 +213,20 @@ public class CreateReservationFrame implements ActionListener {
     //Update Reservation Button
     public void updateButton() {
 	    updateButton = new JButton("Find");
-		updateButton.setBounds(540, 6, 90, 15);
+		updateButton.setBounds(581, 33, 90, 20);
 		updateButton.setFocusable(false);
 		updateButton.addActionListener(this);
 		frame.getContentPane().add(updateButton);
+    }
+    
+    //Logout Button
+    public void logoutButton() {
+		logOutButton = new JButton("Logout");
+		logOutButton.setFont(new Font(null, Font.BOLD, 10));
+		logOutButton.setBounds(603, 11, 68, 18);
+		logOutButton.setFocusable(false);
+		logOutButton.addActionListener(this);
+		frame.getContentPane().add(logOutButton);
     }
     
     //Show/Hide Credit Card Button
@@ -231,6 +245,7 @@ public class CreateReservationFrame implements ActionListener {
 		});
 		showCreditButton.setBounds(571, 129, 100, 23);
 		frame.getContentPane().add(showCreditButton);
+		
     }
     
     
@@ -241,6 +256,11 @@ public class CreateReservationFrame implements ActionListener {
 		if (e.getSource()== updateButton) {
 			UpdateFrame upFrame = new UpdateFrame();
 			frame.setVisible(false);
+		}
+		// logout button leads user back to login screen
+		if (e.getSource() == logOutButton) {
+			LoginFrame loginFrame = new LoginFrame();
+			frame.dispose();
 		}
 	}
 }
