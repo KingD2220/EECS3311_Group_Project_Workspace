@@ -3,7 +3,7 @@ package domain_objects_Rooms;
 public class PresidentialSuite extends Room{
 	static int numberOfRooms = 10;
 	public PresidentialSuite() {
-		this.roomType = "Presidential Suite";
+		this.roomType = "Presedential Suite";
 		this.bedType = "King";
 		this.numberOfBeds = 2; 
 		this.occupancy = 4; 
