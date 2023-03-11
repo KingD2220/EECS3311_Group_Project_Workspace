@@ -1,4 +1,4 @@
-package Reservation_logic_Test;
+package persistence;
 
 import static org.junit.Assert.*;
 
@@ -8,12 +8,11 @@ import org.junit.Test;
 import business_logic.ReservationLogic;
 import domain_objects_Rooms.Reservation;
 import domain_objects_Rooms.StandardRoom;
-import persistence.Database;
-import persistence.RealDatabase;
 
-public class ReservationLogicIntegration {
+public class TestReservationLogic {
+
 	ReservationLogic reservationLogic;
-	Database database = new RealDatabase();
+	Database database = new DatabaseStubs();
 	Reservation Res; 
 	@Before
 	public void setUp() {
@@ -24,7 +23,7 @@ public class ReservationLogicIntegration {
 	@Test
 	public void testAddReservation() {
 		reservationLogic.addReservation(Res);
-		assertNull(database.getReservation(Res.getResNumber()));	
+		assertEquals(Res, database.getReservation(Res.getResNumber()));	
 	}
 	
 	@Test
