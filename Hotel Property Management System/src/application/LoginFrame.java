@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class LoginFrame implements ActionListener {
@@ -54,7 +53,7 @@ public class LoginFrame implements ActionListener {
 		lblUsername.setBounds(250, 240, 94, 20);
 		frame.getContentPane().add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("Password");
+		JLabel lblPassword = new JLabel("Passcode");
 		lblPassword.setFont(new Font(null, Font.BOLD, 14));
 		lblPassword.setBounds(250, 265, 94, 20);
 		frame.getContentPane().add(lblPassword);

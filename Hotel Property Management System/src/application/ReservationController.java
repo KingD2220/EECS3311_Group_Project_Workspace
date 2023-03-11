@@ -17,11 +17,6 @@ import domain_objects_Rooms.Reservation;
 import domain_objects_Rooms.Room;
 import persistence.RealDatabase;
 
-/**
- * ReservationController should only be used to take information from front-end and
- * be the middleman for the model/database;
- * should not be changing what the GUI does or looks like.
- */
 
 public class ReservationController implements ActionListener {
 	private JTextField fName;
@@ -38,7 +33,7 @@ public class ReservationController implements ActionListener {
     RealDatabase database = new RealDatabase();
     ReservationLogic reservationLogic = new ReservationLogic(database);
 
-
+/*Constructor*/
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
 			JTextField phoneNum, JComboBox<Object> roomtype, JDateChooser startDate, JDateChooser endDate) {
 		super();
@@ -51,7 +46,7 @@ public class ReservationController implements ActionListener {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
-	
+	/*Overloaded constructor used instead of creating a new class*/ 
 	public ReservationController(JTextField fName, JTextField lName, JTextField resNum,
 			JTextField phoneNum, JTextField adress) {
 		this.fName = fName;
@@ -61,25 +56,37 @@ public class ReservationController implements ActionListener {
 		this.adress = adress;
 	
 	}
-	
+	/*To display a saved reservation, we first have to get the reservation, then display 
+	 * it in the corresponding fields*/
 	public void searchAndDisplay() {
-		System.out.println(resNum.getText());
+		//System.out.println(resNum.getText());
 	  newRes =reservationLogic.getReservation(Integer.parseInt(resNum.getText()));
+	  if(newRes != null){
+		  
 	  fName.setText(newRes.customer.getFirst_name());
 	  lName.setText(newRes.customer.getLast_name());
 	  phoneNum.setText(newRes.customer.getPhone_num());
 	  adress.setText(newRes.customer.getAddress());
-	  
+	  }else {
+		  UpdateFrame.feedback.setText("Reservation not found please Try Again");
+	}
 	  
 	}
+	/*Updates all the relevant fields, changed and unchanged to prevent saving and comparing fields
+	 * this way all updated fields will be changed as well as the unchanged fields, but it will
+	 * be changing to the same value*/
 	public void update() {
 		newRes =reservationLogic.getReservation(Integer.parseInt(resNum.getText()));
 		newRes.customer.setFirst_name(fName.getText());
 		newRes.customer.setLast_name(lName.getText());
 		newRes.customer.setPhone_num(phoneNum.getText());
 		newRes.customer.setAddress(adress.getText());
-		reservationLogic.addReservation(newRes);
+		if(reservationLogic.updatReservation(newRes)) {
 		UpdateFrame.feedback.setText(newRes.toString());
+		}
+	else {
+		UpdateFrame.feedback.setText("Reservation not Updated please Try Again");
+	}
 	}
 	
 	//Create Reservation Button Pressed
@@ -101,7 +108,7 @@ public class ReservationController implements ActionListener {
 				newRes.setRoom(room);
 				room.roomReserved();
 				if(reservationLogic.addReservation(newRes)) {
-				CreateReservationFrame.feedback.setText(newRes.toString()); //*does not include room info
+				CreateReservationFrame.feedback.setText(newRes.toString()); 
 				}else {
 					CreateReservationFrame.feedback.setText("Reservation not Created Please ensure Phone number "
 							+ "is not associated with another reservation");

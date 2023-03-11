@@ -34,12 +34,15 @@ public class ReservationLogic {
 		return database.removeReservation(resNum);
 	}
 	
-	public Reservation updatReservation(Reservation reservation){
-		return reservation;
+	public boolean updatReservation(Reservation reservation){
+		return database.updateReservation(reservation);
 	}
 	
    public Reservation getReservation(int resNum) {
 	   return database.getReservation(resNum);
+}
+   public boolean getUser(String userName, String password) {
+	return database.getUser(userName, password);
 }
 	
 	public Reservation changeResDates(Reservation reservation, String newArrivalDate, String newDepartDate) {

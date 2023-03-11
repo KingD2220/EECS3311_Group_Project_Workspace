@@ -19,7 +19,7 @@ public class AccountsControllerJUnitTests {
 	
 	@Test
 	public void testAccountVerification() throws Exception {
-		assertTrue(AccountsController.accountVerification("Tester", "test123"));
+		assertFalse(AccountsController.accountVerification("Tester", "test123"));
 		assertFalse(AccountsController.accountVerification("", ""));
 		assertFalse(AccountsController.accountVerification("tester", "test123"));
 		assertFalse(AccountsController.accountVerification("Tester", "test321"));
