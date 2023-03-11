@@ -47,7 +47,8 @@ public class Reservation {
 	public String toString() {
 		return "  Reservation #" + resNumber + "\n" + "  Arrival Date: " + arrival_date +  "\n" + "  Departure Date: " + departure_date + "\n" 
 					+ "  First Name: " + customer.getFirst_name() + "\n"  + "  Last Name: " + customer.getLast_name() + "\n" 
-					+ "  Address: " + customer.getAddress() + "\n" + "  RoomType: " +  room.getRoomType() + "\n";
+					+ "  Address: " + customer.getAddress() + "\n" + "  Phone Number: " + customer.getPhone_num() + "\n" 
+					+ "  RoomType: " +  room.getRoomType() + "\n";
 	}
 
 	public int getResNumber() {
