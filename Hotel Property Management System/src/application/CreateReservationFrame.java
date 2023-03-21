@@ -222,7 +222,7 @@ public class CreateReservationFrame implements ActionListener {
     //Logout Button
     public void logoutButton() {
 		logOutButton = new JButton("Logout");
-		logOutButton.setFont(new Font(null, Font.BOLD, 10));
+		logOutButton.setFont(new Font(null, Font.PLAIN, 10));
 		logOutButton.setBounds(603, 11, 68, 18);
 		logOutButton.setFocusable(false);
 		logOutButton.addActionListener(this);
