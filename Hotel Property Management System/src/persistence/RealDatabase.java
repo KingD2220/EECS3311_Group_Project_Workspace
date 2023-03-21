@@ -12,7 +12,7 @@ import domain_objects_Rooms.*;
 public class RealDatabase implements Database {
 	private  String HOST = "127.0.0.1";
 	private  String PORT ="3306"; 
-	private  String PASSWORD = "";
+	private  String PASSWORD = "root1234";
 	private  String USERNAME ="root";
 	private final String DATABASE ="domain_objects";
 	private  String HOST_URL = String.format("jdbc:mysql://%s:%s/%s?useSSL=false", HOST, PORT, DATABASE);	
