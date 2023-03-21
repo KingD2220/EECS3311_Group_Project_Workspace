@@ -53,7 +53,7 @@ public class UpdateFrame implements ActionListener {
 	//Reservation Number Input
 	public void reservationNumber() {
 		JLabel find = new JLabel("Res. #"); 
-		find.setBounds(55, 9, 94, 14);
+		find.setBounds(70, 9, 70, 14);
 		frame.getContentPane().add(find);
 		
 	    resNum = new JTextField();
@@ -129,9 +129,9 @@ public class UpdateFrame implements ActionListener {
 	//Return to previous screen
 	public void returnButton() {
 		returnButton = new JButton("<<");
-		returnButton.setBounds(10, 9, 35, 18);
+		returnButton.setBounds(10, 9, 50, 20);
 		returnButton.setFocusable(false);
-		returnButton.setFont(new Font(null, Font.BOLD, 10));
+		returnButton.setFont(new Font(null, Font.PLAIN, 10));
 		frame.getContentPane().add(returnButton);
 		returnButton.addActionListener(this);
 	}
@@ -158,7 +158,7 @@ public class UpdateFrame implements ActionListener {
 			control.update();
 		}
 		if (e.getSource() == returnButton) {
-			CreateReservationFrame createFrame = new CreateReservationFrame();
+			new CreateReservationFrame();
 			frame.dispose();
 		}
 		
