@@ -78,7 +78,7 @@ James and Dexter - work on the back end and front end of authorizing and authent
 
 =========================================================================================
 
-Mar. 1, 2023 (19:00-19:30)
+7. Mar. 1, 2023 (19:00-19:30)
 
 - The team went over the feedback from Itr1 and discussed further who is responsible for which tasks for Itr2. 
 - From Itr1, everyone needs to review their code and add proper comments. 
@@ -91,7 +91,7 @@ Mar. 1, 2023 (19:00-19:30)
 
 =========================================================================================
 
-March 7, 2023  (11:30 - 12:00)
+8. March 7, 2023  (11:30 - 12:00)
 
 - During this meeting we took a look at what we completed since our last meeting, and what else needs to be done to prepare for submission 
 
@@ -100,5 +100,20 @@ March 7, 2023  (11:30 - 12:00)
 - include modified planning document
 
 - Add J unit tests for the methods we have implemented. 
+
+=========================================================================================
+
+9. March 21, 2023 (19:00 - 20:30)
+
+- Each group member showed and explained what they were working on for Iteration 3.
+     - Humud --> Employee front-end for staff to see their employee profiles and pay information.
+     - Dexter --> A frame for employees to select while logging in, whether they want to view their employment information or go to the interface 
+       to perform their duties.
+     - Miguel --> Addressing bugs from QA team and working on database.
+     - James --> Housekeeping front-end to search/filter desired rooms and the ability to change the room status (dirty, clean, inspected). 
+
+- This week's goal is to complete the back-end implementation for each group member's respective front-end - Sunday deadline.
+
+- Next week, the team will work on the Front Desk user stories (e.g., check-in/check-out, billing).
 
 =========================================================================================
