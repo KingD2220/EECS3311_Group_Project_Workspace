@@ -35,6 +35,7 @@ public class LoginFrame implements ActionListener {
 	 * Create contents of frame.
 	 */
 	private void window() {	
+
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
