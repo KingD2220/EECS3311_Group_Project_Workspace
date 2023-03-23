@@ -6,5 +6,5 @@ import domain_objects_Rooms.Room;
 
 public interface ManagementInterfaceDb {
 
-	public ArrayList<Room> roomSearch (ArrayList<Room> rooms);
+	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd);
 }
