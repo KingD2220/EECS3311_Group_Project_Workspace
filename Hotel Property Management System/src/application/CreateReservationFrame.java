@@ -212,7 +212,7 @@ public class CreateReservationFrame implements ActionListener {
     
     //Update Reservation Button
     private void updateButton() {
-	    updateButton = new JButton("Find");
+	    updateButton = new JButton("Find >>");
 		updateButton.setBounds(581, 33, 90, 20);
 		updateButton.setFocusable(false);
 		updateButton.addActionListener(this);
