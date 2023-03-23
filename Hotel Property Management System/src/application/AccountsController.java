@@ -22,7 +22,6 @@ public class AccountsController {
 		
 		return db.getUser(username, passHash);
 	}
-	
 	/**
 	 * Checks if username already exists. 
 	 * If not, a new account is created and added to the accounts database

@@ -78,74 +78,74 @@ public class CreateReservationFrame implements ActionListener {
     }
     
     //First name input
-    public void firstName() {
+    private void firstName() {
     	JLabel lblFirstName = new JLabel("First Name:");
 		lblFirstName.setBounds(30, 33, 94, 14);
 		frame.getContentPane().add(lblFirstName);
 		
 		firstInput = new JTextField();
-		firstInput.setBounds(134, 30, 108, 20);
+		firstInput.setBounds(134, 30, 108, 23);
 		frame.getContentPane().add(firstInput);
 		firstInput.setColumns(10);
     }
     
     //Last name input
-    public void lastName() {
+    private void lastName() {
     	JLabel lblLastName = new JLabel("Last Name:");
 		lblLastName.setBounds(30, 58, 94, 14);
 		frame.getContentPane().add(lblLastName);
 		
 		lastInput = new JTextField();
 		lastInput.setColumns(10);
-		lastInput.setBounds(134, 55, 108, 20);
+		lastInput.setBounds(134, 55, 108, 23);
 		frame.getContentPane().add(lastInput);
     }
     
     //Phone Number Input
-    public void phoneNumber() {
+    private void phoneNumber() {
     	JLabel lblPhoneNum = new JLabel("Phone Num:");
 		lblPhoneNum.setBounds(30, 83, 94, 14);
 		frame.getContentPane().add(lblPhoneNum);
 		
 		phoneInput = new JTextField();
 		phoneInput.setColumns(10);
-		phoneInput.setBounds(134, 80, 108, 20);
+		phoneInput.setBounds(134, 80, 108, 23);
 		frame.getContentPane().add(phoneInput);
     }
     
     //Address Input
-    public void address() {
+    private void address() {
     	JLabel lblAddress = new JLabel("Address:");
 		lblAddress.setBounds(30, 108, 94, 14);
 		frame.getContentPane().add(lblAddress);
 		
 		addressInput = new JTextField();
 		addressInput.setColumns(10);
-		addressInput.setBounds(134, 105, 427, 20);
+		addressInput.setBounds(134, 105, 427, 23);
 		frame.getContentPane().add(addressInput);
     }
     
     //Credit Card Input
-    public void creditCard() {
+    private void creditCard() {
 		JLabel lblCreditCard = new JLabel("Credit Card:");
 		lblCreditCard.setBounds(30, 133, 94, 14);
 		frame.getContentPane().add(lblCreditCard);
 		
 		creditInput = new JPasswordField();
-		creditInput.setBounds(134, 130, 427, 20);
+		creditInput.setBounds(134, 130, 427, 23);
 		creditInput.setEchoChar('\u25cf');
 		frame.getContentPane().add(this.creditInput);
     }
     
     //Reservation Date Chooser
-    void dateChooser() {
+    private void dateChooser() {
     	//Check-in Date
 		JLabel lblCheckinDate = new JLabel("Check-in Date:");
 		lblCheckinDate.setBounds(335, 33, 108, 14);
 		frame.getContentPane().add(lblCheckinDate);
 		
 		checkInChooser = new JDateChooser();
-		checkInChooser.setBounds(453, 33, 108, 20);
+		checkInChooser.setBounds(453, 33, 108, 23);
 		frame.getContentPane().add(checkInChooser);
 		
 		//Check-out Date
@@ -154,24 +154,24 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(lblCheckoutDate);
 		
 		checkOutChooser = new JDateChooser();
-		checkOutChooser.setBounds(453, 58, 108, 20);
+		checkOutChooser.setBounds(453, 58, 108, 23);
 		frame.getContentPane().add(checkOutChooser);
     }
     
     //Room Type Selector
-    void roomSelector() {
+    private void roomSelector() {
     	JLabel lblRoomType = new JLabel("Room Type:");
 		lblRoomType.setBounds(30, 179, 94, 14);
 		frame.getContentPane().add(lblRoomType);
 		
-		roomSelect = new JComboBox<Object>();
-		roomSelect.setModel(new DefaultComboBoxModel<Object>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
-		roomSelect.setBounds(30, 204, 134, 22);
+		roomSelect = new JComboBox<>();
+		roomSelect.setModel(new DefaultComboBoxModel<>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
+		roomSelect.setBounds(26, 196, 94, 22);
 		frame.getContentPane().add(roomSelect);
     }
     
     //Services Checkboxes
-    public void services() {
+    private void services() {
     	JLabel lblServices = new JLabel("Services:");
 		lblServices.setBounds(30, 255, 94, 14);
 		frame.getContentPane().add(lblServices);
@@ -190,7 +190,7 @@ public class CreateReservationFrame implements ActionListener {
     }
     
     //Feedback Text Window
-    public void feedbackWindow() {
+    private void feedbackWindow() {
 		feedback = new JTextArea();
 		feedback.setBounds(10, 376, 661, 180);
 		feedback.setLineWrap(true);
@@ -201,7 +201,7 @@ public class CreateReservationFrame implements ActionListener {
     }
 
     //Create Reservation Button
-    public void createReservationButton() {
+    private void createReservationButton() {
 		ActionListener create = new ReservationController(firstInput, lastInput, creditInput, //create new reservation controller when pressed
 				addressInput, phoneInput, roomSelect, checkInChooser, checkOutChooser);
 		JButton createButton = new JButton("Create Reservation");
@@ -211,7 +211,7 @@ public class CreateReservationFrame implements ActionListener {
     }
     
     //Update Reservation Button
-    public void updateButton() {
+    private void updateButton() {
 	    updateButton = new JButton("Find");
 		updateButton.setBounds(581, 33, 90, 20);
 		updateButton.setFocusable(false);
@@ -220,9 +220,9 @@ public class CreateReservationFrame implements ActionListener {
     }
     
     //Logout Button
-    public void logoutButton() {
+    private void logoutButton() {
 		logOutButton = new JButton("Logout");
-		logOutButton.setFont(new Font(null, Font.BOLD, 10));
+		logOutButton.setFont(new Font(null, Font.PLAIN, 10));
 		logOutButton.setBounds(603, 11, 68, 18);
 		logOutButton.setFocusable(false);
 		logOutButton.addActionListener(this);
@@ -230,7 +230,7 @@ public class CreateReservationFrame implements ActionListener {
     }
     
     //Show/Hide Credit Card Button
-    public void showCreditCardButton() {
+    private void showCreditCardButton() {
     	JCheckBox showCreditButton = new JCheckBox("Show/Hide");
 		showCreditButton.addMouseListener(new MouseAdapter() {
 			@Override

@@ -53,11 +53,11 @@ public class UpdateFrame implements ActionListener {
 	//Reservation Number Input
 	public void reservationNumber() {
 		JLabel find = new JLabel("Res. #"); 
-		find.setBounds(55, 9, 94, 14);
+		find.setBounds(70, 9, 70, 14);
 		frame.getContentPane().add(find);
 		
 	    resNum = new JTextField();
-		resNum.setBounds(134, 9, 108, 20);
+		resNum.setBounds(134, 9, 108, 23);
 		frame.getContentPane().add(resNum);
 	    resNum.setColumns(10);
 	}
@@ -69,7 +69,7 @@ public class UpdateFrame implements ActionListener {
 		frame.getContentPane().add(lblFirstName);
 		
 	    firstInput = new JTextField();
-		firstInput.setBounds(134, 130, 108, 20);
+		firstInput.setBounds(134, 130, 108, 23);
 		frame.getContentPane().add(firstInput);
 		firstInput.setColumns(10);
 	}
@@ -82,7 +82,7 @@ public class UpdateFrame implements ActionListener {
 		
 		lastInput = new JTextField();
 		lastInput.setColumns(10);
-		lastInput.setBounds(134, 155, 108, 20);
+		lastInput.setBounds(134, 155, 108, 23);
 		frame.getContentPane().add(lastInput);
 	}
 	
@@ -94,7 +94,7 @@ public class UpdateFrame implements ActionListener {
 		
 		phoneInput = new JTextField();
 		phoneInput.setColumns(10);
-		phoneInput.setBounds(134, 180, 108, 20);
+		phoneInput.setBounds(134, 180, 108, 23);
 		frame.getContentPane().add(phoneInput);
 	}
 	
@@ -106,7 +106,7 @@ public class UpdateFrame implements ActionListener {
 				
 		addressInput = new JTextField();
 		addressInput.setColumns(10);
-		addressInput.setBounds(134, 205, 427, 20);
+		addressInput.setBounds(134, 205, 427, 23);
 		frame.getContentPane().add(addressInput);
 	}
 	
@@ -129,9 +129,9 @@ public class UpdateFrame implements ActionListener {
 	//Return to previous screen
 	public void returnButton() {
 		returnButton = new JButton("<<");
-		returnButton.setBounds(10, 9, 35, 18);
+		returnButton.setBounds(10, 9, 50, 20);
 		returnButton.setFocusable(false);
-		returnButton.setFont(new Font(null, Font.BOLD, 10));
+		returnButton.setFont(new Font(null, Font.PLAIN, 10));
 		frame.getContentPane().add(returnButton);
 		returnButton.addActionListener(this);
 	}
@@ -142,8 +142,6 @@ public class UpdateFrame implements ActionListener {
 		feedback.setBounds(10, 376, 661, 180);
 		feedback.setLineWrap(true);
 		feedback.setEditable(false);
-		JScrollPane scroll = new JScrollPane(feedback);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		frame.getContentPane().add(feedback);
 	}
 	
@@ -160,7 +158,7 @@ public class UpdateFrame implements ActionListener {
 			control.update();
 		}
 		if (e.getSource() == returnButton) {
-			CreateReservationFrame createFrame = new CreateReservationFrame();
+			new CreateReservationFrame();
 			frame.dispose();
 		}
 		

@@ -24,7 +24,7 @@ public class ReservationLogicIntegration {
 	@Test
 	public void testAddReservation() {
 		reservationLogic.addReservation(Res);
-		assertNull(database.getReservation(Res.getResNumber()));	
+		assertNotNull(database.getReservation(Res.getResNumber()));	
 	}
 	
 	@Test

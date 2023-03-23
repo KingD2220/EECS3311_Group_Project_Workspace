@@ -17,6 +17,7 @@ public class LoginFrame implements ActionListener {
 	private JPasswordField passwordInput;
 	private JButton registerButton;
 	private JButton loginButton;
+	private JButton returnButton;
 	private JLabel loginMsg;
 	private JFrame frame  = new JFrame();
 	
@@ -34,6 +35,7 @@ public class LoginFrame implements ActionListener {
 	 * Create contents of frame.
 	 */
 	private void window() {	
+
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,8 +91,15 @@ public class LoginFrame implements ActionListener {
 		loginButton.setFocusable(false);
 		frame.getContentPane().add(loginButton);
 		loginButton.addActionListener(this);
+		
+		//Return to role selection screen
+		returnButton = new JButton("<<");
+		returnButton.setBounds(10, 9, 50, 20);
+		returnButton.setFocusable(false);
+		returnButton.setFont(new Font(null, Font.PLAIN, 10));
+		frame.getContentPane().add(returnButton);
+		returnButton.addActionListener(this);
 	}
-	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -137,6 +146,11 @@ public class LoginFrame implements ActionListener {
 				e1.printStackTrace();
 			} 
 				
+		}
+		
+		if (e.getSource() == returnButton) {
+			new RoleSelectionFrame();
+			frame.dispose();
 		}
 		
 	}
