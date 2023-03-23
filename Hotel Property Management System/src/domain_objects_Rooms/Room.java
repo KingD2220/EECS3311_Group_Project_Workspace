@@ -10,6 +10,9 @@ public abstract class Room {
 	int occupancy;
 	int roomSize;
 	double fixedRatePerNight;
+	String roomNum;
+	String arrivalDate;
+	String departureDate;
 	
 	// getter methods
 	
@@ -37,7 +40,20 @@ public abstract class Room {
 		return this.fixedRatePerNight;
 	}
 	
+	public String getRoomNum() {
+		return roomNum;
+	}
+
+	public String getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public String getDepartureDate() {
+		return departureDate;
+	}
+	
 	public abstract int getRoomsAvailable();
+
 	
 	// setterMethods
 	
@@ -64,6 +80,18 @@ public abstract class Room {
 	void setRate(double rate) {
 		this.fixedRatePerNight = rate;
 	}	
+	
+	public void setRoomNum(String roomNum) {
+		this.roomNum = roomNum;
+	}
+	
+	public void setArrivalDate(String arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+	
+	public void setDepartureDate(String departureDate) {
+		this.departureDate = departureDate;
+	}
 	
 	public abstract void roomReserved();
 	
