@@ -11,6 +11,8 @@ public abstract class Room {
 	int roomSize;
 	double fixedRatePerNight;
 	String roomNum;
+	String roomStatus;
+	String reservationStatus;
 	String arrivalDate;
 	String departureDate;
 	
@@ -52,6 +54,14 @@ public abstract class Room {
 		return departureDate;
 	}
 	
+	public String getRoomStatus() {
+		return roomStatus;
+	}
+	
+	public String getReservationStatus() {
+		return reservationStatus;
+	}
+	
 	public abstract int getRoomsAvailable();
 
 	
@@ -91,6 +101,14 @@ public abstract class Room {
 	
 	public void setDepartureDate(String departureDate) {
 		this.departureDate = departureDate;
+	}
+	
+	public void setRoomStatus(String roomStatus) {
+		this.roomStatus = roomStatus;
+	}
+	
+	public void setReservationStatus(String reservationStatus) {
+		this.reservationStatus = reservationStatus;
 	}
 	
 	public abstract void roomReserved();
