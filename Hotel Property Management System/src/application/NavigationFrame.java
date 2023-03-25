@@ -6,32 +6,25 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class NavigationFrame implements ActionListener {
+public class NavigationFrame implements ActionListener{
 	
 	private JFrame frame = new JFrame();
 	private JButton viewProfileButton;
 	private JButton createResFrameButton;
 	private JButton updateResButton;
-	private JButton manageEmployeeButon;
+	private JButton manageEmployeeButton;
 	private JButton roomStatusButton;
 	
-	NavigationFrame() {
+	NavigationFrame(String role) {
+		
+		frame.setVisible(true);
 		this.window();
 		
 		//View My Profile Button
 		viewProfileButton();
 		
-		//Get role from database***
-		//If account is employee
-		createResFrameButton();
-		updateResFrameButton();
-		
-		//If account is manager
-		manageEmployeeButton();
-		
-		//If account is house keeper
-		//roomStatusButton();
-		
+		//Display buttons based on role
+		enableRoleButtons(role);
 	}
 	
 	//Initialize Frame
@@ -41,11 +34,13 @@ public class NavigationFrame implements ActionListener {
 		frame.getContentPane().setLayout(null);
     }
     
+    //Buttons
     private void viewProfileButton() {
     	viewProfileButton = new JButton("View My Profile");
 		viewProfileButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		viewProfileButton.setBounds(200, 34, 296, 102);
 		frame.getContentPane().add(viewProfileButton);
+		viewProfileButton.addActionListener(this);
     }
     
     private void createResFrameButton() {
@@ -53,6 +48,7 @@ public class NavigationFrame implements ActionListener {
 		createResFrameButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		createResFrameButton.setBounds(200, 166, 296, 102);
 		frame.getContentPane().add(createResFrameButton);
+		createResFrameButton.addActionListener(this);
     }
     
     private void updateResFrameButton() {
@@ -60,13 +56,15 @@ public class NavigationFrame implements ActionListener {
 		updateResButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		updateResButton.setBounds(200, 295, 296, 102);
 		frame.getContentPane().add(updateResButton);
+		updateResButton.addActionListener(this);
     }
     
     private void manageEmployeeButton() {	
-		manageEmployeeButon = new JButton("Manage Employees");
-		manageEmployeeButon.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		manageEmployeeButon.setBounds(200, 422, 296, 102);
-		frame.getContentPane().add(manageEmployeeButon);
+		manageEmployeeButton = new JButton("Manage Employees");
+		manageEmployeeButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		manageEmployeeButton.setBounds(200, 422, 296, 102);
+		frame.getContentPane().add(manageEmployeeButton);
+		manageEmployeeButton.addActionListener(this);
 	}
     
     private void roomStatusButton() {
@@ -74,6 +72,21 @@ public class NavigationFrame implements ActionListener {
 		roomStatusButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		roomStatusButton.setBounds(200, 166, 296, 102);
 		frame.getContentPane().add(roomStatusButton);
+		roomStatusButton.addActionListener(this);
+    }
+    
+    //Display navigation buttons based on role of user
+    private void enableRoleButtons(String role) {
+    	if (role == "housekeeper") {
+    		roomStatusButton();
+    	}
+    	else { //Create buttons shared by employees and managers
+    		createResFrameButton();
+    		updateResFrameButton();
+    	}
+    	if (role == "manager") {
+    		manageEmployeeButton();
+    	}
     }
     
     //Navigate to selected tab when button is pressed
@@ -88,7 +101,7 @@ public class NavigationFrame implements ActionListener {
 		if (e.getSource() == updateResButton) {
 			new UpdateFrame();
 		}
-		if (e.getSource() == manageEmployeeButon) {
+		if (e.getSource() == manageEmployeeButton) {
 			new ManagerFrame();
 		}
 		if (e.getSource() == roomStatusButton) {
