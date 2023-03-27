@@ -67,7 +67,7 @@ public abstract class Room {
 	
 	// setterMethods
 	
-	 void setRoomType(String roomType) {
+	void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
 	
