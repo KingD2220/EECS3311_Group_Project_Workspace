@@ -24,18 +24,17 @@ public class ReservationController implements ActionListener {
 	private JPasswordField creditCard;
 	private JTextField adress;
 	private JTextField phoneNum;
-	private JComboBox<Object> roomtype;
+	private JComboBox<String> roomtype;
 	private JDateChooser startDate;
 	private JDateChooser endDate;
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
     Reservation newRes;
-    RealDatabase database = new RealDatabase();
-    ReservationLogic reservationLogic = new ReservationLogic(database);
+    ReservationLogic reservationLogic = new ReservationLogic(new RealDatabase());
 
 /*Constructor*/
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
-			JTextField phoneNum, JComboBox<Object> roomtype, JDateChooser startDate, JDateChooser endDate) {
+			JTextField phoneNum, JComboBox<String> roomtype, JDateChooser startDate, JDateChooser endDate) {
 		super();
 		this.fName = fName;
 		this.lName = lName;
@@ -106,6 +105,7 @@ public class ReservationController implements ActionListener {
 				newRes.setArrival_date(date.format(startDate.getDate()));
 				newRes.setDeparture_date(date.format(endDate.getDate()));
 				newRes.setRoom(room);
+				newRes.setRoomType(roomtype.getSelectedItem().toString());
 				room.roomReserved();
 				if(reservationLogic.addReservation(newRes)) {
 				CreateReservationFrame.feedback.setText(newRes.toString()); 

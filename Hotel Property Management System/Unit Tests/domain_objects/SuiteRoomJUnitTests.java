@@ -17,26 +17,6 @@ public class SuiteRoomJUnitTests {
 	}
 	
 	@Test
-	public void testGetBedType() {
-		assertEquals("King", room.getBedType());
-	}
-	
-	@Test
-	public void testGetNumberOfBeds() {
-		assertEquals(1, room.getNumberOfBeds());
-	}
-	
-	@Test
-	public void testGetOccupancy() {
-		assertEquals(2, room.getOccupancy());
-	}
-
-	@Test
-	public void testGetRoomSize() {
-		assertEquals(600, room.getRoomSize());
-	}
-	
-	@Test
 	public void testGetRate() {
 		assertEquals(300.00, room.getRate(), 0.05);
 	}

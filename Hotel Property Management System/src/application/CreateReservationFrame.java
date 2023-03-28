@@ -32,7 +32,7 @@ public class CreateReservationFrame implements ActionListener {
 	public static  JTextArea feedback;
     public	JButton updateButton;
     private JButton logOutButton;
-	private JComboBox<Object> roomSelect;
+	private JComboBox<String> roomSelect;
 	private JDateChooser checkInChooser;
 	private JDateChooser checkOutChooser;
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");

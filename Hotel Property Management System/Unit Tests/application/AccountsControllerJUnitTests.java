@@ -13,17 +13,17 @@ public class AccountsControllerJUnitTests {
 
 	@Before
 	public void setupData() throws Exception {
-		userAcct = new Account("Tester", "test123");
-		res = AccountsController.registerAccount(userAcct.getUserName(), userAcct.getPassword());
+		userAcct = new Account("Tester", "test123", "Manager");
+		res = AccountsController.registerAccount(userAcct.getUserName(), userAcct.getPassword(), userAcct.getRole());
 	}
 	
 	@Test
 	public void testAccountVerification() throws Exception {
-		assertFalse(AccountsController.accountVerification("Tester", "test123"));
-		assertFalse(AccountsController.accountVerification("", ""));
-		assertFalse(AccountsController.accountVerification("tester", "test123"));
-		assertFalse(AccountsController.accountVerification("Tester", "test321"));
-		assertFalse(AccountsController.accountVerification("Testre", "test123"));
+		assertFalse(AccountsController.accountVerification("Tester", "test123","Manager"));
+		assertFalse(AccountsController.accountVerification("", "" ,"Manager"));
+		assertFalse(AccountsController.accountVerification("tester", "test123","Manager"));
+		assertFalse(AccountsController.accountVerification("Tester", "test321","Manager"));
+		assertFalse(AccountsController.accountVerification("Testre", "test123","Manager"));
 	}
 	
 	

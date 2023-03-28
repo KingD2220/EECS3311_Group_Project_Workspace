@@ -336,7 +336,7 @@ public class HousekeepingFrame implements ActionListener {
 		checkboxArray = new Checkbox[] {checkDirty, checkClean, checkInspected, checkOccupied, checkVacant};
 	
 		if (e.getSource() == logOutButton) {
-			new RoleSelectionFrame();
+			new LoginFrame();
 			frame.dispose();
 		}
 		if (e.getSource() == searchButton) {

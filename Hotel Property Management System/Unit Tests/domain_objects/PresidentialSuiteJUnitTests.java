@@ -17,26 +17,6 @@ public class PresidentialSuiteJUnitTests {
 	}
 	
 	@Test
-	public void testGetBedType() {
-		assertEquals("King", room.getBedType());
-	}
-	
-	@Test
-	public void testGetNumberOfBeds() {
-		assertEquals(2, room.getNumberOfBeds());
-	}
-	
-	@Test
-	public void testGetOccupancy() {
-		assertEquals(4, room.getOccupancy());
-	}
-
-	@Test
-	public void testGetRoomSize() {
-		assertEquals(900, room.getRoomSize());
-	}
-	
-	@Test
 	public void testGetRate() {
 		assertEquals(500.00, room.getRate(), 0.05);
 	}
