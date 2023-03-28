@@ -77,14 +77,14 @@ public class NavigationFrame implements ActionListener{
     
     //Display navigation buttons based on role of user
     private void enableRoleButtons(String role) {
-    	if (role == "housekeeper") {
+    	if (role == "Housekeeping") {
     		roomStatusButton();
     	}
     	else { //Create buttons shared by employees and managers
     		createResFrameButton();
     		updateResFrameButton();
     	}
-    	if (role == "manager") {
+    	if (role.equalsIgnoreCase("Manager")) {
     		manageEmployeeButton();
     	}
     }
@@ -105,7 +105,7 @@ public class NavigationFrame implements ActionListener{
 			new ManagerFrame();
 		}
 		if (e.getSource() == roomStatusButton) {
-			new HSKPFrame();
+			new HousekeepingFrame();
 		}
 		
 		frame.dispose();

@@ -5,6 +5,8 @@ import java.util.List;
 
 import domain_objects.Account;
 import domain_objects_Rooms.Reservation;
+import domain_objects_Rooms.Room;
+import domain_objects_Users.Employee;
 import domain_objects_Users.Profile;
 
 public class DatabaseStubs implements Database {
@@ -15,7 +17,7 @@ public class DatabaseStubs implements Database {
 	private static List<Account> accounts = new ArrayList<>(); 
 	
 	@Override
-	public boolean getUser(String userName, String passHash) {
+	public boolean getUser(String userName, String passHash, String jobType) {
 		for (Account account : accounts) {
 			if (userName.equals(account.getUserName())&& passHash.equals(account.getPassword())) {
 				return true;
@@ -24,10 +26,10 @@ public class DatabaseStubs implements Database {
 		return false;
 	}
 	@Override
-	public boolean addUser(String userName, String passHash) {
+	public boolean addUser(String userName, String passHash, String jobType) {
 		Account account = null;
 		try {
-			account = new Account(userName, passHash);
+			account = new Account(userName, passHash, jobType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,6 +80,16 @@ public class DatabaseStubs implements Database {
 			}
 		}
 		return false;
+	}
+	@Override
+	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Employee getEmployee(String employeeNum) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

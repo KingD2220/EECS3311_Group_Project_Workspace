@@ -8,6 +8,7 @@ public class Reservation {
 	public String departure_date = "";
 	public Customer customer = new Customer();
 	private int resNumber;
+	private String roomType ="";
 	
 
 	private Room room;
@@ -46,7 +47,15 @@ public class Reservation {
 	@Override
 	public String toString() {
 		return "  Reservation arrival_date:" + arrival_date +  "\n" + "  Departure_date:" + departure_date + "\n" +"  Customer="
-				+ customer + "\n" + "  RoomType:" + "\n" + "  Reservation Number:" + resNumber  ;
+				+ customer + "\n" + "  RoomType:" + roomType+ "\n" + "  Reservation Number:" + resNumber  ;
+	}
+
+	public String getRoomType() {
+		return roomType;
+	}
+
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
 	}
 
 	public int getResNumber() {

@@ -41,8 +41,8 @@ public class ReservationLogic {
    public Reservation getReservation(int resNum) {
 	   return database.getReservation(resNum);
 }
-   public boolean getUser(String userName, String password) {
-	return database.getUser(userName, password);
+   public boolean getUser(String userName, String password, String jobType) {
+	return database.getUser(userName, password, jobType);
 }
 	
 	public Reservation changeResDates(Reservation reservation, String newArrivalDate, String newDepartDate) {

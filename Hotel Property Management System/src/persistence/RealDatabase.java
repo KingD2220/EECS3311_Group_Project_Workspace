@@ -6,16 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import domain_objects_Rooms.*;
+import domain_objects_Users.Employee;
 
 public class RealDatabase implements Database {
-	private  String HOST = "127.0.0.1";
-	private  String PORT ="3306";
-	private  String PASSWORD = "";
-	private  String USERNAME ="root";
-	private final String DATABASE ="domain_objects";
-	private  String HOST_URL = String.format("jdbc:mysql://%s:%s/%s?useSSL=false", HOST, PORT, DATABASE);	
+	private static final String HOST = "127.0.0.1";
+	private static final String PORT ="3306";
+	private static final String PASSWORD = "Sean@1234";
+	private static final String USERNAME ="root";
+	private static final String DATABASE ="domain_objects";
+	private static final String HOST_URL = String.format("jdbc:mysql://%s:%s/%s?useSSL=false", HOST, PORT, DATABASE);	
 	private Connection connection;
 	
 	/*Constructor opens a connection to the database so each method does not  have to */
@@ -70,38 +73,41 @@ public class RealDatabase implements Database {
 	}
    /*This method gets a user and returns true is the user exists for authentication purposes */
 	@Override
-	public boolean getUser(String userName, String passHash) {
+	public boolean getUser(String userName, String passHash, String jobType) {
 		
 		try  { 
-			PreparedStatement statement = connection.prepareStatement(String.format("SELECT userName FROM Account WHERE hashPassWord= ? AND userName = ?"));
+			PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM Account WHERE hashPassWord= ? AND userName = ?"));
 			statement.setString(1, passHash);
 		    statement.setString(2, userName);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
-				if (rs.getString("userName").equals(userName)) {
+				if (rs.getString("userName").equals(userName) && rs.getString("jobType").equals(jobType)) {
 					return true;
 				}
 			}
 			rs.close();
 			statement.close();
-		} catch (Exception e) {;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		return false;
 	}
 /*Adds user to the Account table in the database to allow registration*/
 	@Override
-	public boolean addUser(String userName, String passHash) {
+	public boolean addUser(String userName, String passHash, String jobType) {
 		int changedrows=0;
 	    try {
-			PreparedStatement prepared = connection.prepareStatement(String.format("INSERT INTO Account VALUES(?, ?)"));
+			PreparedStatement prepared = connection.prepareStatement(String.format("INSERT INTO Account VALUES(?, ?, ?)"));
 			prepared.setString(1, userName);
 			prepared.setString(2, passHash);
+			prepared.setString(3, jobType);
 			changedrows = prepared.executeUpdate();
 			prepared.close();
 			
 			return retunedRows(changedrows);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return retunedRows(changedrows);
 	}
 	}
@@ -119,6 +125,7 @@ public class RealDatabase implements Database {
 						rs.getString("address"), rs.getString("phone_num"), rs.getString("credit_card"));
 				reservation.setArrival_date(rs.getString("arrival_date"));
 				reservation.setDeparture_date(rs.getString("departure_date"));
+				reservation.setRoomType(rs.getString("roomType"));
 				reservation.setResNumber(resNum);
 				return reservation;
 			}
@@ -138,8 +145,8 @@ public class RealDatabase implements Database {
 	public boolean addReservation(Reservation reservation) {
 		String caller = "ADD";
 		boolean queryPerfomed = false;
-		String query = String.format("INSERT INTO RESERVATION (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)","arrival_date",
-				"departure_date","last_name","first_name","address","phone_num","credit_card");
+		String query = String.format("INSERT INTO RESERVATION (%s, %s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?, ?)","arrival_date",
+				"departure_date","last_name","first_name","address","phone_num","credit_card", "roomType");
 	 	queryPerfomed  = reserVationHelper(reservation, query, caller);//Helper method
 	 	if (queryPerfomed) {
 	 		//Inserts relevant info into the customer table
@@ -238,6 +245,7 @@ public class RealDatabase implements Database {
 		prepared.setString(5, reservation.customer.getAddress());
 		prepared.setString(6, reservation.customer.getPhone_num());
 		prepared.setString(7, reservation.customer.getCredit_card());
+		prepared.setString(8, reservation.getRoomType());
 		if (caller.equalsIgnoreCase("UPDATE")) {//if it is the update method that calls
 		prepared.setInt(8, reservation.getResNumber());
 		}
@@ -249,6 +257,65 @@ public class RealDatabase implements Database {
 		return retunedRows(changedRows);
 	}
 }
+
+
+//This return an Arraylist of rooms between two given room numbers
+	@Override
+	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd) {
+		ArrayList<Room> roomList = new ArrayList<>();
+; 		try {
+			PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM ROOM WHERE roomNumber BETWEEN ? AND ?"));
+			statement.setString(1, roomNumStart);
+			statement.setString(2, roomNumEnd);
+			ResultSet rs = statement.executeQuery();
+		while(rs.next()) {
+			if(rs.getString("roomType").equals("Standard")) {
+				Room newRoom = new StandardRoom();
+				roomList.add(roomHelper(rs,newRoom));
+			}else if (rs.getString("roomType").equals("Deluxe")) {
+				Room newRoom = new DeluxeRoom();
+				roomList.add(roomHelper(rs,newRoom));
+			}else if (rs.getString("roomType").equals("Suite")) {
+				Room newRoom = new SuiteRoom();
+				roomList.add(roomHelper(rs,newRoom));
+			}else if (rs.getString("roomType").equals("Executive")) {
+				Room newRoom = new ExecutiveSuite();
+				roomList.add(roomHelper(rs,newRoom));
+			}else if (rs.getString("roomType").equals("Presidential")) {
+				Room newRoom = new PresidentialSuite();
+				roomList.add(roomHelper(rs,newRoom));
+			}
+		}
+		   return roomList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+	}
+	// helps assign data to each room type
+	public Room roomHelper(ResultSet rs, Room room) {
+		try {
+		room.setRoomNum(rs.getString("roomNumber"));
+		room.setArrivalDate(rs.getString("start_date"));
+		room.setArrivalDate(rs.getString("end_date"));
+		room.setRoomStatus(rs.getString("roomSatus"));
+	    room.setRoomType(rs.getString("roomType"));
+	    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return room;
+	}
+
+
+
+	@Override
+	public Employee getEmployee(String employeeNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
 }
 
   
