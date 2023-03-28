@@ -5,6 +5,7 @@ import java.util.List;
 
 import domain_objects.Account;
 import domain_objects_Rooms.Reservation;
+import domain_objects_Rooms.Room;
 import domain_objects_Users.Profile;
 
 public class DatabaseStubs implements Database {
@@ -78,6 +79,11 @@ public class DatabaseStubs implements Database {
 			}
 		}
 		return false;
+	}
+	@Override
+	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

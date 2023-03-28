@@ -6,16 +6,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import domain_objects_Rooms.*;
 
 public class RealDatabase implements Database {
-	private  String HOST = "127.0.0.1";
-	private  String PORT ="3306";
-	private  String PASSWORD = "";
-	private  String USERNAME ="root";
-	private final String DATABASE ="domain_objects";
-	private  String HOST_URL = String.format("jdbc:mysql://%s:%s/%s?useSSL=false", HOST, PORT, DATABASE);	
+	private static final String HOST = "127.0.0.1";
+	private static final String PORT ="3306";
+	private static final String PASSWORD = "Sean@1234";
+	private static final String USERNAME ="root";
+	private static final String DATABASE ="domain_objects";
+	private static final String HOST_URL = String.format("jdbc:mysql://%s:%s/%s?useSSL=false", HOST, PORT, DATABASE);	
 	private Connection connection;
 	
 	/*Constructor opens a connection to the database so each method does not  have to */
@@ -249,6 +251,57 @@ public class RealDatabase implements Database {
 		return retunedRows(changedRows);
 	}
 }
+
+
+
+	@Override
+	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd) {
+		ArrayList<Room> roomList = new ArrayList<>();
+; 		try {
+			PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM ROOM WHERE roomNumber BETWEEN ? AND ?"));
+			statement.setString(1, roomNumStart);
+			statement.setString(2, roomNumEnd);
+			ResultSet rs = statement.executeQuery();
+		while(rs.next()) {
+			if(rs.getString("roomType").equals("Standard")) {
+				Room newRoom = new StandardRoom();
+				roomList.add(roomHelper(rs,newRoom));
+			}else if (rs.getString("roomType").equals("Deluxe")) {
+				Room newRoom = new DeluxeRoom();
+				roomList.add(roomHelper(rs,newRoom));
+			}else if (rs.getString("roomType").equals("Suite")) {
+				Room newRoom = new SuiteRoom();
+				roomList.add(roomHelper(rs,newRoom));
+			}else if (rs.getString("roomType").equals("Executive")) {
+				Room newRoom = new ExecutiveSuite();
+				roomList.add(roomHelper(rs,newRoom));
+			}else if (rs.getString("roomType").equals("Presidential")) {
+				Room newRoom = new PresidentialSuite();
+				roomList.add(roomHelper(rs,newRoom));
+			}
+		}
+		   return roomList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+	}
+	
+	public Room roomHelper(ResultSet rs, Room room) {
+		try {
+		room.setRoomNum(rs.getString("roomNumber"));
+		room.setArrivalDate(rs.getString("start_date"));
+		room.setArrivalDate(rs.getString("end_date"));
+		room.setRoomStatus(rs.getString("roomSatus"));
+	    room.setRoomType(rs.getString("roomType"));
+	    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return room;
+	}
+	
+
 }
 
   

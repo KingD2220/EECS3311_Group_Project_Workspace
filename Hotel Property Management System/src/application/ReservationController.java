@@ -30,8 +30,7 @@ public class ReservationController implements ActionListener {
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
     Reservation newRes;
-    RealDatabase database = new RealDatabase();
-    ReservationLogic reservationLogic = new ReservationLogic(database);
+    ReservationLogic reservationLogic = new ReservationLogic(new RealDatabase());
 
 /*Constructor*/
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
@@ -106,6 +105,7 @@ public class ReservationController implements ActionListener {
 				newRes.setArrival_date(date.format(startDate.getDate()));
 				newRes.setDeparture_date(date.format(endDate.getDate()));
 				newRes.setRoom(room);
+				newRes.setRoomType(roomtype.getSelectedItem().toString());
 				room.roomReserved();
 				if(reservationLogic.addReservation(newRes)) {
 				CreateReservationFrame.feedback.setText(newRes.toString()); 
