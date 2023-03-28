@@ -113,4 +113,8 @@ public class HousekeepingController {
         	HousekeepingFrame.model.addRow(rowArray);
     	}
     }
+    
+    public void roomStatusUpdate(String roomNum, String roomStatus) {
+    	managementLogic.roomStatusUpdate(roomNum, roomStatus);
+    }
 }
