@@ -16,4 +16,8 @@ public class ManagementLogic {
 		return database.getRoomStatus(roomRangeStart, roomRangeEnd);
 	}
 	
+	// update room status in database
+	public void roomStatusUpdate(String roomNum, String roomStatus) {
+		database.updateRoomStatus(roomNum, roomStatus);
+	}
 }
