@@ -1,5 +1,7 @@
 package persistence;
 
+import java.util.ArrayList;
+
 import domain_objects_Rooms.*;
 public interface Database {
 	
@@ -10,6 +12,7 @@ public interface Database {
 	public boolean removeReservation(int resNum);
 	public int getLastResNum();
 	public boolean updateReservation(Reservation changedReservation);
+	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd);
 	
 
 }
