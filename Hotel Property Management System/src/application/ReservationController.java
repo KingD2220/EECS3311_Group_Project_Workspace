@@ -24,7 +24,7 @@ public class ReservationController implements ActionListener {
 	private JPasswordField creditCard;
 	private JTextField adress;
 	private JTextField phoneNum;
-	private JComboBox<Object> roomtype;
+	private JComboBox<String> roomtype;
 	private JDateChooser startDate;
 	private JDateChooser endDate;
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
@@ -34,7 +34,7 @@ public class ReservationController implements ActionListener {
 
 /*Constructor*/
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
-			JTextField phoneNum, JComboBox<Object> roomtype, JDateChooser startDate, JDateChooser endDate) {
+			JTextField phoneNum, JComboBox<String> roomtype, JDateChooser startDate, JDateChooser endDate) {
 		super();
 		this.fName = fName;
 		this.lName = lName;

@@ -15,23 +15,23 @@ public class AccountsController {
 	 * checking the accounts database.
 	 * @return boolean true or false.
 	 */
-	public static boolean accountVerification(String username, String password) throws Exception {
+	public static boolean accountVerification(String username, String password, String jobType) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		byte[] hash = md.digest(password.getBytes());
 		String passHash = new String(hash);
 		
-		return db.getUser(username, passHash);
+		return db.getUser(username, passHash, jobType);
 	}
 	/**
 	 * Checks if username already exists. 
 	 * If not, a new account is created and added to the accounts database
 	 */
-	public static String registerAccount(String username, String password) throws Exception {
+	public static String registerAccount(String username, String password, String jobType) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		byte[] hash = md.digest(password.getBytes());
 		String passHash = new String(hash);
 		
-		if (!db.addUser(username, passHash)) {
+		if (!db.addUser(username, passHash, jobType)) {
 			return "User already exists!";
 		}else {	
 	

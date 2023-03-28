@@ -5,8 +5,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -19,6 +21,8 @@ public class LoginFrame implements ActionListener {
 	private JButton loginButton;
 	private JButton returnButton;
 	private JLabel loginMsg;
+	private JLabel roleLabel;
+	private JComboBox<String> roleSelect;
 	private JFrame frame  = new JFrame();
 	
 	/**
@@ -29,6 +33,7 @@ public class LoginFrame implements ActionListener {
 		labels();
 		inputFields();
 		buttons();
+		roleComboBox();
 	}
 	
 	/**
@@ -77,7 +82,17 @@ public class LoginFrame implements ActionListener {
 		frame.getContentPane().add(passwordInput);
 	    usernameInput.setColumns(10);
 	}    
-	    
+	   
+	private void roleComboBox() {
+		JLabel roleLabel = new JLabel("Job Type:");
+		roleLabel.setBounds(477, 244, 94, 14);
+		frame.getContentPane().add(roleLabel);
+		
+		roleSelect = new JComboBox<>();
+		roleSelect.setModel(new DefaultComboBoxModel<>(new String[] {"Manager", "Front Desk", "Housekeeping", "Admin"}));
+		roleSelect.setBounds(477, 265, 94, 22);
+		frame.getContentPane().add(roleSelect);
+	}
 	// register & login buttons 
 	private void buttons() {
 	    registerButton = new JButton("Register");
@@ -92,13 +107,13 @@ public class LoginFrame implements ActionListener {
 		frame.getContentPane().add(loginButton);
 		loginButton.addActionListener(this);
 		
-		//Return to role selection screen
-		returnButton = new JButton("<<");
-		returnButton.setBounds(10, 9, 50, 20);
-		returnButton.setFocusable(false);
-		returnButton.setFont(new Font(null, Font.PLAIN, 10));
-		frame.getContentPane().add(returnButton);
-		returnButton.addActionListener(this);
+		/*
+		 * //Return to role selection screen returnButton = new JButton("<<");
+		 * returnButton.setBounds(10, 9, 50, 20); returnButton.setFocusable(false);
+		 * returnButton.setFont(new Font(null, Font.PLAIN, 10));
+		 * frame.getContentPane().add(returnButton);
+		 * returnButton.addActionListener(this);
+		 */
 	}
 	
 	@Override
@@ -107,8 +122,9 @@ public class LoginFrame implements ActionListener {
 		if (e.getSource() == loginButton) {
 			try {
 				// check if user input is valid
-				if (AccountsController.accountVerification(usernameInput.getText(), String.valueOf(passwordInput.getPassword()))) {
-					CreateReservationFrame createFrame = new CreateReservationFrame();
+				if (AccountsController.accountVerification(usernameInput.getText(), String.valueOf(passwordInput.getPassword()),
+						roleSelect.getSelectedItem().toString())) {
+					NavigationFrame createFrame = new NavigationFrame(roleSelect.getSelectedItem().toString());
 					frame.dispose();
 				}
 				else {
@@ -133,7 +149,8 @@ public class LoginFrame implements ActionListener {
 			try {
 				if (!usernameInput.getText().equals("") || !String.valueOf(passwordInput.getPassword()).equals("")) {
 					loginMsg.setForeground(Color.BLACK);
-					loginMsg.setText(AccountsController.registerAccount(usernameInput.getText(), String.valueOf(passwordInput.getPassword())));
+					loginMsg.setText(AccountsController.registerAccount(usernameInput.getText(), String.valueOf(passwordInput.getPassword()),
+							roleSelect.getSelectedItem().toString()));
 					usernameInput.setText("");
 					passwordInput.setText("");
 				}
@@ -148,10 +165,10 @@ public class LoginFrame implements ActionListener {
 				
 		}
 		
-		if (e.getSource() == returnButton) {
-			new RoleSelectionFrame();
-			frame.dispose();
-		}
+		/*
+		 * if (e.getSource() == returnButton) { new RoleSelectionFrame();
+		 * frame.dispose(); }
+		 */
 		
 	}
 

@@ -9,7 +9,7 @@ public class Account {
 	private byte[] hash;
 	
 
-	public Account(String userName, String password) throws Exception {
+	public Account(String userName, String password, String role) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");	
 		hash = md.digest(password.getBytes());					// encrypt password
 		this.password = new String(hash);
@@ -36,7 +36,7 @@ public class Account {
 		this.role = role;
 	}
 	
-	public String getRole(String role) {
+	public String getRole() {
 		return this.role;
 	}
 }

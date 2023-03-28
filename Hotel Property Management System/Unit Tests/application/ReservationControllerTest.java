@@ -24,7 +24,7 @@ public class ReservationControllerTest {
 	JPasswordField creditCard = new JPasswordField();
 	JTextField adress = new JTextField();
 	JTextField phoneNum = new JTextField();
-	JComboBox<Object> roomtype = new JComboBox<Object>();
+	JComboBox<String> roomtype = new JComboBox<String>();
 	JDateChooser startDate = new JDateChooser();
 	JDateChooser endDate = new JDateChooser();
 
@@ -35,7 +35,7 @@ public class ReservationControllerTest {
 	public void setUp() throws Exception {
 		//Setup class requirements
 		CreateReservationFrame.feedback = new JTextArea();
-		roomtype.setModel(new DefaultComboBoxModel<Object>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
+		roomtype.setModel(new DefaultComboBoxModel<String>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
 		
 		//Setup valid test data
 		fName.setText("Bob");
