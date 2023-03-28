@@ -73,12 +73,12 @@ public class LoginFrame implements ActionListener {
 	// user input fields
 	private void inputFields() {
 		usernameInput = new JTextField();
-		usernameInput.setBounds(325, 240, 108, 25);
+		usernameInput.setBounds(325, 240, 108, 28);
 		frame.getContentPane().add(usernameInput);
 	    usernameInput.setColumns(10);
 	    
 	    passwordInput = new JPasswordField();
-		passwordInput.setBounds(325, 265, 108, 25);
+		passwordInput.setBounds(325, 265, 108, 28);
 		frame.getContentPane().add(passwordInput);
 	    usernameInput.setColumns(10);
 	}    
