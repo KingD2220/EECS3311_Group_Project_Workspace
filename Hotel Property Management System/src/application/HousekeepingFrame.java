@@ -266,8 +266,8 @@ public class HousekeepingFrame implements ActionListener {
 		frame.getContentPane().add(scroll);
 		
 		// show all rooms and room status by default when frame first appears
-		HousekeepingController ctlr = new HousekeepingController("100", "509", false, false, false, false, false);
-		ctlr.displayAllRooms();
+		HousekeepingController ctlr = new HousekeepingController("100", "509", true, true, true, true, true);
+		ctlr.displayRoomDetails();;
 		
 		// drop-down selection for room status column - updates database when changed
 		JComboBox<String> roomStatusBox = new JComboBox<>();
