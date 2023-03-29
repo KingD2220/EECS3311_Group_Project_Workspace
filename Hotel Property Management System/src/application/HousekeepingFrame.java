@@ -3,10 +3,12 @@ package application;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
+import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
@@ -15,8 +17,6 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -142,7 +142,7 @@ public class HousekeepingFrame implements ActionListener {
 		checkOccupied.setFocusable(false);
 		checkPanel.add(checkOccupied);
 		
-		checkVacant = new Checkbox("Vacant");
+		checkVacant = new Checkbox("Available");
 		checkVacant.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -245,10 +245,6 @@ public class HousekeepingFrame implements ActionListener {
 	 * @Override method for DefaultTableModel is to make cells in the table non-editable.
 	 */
 	private void roomsDisplay() {
-		// show all rooms and room status by default
-		HousekeepingController ctlr = new HousekeepingController("100", "509", true, true, true, true, true);
-		ctlr.displayRoomDetails();
-		
 		Object[] columnHeaders = {"Room Number", "Room Status", "Room Type", "Reserv. Status", "Arrival Date", "Departure Date"};
 		model = new DefaultTableModel() { 
 			@Override
@@ -258,31 +254,35 @@ public class HousekeepingFrame implements ActionListener {
 		};
 		model.setColumnIdentifiers(columnHeaders);
 		
-		// drop-down selection for room status column - updates database when changed
-		JComboBox<String> roomStatusBox = new JComboBox<>();
-		roomStatusBox.setModel(new DefaultComboBoxModel<>(new String[] {"Dirty", "Clean", "Inspected"}));	
-		roomStatusBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if ((e.getStateChange() == ItemEvent.SELECTED)) {
-					int index = table.getSelectedRow();
-					Object roomNum = model.getValueAt(index, 0);
-					Object roomStatus = model.getValueAt(index, 1);
-					ctlr.roomStatusUpdate(String.valueOf(roomNum), String.valueOf(roomStatus));
-				}
-			}
-		});
-		
 		// add column headers to table and make 2nd column cells have drop-down options
 		table = new JTable(model);
 		table.setBounds(10, 288, 663, 264);
 		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);
-		table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(roomStatusBox));
 		
 		// add scroll capability to room status display
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBounds(10,218,663,334);
 		frame.getContentPane().add(scroll);
+		
+		// show all rooms and room status by default when frame first appears
+		HousekeepingController ctlr = new HousekeepingController("100", "509", true, true, true, true, true);
+		ctlr.displayRoomDetails();;
+		
+		// drop-down selection for room status column - updates database when changed
+		JComboBox<String> roomStatusBox = new JComboBox<>();
+		roomStatusBox.setModel(new DefaultComboBoxModel<>(new String[] {"DIRTY", "CLEAN", "INSPECTED"}));	
+		table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(roomStatusBox));
+//		roomStatusBox.addItemListener(new ItemListener() {
+//			public void itemStateChanged(ItemEvent e) {
+//				if ((e.getStateChange() == ItemEvent.SELECTED)) {
+//					int index = table.getSelectedRow();
+//					Object roomNum = model.getValueAt(index, 0);
+//					Object roomStatus = model.getValueAt(index, 1);
+//					ctlr.roomStatusUpdate(String.valueOf(roomNum), String.valueOf(roomStatus));
+//				}
+//			}
+//		});
 		
 		// manual rows added for preview purposes - comment out when using database
 //		model.addRow(new Object[] {"100", "Clean", "Suite", "Occupied", "2023-04-01", "2023-04-02"} );
@@ -340,7 +340,8 @@ public class HousekeepingFrame implements ActionListener {
 			frame.dispose();
 		}
 		if (e.getSource() == searchButton) {
-			new HousekeepingController((String) fromComboBox.getSelectedItem(), (String) toComboBox.getSelectedItem(), dirty, clean, inspected, occupied, vacant);
+			HousekeepingController ctrl = new HousekeepingController((String) fromComboBox.getSelectedItem(), (String) toComboBox.getSelectedItem(), dirty, clean, inspected, occupied, vacant);
+			ctrl.displayRoomDetails();
 		}
 		if (e.getSource() == selectAllButton) {
 			for (int i = 0; i < checkboxArray.length; i++) {
@@ -356,6 +357,23 @@ public class HousekeepingFrame implements ActionListener {
 				}
 			}	
 		}
+	}
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+						if("Nimbus".equals(info.getName()))
+						 UIManager.setLookAndFeel(info.getClassName());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				ActionListener hskpFrame  = new HousekeepingFrame();
+
+			}
+		});
 	}
 	
 }

@@ -15,7 +15,7 @@ public class HousekeepingController {
     boolean inspected;
     boolean occupied;
     boolean vacant;
-    
+        
     public HousekeepingController(String rangeStart, String rangeEnd, boolean dirty, boolean clean, boolean inspected, boolean occupied, boolean vacant) {
     	this.rangeStart = rangeStart;
     	this.rangeEnd = rangeEnd;
@@ -25,7 +25,7 @@ public class HousekeepingController {
     	this.occupied = occupied;
     	this.vacant = vacant;
     }
-    
+       
     /**
      * Get room details following the structure {"Room Number", "Room Status", "Room Type", "Reserv. Status", "Arrival Date", "Departure Date"},
      * then update HousekeepingFrame rooms display.
@@ -40,77 +40,53 @@ public class HousekeepingController {
     	// status that were selected by the client.
     	for (int i = 0; i < roomsList.size(); i++) {
     		if (this.dirty) {
-    			if (roomsList.get(i).getRoomStatus().equals("Dirty")) {
-    				ArrayList<Object> objArray = new ArrayList<>();
-        			objArray.add(roomsList.get(i).getRoomNum());
-        			objArray.add(roomsList.get(i).getRoomStatus());
-        			objArray.add(roomsList.get(i).getRoomType());
-        			objArray.add(roomsList.get(i).getReservationStatus());
-        			objArray.add(roomsList.get(i).getArrivalDate());
-        			objArray.add(roomsList.get(i).getDepartureDate()); 
-        			rowValuesList.add(objArray);
+    			if (roomsList.get(i).getRoomStatus().equals("DIRTY")) {
+    				rowValuesList.add(displayHelper(roomsList.get(i)));
     			}	
     		}
     		if (this.clean) {
-    			if (roomsList.get(i).getRoomStatus().equals("Clean")) {
-    				ArrayList<Object> objArray = new ArrayList<>();
-    				objArray.add(roomsList.get(i).getRoomNum());
-    				objArray.add(roomsList.get(i).getRoomStatus());
-    				objArray.add(roomsList.get(i).getRoomType());
-    				objArray.add(roomsList.get(i).getReservationStatus());
-    				objArray.add(roomsList.get(i).getArrivalDate());
-    				objArray.add(roomsList.get(i).getDepartureDate());
-    				rowValuesList.add(objArray);
-    				lastRoomInput = roomsList.get(i).getRoomNum();
+    			if (roomsList.get(i).getRoomStatus().equals("CLEAN")) {
+    				rowValuesList.add(displayHelper(roomsList.get(i)));
+    				lastRoomInput = roomsList.get(i).getRoomNum();   			
     			}
     		}
     		if (this.inspected) {
-    			if (roomsList.get(i).getRoomStatus().equals("Inspected")) {
-    				ArrayList<Object> objArray = new ArrayList<>();
-    				objArray.add(roomsList.get(i).getRoomNum());
-    				objArray.add(roomsList.get(i).getRoomStatus());
-    				objArray.add(roomsList.get(i).getRoomType());
-    				objArray.add(roomsList.get(i).getReservationStatus());
-    				objArray.add(roomsList.get(i).getArrivalDate());
-    				objArray.add(roomsList.get(i).getDepartureDate());
-    				rowValuesList.add(objArray);
+    			if (roomsList.get(i).getRoomStatus().equals("INSPECTED")) {
+    				rowValuesList.add(displayHelper(roomsList.get(i)));
     				lastRoomInput = roomsList.get(i).getRoomNum();
     			}
     		}
     		if (this.occupied) {
-    			if ( roomsList.get(i).getReservationStatus().equals("Occupied") && !roomsList.get(i).getRoomNum().equals(lastRoomInput) ) {
-    				ArrayList<Object> objArray = new ArrayList<>();
-    				objArray.add(roomsList.get(i).getRoomNum());
-    				objArray.add(roomsList.get(i).getRoomStatus());
-    				objArray.add(roomsList.get(i).getRoomType());
-    				objArray.add(roomsList.get(i).getReservationStatus());
-    				objArray.add(roomsList.get(i).getArrivalDate());
-    				objArray.add(roomsList.get(i).getDepartureDate());
-    				rowValuesList.add(objArray);
+    			if ( roomsList.get(i).getReservationStatus().equals("OCCUPIED") && !roomsList.get(i).getRoomNum().equals(lastRoomInput) ) {
+    				rowValuesList.add(displayHelper(roomsList.get(i)));
     			}
     		}
     		if (this.vacant) {
-    			if ( roomsList.get(i).getReservationStatus().equals("Vacant") && !roomsList.get(i).getRoomNum().equals(lastRoomInput) ) {
-    				ArrayList<Object> objArray = new ArrayList<>();
-    				objArray.add(roomsList.get(i).getRoomNum());
-    				objArray.add(roomsList.get(i).getRoomStatus());
-    				objArray.add(roomsList.get(i).getRoomType());
-    				objArray.add(roomsList.get(i).getReservationStatus());
-    				objArray.add(roomsList.get(i).getArrivalDate());
-    				objArray.add(roomsList.get(i).getDepartureDate());
-    				rowValuesList.add(objArray);
+    			if ( roomsList.get(i).getReservationStatus().equals("AVAILABLE") && !roomsList.get(i).getRoomNum().equals(lastRoomInput) ) {
+    				rowValuesList.add(displayHelper(roomsList.get(i)));
     			}
     		}
     	}
     	
     	// Place all bucket elements of rowValuesList into an array to insert as a row in HousekeepingFrame 
-    	// one iteration at a time.
     	for (int i = 0; i < rowValuesList.size(); i++) {
     		for (int j = 0; j < rowArray.length; j++) {
     			rowArray[j] = rowValuesList.get(i).get(j);
     		}
         	HousekeepingFrame.model.addRow(rowArray);
     	}
+    }
+    
+    // displayRoomsDetail() helper method
+    public ArrayList<Object> displayHelper(Room room) {
+    	ArrayList<Object> objArray = new ArrayList<>();
+    	objArray.add(room.getRoomNum());
+    	objArray.add(room.getRoomStatus());
+    	objArray.add(room.getRoomType());
+    	objArray.add(room.getReservationStatus());
+    	objArray.add(room.getArrivalDate());
+    	objArray.add(room.getDepartureDate());
+    	return objArray;
     }
     
     public void roomStatusUpdate(String roomNum, String roomStatus) {
