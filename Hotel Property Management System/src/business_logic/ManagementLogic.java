@@ -26,3 +26,5 @@ public class ManagementLogic {
 		database.updateRoomStatus(roomNum, roomStatus);
 	}
 }
+
+ 

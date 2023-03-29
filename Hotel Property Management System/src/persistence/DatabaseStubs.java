@@ -91,5 +91,10 @@ public class DatabaseStubs implements Database {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public void updateRoomStatus(String roomNum, String roomStatus) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

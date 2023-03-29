@@ -1,7 +1,8 @@
-package application;
+package application.controllers;
 
 import java.util.ArrayList;
 
+import application.frames.HousekeepingFrame;
 import business_logic.ManagementLogic;
 import domain_objects_Rooms.Room;
 import persistence.RealDatabase;

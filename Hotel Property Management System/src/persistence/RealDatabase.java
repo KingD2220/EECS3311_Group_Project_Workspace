@@ -319,9 +319,11 @@ public class RealDatabase implements Database {
 			statement.setString(1, employeeNum);
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
-				newEmployee.setFirst_name(rs.getString(""));
-				newEmployee.setLast_name(rs.getString(""));
-				newEmployee.setWeeklyWage(rs.getString(""));
+				newEmployee.setFirst_name(rs.getString("first_name"));
+				newEmployee.setLast_name(rs.getString("last_name"));
+				newEmployee.setWeeklyWage(rs.getString("weeklyWage"));
+				newEmployee.setAddress(rs.getString("address"));
+				newEmployee.setHourlyWage(rs.getString("hourlyPay"));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -329,14 +331,19 @@ public class RealDatabase implements Database {
 		return null;
 	}
 	public static void main(String[] args) {
-		ArrayList<Room> roomtest = new ArrayList();
-		RealDatabase db = new RealDatabase();
 		
-		roomtest = db.getRoomStatus("100", "209");
-		
-		for (Room room : roomtest) {
-			System.out.println(room.toString());
+	}
+
+
+
+	@Override
+	public void updateRoomStatus(String roomNum, String roomStatus) {
+		try {
+			PreparedStatement statement = connection.prepareStatement("UPDATE ROOM SET %s="); 
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+		
 	}
 	
 

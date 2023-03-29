@@ -1,4 +1,4 @@
-package application;
+package application.frames;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -6,6 +6,9 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.table.DefaultTableModel;
+
+import application.controllers.HousekeepingController;
+
 import javax.swing.JScrollPane;
 import java.awt.Checkbox;
 import java.awt.EventQueue;

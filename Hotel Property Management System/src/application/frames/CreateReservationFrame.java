@@ -1,4 +1,4 @@
-package application;
+package application.frames;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,6 +19,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JPasswordField;
 
 import com.toedter.calendar.JDateChooser;
+
+import application.controllers.ReservationController;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

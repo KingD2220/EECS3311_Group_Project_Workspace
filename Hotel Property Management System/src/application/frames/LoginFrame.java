@@ -1,4 +1,4 @@
-package application;
+package application.frames;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import application.controllers.AccountsController;
 
 public class LoginFrame implements ActionListener {
 	private JTextField usernameInput;

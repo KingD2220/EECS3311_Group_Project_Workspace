@@ -5,9 +5,11 @@ import java.awt.event.ActionListener;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import application.frames.LoginFrame;
 
 
-public class guiBuilder {
+
+public class Main {
 
 	/**
 	 * Launch the application.
