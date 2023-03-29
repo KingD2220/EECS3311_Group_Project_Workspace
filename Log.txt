@@ -117,3 +117,13 @@ James and Dexter - work on the back end and front end of authorizing and authent
 - Next week, the team will work on the Front Desk user stories (e.g., check-in/check-out, billing).
 
 =========================================================================================
+
+10. March 28, 2023 (19:00 - 20:00)
+
+- Each Team member provided an update on their work and assigned more tasks in preparation for iteration 3 deadline
+
+- Humud & Dexter --> Refractor current code, address bugs that QA team presented, and work on remove reservation user story 
+
+- Miguel & James --> Work on front-end and back-end backend for checking in / checking out customers who have reservations user story.
+
+=========================================================================================
