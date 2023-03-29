@@ -210,6 +210,7 @@ public class RealDatabase implements Database {
 			return false;
 		}
 	}
+	
 /*this is a helper method that extracts duplicate code from the customer methods
  * and does the heavy lifting after receiving a query*/
 	public void customerHelper(Reservation reservation, String query, String caller ) {
@@ -263,7 +264,7 @@ public class RealDatabase implements Database {
 	@Override
 	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd) {
 		ArrayList<Room> roomList = new ArrayList<>();
-; 		try {
+		try {
 			PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM ROOM WHERE roomNumber BETWEEN ? AND ?"));
 			statement.setString(1, roomNumStart);
 			statement.setString(2, roomNumEnd);
@@ -300,6 +301,7 @@ public class RealDatabase implements Database {
 		room.setArrivalDate(rs.getString("end_date"));
 		room.setRoomStatus(rs.getString("roomSatus"));
 	    room.setRoomType(rs.getString("roomType"));
+	    room.setReservationStatus(rs.getString("reservationStatus"));
 	    
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -311,8 +313,30 @@ public class RealDatabase implements Database {
 
 	@Override
 	public Employee getEmployee(String employeeNum) {
-		// TODO Auto-generated method stub
+		Employee newEmployee = new Employee();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE employeeNum = ?");
+			statement.setString(1, employeeNum);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				newEmployee.setFirst_name(rs.getString(""));
+				newEmployee.setLast_name(rs.getString(""));
+				newEmployee.setWeeklyWage(rs.getString(""));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return null;
+	}
+	public static void main(String[] args) {
+		ArrayList<Room> roomtest = new ArrayList();
+		RealDatabase db = new RealDatabase();
+		
+		roomtest = db.getRoomStatus("100", "209");
+		
+		for (Room room : roomtest) {
+			System.out.println(room.toString());
+		}
 	}
 	
 
