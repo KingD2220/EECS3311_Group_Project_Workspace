@@ -6,9 +6,8 @@ import business_logic.ManagementLogic;
 import domain_objects_Rooms.Room;
 import persistence.RealDatabase;
 
-public class HousekeepingController {
-	RealDatabase database = new RealDatabase(); 
-    ManagementLogic managementLogic = new ManagementLogic(database);
+public class HousekeepingController {	
+    ManagementLogic managementLogic = new ManagementLogic(new RealDatabase());
     String rangeStart;
     String rangeEnd;
     boolean dirty;

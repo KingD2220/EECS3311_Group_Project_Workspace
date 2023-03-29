@@ -2,6 +2,7 @@ package business_logic;
 
 import java.util.ArrayList;
 import domain_objects_Rooms.Room;
+import domain_objects_Users.Employee;
 import persistence.Database;
 
 public class ManagementLogic {
@@ -16,6 +17,10 @@ public class ManagementLogic {
 		return database.getRoomStatus(roomRangeStart, roomRangeEnd);
 	}
 	
+	public Employee getEmployee(String employeeNum) {
+		return database.getEmployee(employeeNum);
+	}
+
 	// update room status in database
 	public void roomStatusUpdate(String roomNum, String roomStatus) {
 		database.updateRoomStatus(roomNum, roomStatus);
