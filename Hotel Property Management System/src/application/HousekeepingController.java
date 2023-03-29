@@ -16,7 +16,7 @@ public class HousekeepingController {
     boolean inspected;
     boolean occupied;
     boolean vacant;
-    
+        
     public HousekeepingController(String rangeStart, String rangeEnd, boolean dirty, boolean clean, boolean inspected, boolean occupied, boolean vacant) {
     	this.rangeStart = rangeStart;
     	this.rangeEnd = rangeEnd;
@@ -25,6 +25,32 @@ public class HousekeepingController {
     	this.inspected = inspected;
     	this.occupied = occupied;
     	this.vacant = vacant;
+    }
+    
+    // add room details for all rooms for the HousekeepingFrame
+    public void displayAllRooms() {
+    	ArrayList<Room> roomsList = managementLogic.roomSearch(rangeStart, rangeEnd); 
+    	ArrayList<ArrayList<Object>> rowValuesList = new ArrayList<ArrayList<Object>>();
+    	Object[] rowArray = new Object[6];
+    	
+    	for (int i = 0; i < roomsList.size(); i++) {
+    		ArrayList<Object> objArray = new ArrayList<>();
+    		objArray.add(roomsList.get(i).getRoomNum());
+    		objArray.add(roomsList.get(i).getRoomStatus());
+    		objArray.add(roomsList.get(i).getRoomType());
+    		objArray.add(roomsList.get(i).getReservationStatus());
+    		objArray.add(roomsList.get(i).getArrivalDate());
+			objArray.add(roomsList.get(i).getDepartureDate()); 
+			rowValuesList.add(objArray);
+    	}
+    	
+    	// Place all bucket elements of rowValuesList into an array to insert as a row in HousekeepingFrame 
+    	for (int i = 0; i < rowValuesList.size(); i++) {
+    		for (int j = 0; j < rowArray.length; j++) {
+    			rowArray[j] = rowValuesList.get(i).get(j);
+    		}
+        	HousekeepingFrame.model.addRow(rowArray);
+    	}
     }
     
     /**
@@ -91,7 +117,7 @@ public class HousekeepingController {
     			}
     		}
     		if (this.vacant) {
-    			if ( roomsList.get(i).getReservationStatus().equals("Vacant") && !roomsList.get(i).getRoomNum().equals(lastRoomInput) ) {
+    			if ( roomsList.get(i).getReservationStatus().equals("Available") && !roomsList.get(i).getRoomNum().equals(lastRoomInput) ) {
     				ArrayList<Object> objArray = new ArrayList<>();
     				objArray.add(roomsList.get(i).getRoomNum());
     				objArray.add(roomsList.get(i).getRoomStatus());
@@ -105,7 +131,6 @@ public class HousekeepingController {
     	}
     	
     	// Place all bucket elements of rowValuesList into an array to insert as a row in HousekeepingFrame 
-    	// one iteration at a time.
     	for (int i = 0; i < rowValuesList.size(); i++) {
     		for (int j = 0; j < rowArray.length; j++) {
     			rowArray[j] = rowValuesList.get(i).get(j);

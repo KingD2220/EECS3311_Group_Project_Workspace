@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JLabel;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -28,6 +29,10 @@ public class ArrivalsFrame implements ActionListener {
 	private JDateChooser checkInChooser;
 	private JDateChooser checkOutChooser;
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+    JButton logOutButton;
+    JButton checkInButton;
+    JButton cxlButton;
+    JButton searchButton;
     
 	
 	public ArrivalsFrame() {
@@ -47,6 +52,13 @@ public class ArrivalsFrame implements ActionListener {
 		lblHeader.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblHeader.setBounds(25, 11, 55, 24);
 		frame.getContentPane().add(lblHeader);
+		
+		logOutButton = new JButton("Logout");
+		logOutButton.setFont(new Font("Dialog", Font.PLAIN, 10));
+		logOutButton.setBounds(605, 11, 68, 18);
+		logOutButton.setFocusable(false);
+		logOutButton.addActionListener(this);
+		frame.getContentPane().add(logOutButton);
 	}
 	
 	private void queryPanel() {
@@ -121,24 +133,24 @@ public class ArrivalsFrame implements ActionListener {
 		frame.getContentPane().add(scroll);
 	}
 	
-	private void buttonsPanel() {
+	private void buttonsPanel() {		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setBounds(581, 38, 92, 514);
 		buttonsPanel.setLayout(null);
 		buttonsPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		frame.getContentPane().add(buttonsPanel);
 		
-		JButton checkInButton = new JButton("Check In");
+		checkInButton = new JButton("Check In");
 		checkInButton.setBounds(0, 212, 92, 23);
 		checkInButton.setFocusable(false);
 		buttonsPanel.add(checkInButton);
 		
-		JButton cxlButton = new JButton("Cancel");
+		cxlButton = new JButton("Cancel");
 		cxlButton.setBounds(0, 241, 92, 23);
 		cxlButton.setFocusable(false);
 		buttonsPanel.add(cxlButton);
 		
-		JButton searchButton = new JButton("Search");
+		searchButton = new JButton("Search");
 		searchButton.setBounds(0, 21, 92, 23);
 		searchButton.setFocusable(false);
 		buttonsPanel.add(searchButton);
@@ -150,4 +162,5 @@ public class ArrivalsFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
+
 }
