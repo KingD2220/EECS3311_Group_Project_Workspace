@@ -11,9 +11,12 @@ CREATE TABLE EMPLOYEE
      first_name 		VARCHAR(30)		NOT NULL, 
      address 			VARCHAR(30) 	NOT NULL, 
      phone_num 			VARCHAR(30)		NOT NULL,
-     hourlyPay          INT				NOT NULL,
-     weeklyWage         INT,
-     employeeNum        VARCHAR(30)     NOT NULL,
+     hourlyPay          VARCHAR(70)		NOT NULL,
+     weeklyWage         VARCHAR(10),
+     employeeNum        int             NOT NULL AUTO_INCREMENT,
+     emplRole           VARCHAR(15)     NOT NULL,
+     email              VARCHAR(50)     NOT NULL,
+     hoursWorked        VARCHAR(10),
      PRIMARY KEY(employeeNum));
      
      CREATE TABLE RESERVATION
