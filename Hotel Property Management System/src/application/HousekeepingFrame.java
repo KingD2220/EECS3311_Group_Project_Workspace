@@ -42,7 +42,7 @@ public class HousekeepingFrame implements ActionListener {
 	private boolean clean;
 	private boolean inspected;
 	private boolean occupied;
-	private boolean vacant;
+	private boolean vacant; 
 	
 	public HousekeepingFrame() {
 		window();
@@ -245,6 +245,10 @@ public class HousekeepingFrame implements ActionListener {
 	 * @Override method for DefaultTableModel is to make cells in the table non-editable.
 	 */
 	private void roomsDisplay() {
+		// show all rooms and room status by default
+		HousekeepingController ctlr = new HousekeepingController("100", "509", true, true, true, true, true);
+		ctlr.displayRoomDetails();
+		
 		Object[] columnHeaders = {"Room Number", "Room Status", "Room Type", "Reserv. Status", "Arrival Date", "Departure Date"};
 		model = new DefaultTableModel() { 
 			@Override
@@ -254,9 +258,19 @@ public class HousekeepingFrame implements ActionListener {
 		};
 		model.setColumnIdentifiers(columnHeaders);
 		
-		// drop-down selection for room status column
+		// drop-down selection for room status column - updates database when changed
 		JComboBox<String> roomStatusBox = new JComboBox<>();
 		roomStatusBox.setModel(new DefaultComboBoxModel<>(new String[] {"Dirty", "Clean", "Inspected"}));	
+		roomStatusBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if ((e.getStateChange() == ItemEvent.SELECTED)) {
+					int index = table.getSelectedRow();
+					Object roomNum = model.getValueAt(index, 0);
+					Object roomStatus = model.getValueAt(index, 1);
+					ctlr.roomStatusUpdate(String.valueOf(roomNum), String.valueOf(roomStatus));
+				}
+			}
+		});
 		
 		// add column headers to table and make 2nd column cells have drop-down options
 		table = new JTable(model);
@@ -269,10 +283,6 @@ public class HousekeepingFrame implements ActionListener {
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBounds(10,218,663,334);
 		frame.getContentPane().add(scroll);
-		
-		// show all rooms and room status by default
-		HousekeepingController ctlr = new HousekeepingController("100", "509", true, true, true, true, true);
-		ctlr.displayRoomDetails();
 		
 		// manual rows added for preview purposes - comment out when using database
 //		model.addRow(new Object[] {"100", "Clean", "Suite", "Occupied", "2023-04-01", "2023-04-02"} );
@@ -330,7 +340,7 @@ public class HousekeepingFrame implements ActionListener {
 			frame.dispose();
 		}
 		if (e.getSource() == searchButton) {
-			HousekeepingController ctlr = new HousekeepingController((String) fromComboBox.getSelectedItem(), (String) toComboBox.getSelectedItem(), dirty, clean, inspected, occupied, vacant);
+			new HousekeepingController((String) fromComboBox.getSelectedItem(), (String) toComboBox.getSelectedItem(), dirty, clean, inspected, occupied, vacant);
 		}
 		if (e.getSource() == selectAllButton) {
 			for (int i = 0; i < checkboxArray.length; i++) {
