@@ -3,6 +3,9 @@ package application.frames;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import application.controllers.ManagementController;
+
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JRadioButton;
@@ -137,7 +140,11 @@ public class ManagerFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		ManagementController manage = new ManagementController(employeeNum, emplyeeName, jobType,
+				 employeeEmail, hourly, hoursWorked, pay);
+		if(e.getSource() == showJButton) {
+			manage.getAndDispEmpl();
+		}
 		
 	}
 }

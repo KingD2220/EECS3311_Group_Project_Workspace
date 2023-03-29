@@ -78,6 +78,7 @@ public class HousekeepingController {
     	}
     }
     
+  
     // displayRoomsDetail() helper method
     public ArrayList<Object> displayHelper(Room room) {
     	ArrayList<Object> objArray = new ArrayList<>();

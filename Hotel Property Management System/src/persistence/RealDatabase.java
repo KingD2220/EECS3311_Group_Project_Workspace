@@ -324,6 +324,7 @@ public class RealDatabase implements Database {
 				newEmployee.setWeeklyWage(rs.getString("weeklyWage"));
 				newEmployee.setAddress(rs.getString("address"));
 				newEmployee.setHourlyWage(rs.getString("hourlyPay"));
+				
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -339,7 +340,9 @@ public class RealDatabase implements Database {
 	@Override
 	public void updateRoomStatus(String roomNum, String roomStatus) {
 		try {
-			PreparedStatement statement = connection.prepareStatement("UPDATE ROOM SET %s="); 
+			PreparedStatement statement = connection.prepareStatement(String.format("UPDATE ROOM SET %s=? WHERE roomNumber = ?", "roomSatus"));
+			statement.setString(1, roomStatus);
+			statement.setString(2, roomNum);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
