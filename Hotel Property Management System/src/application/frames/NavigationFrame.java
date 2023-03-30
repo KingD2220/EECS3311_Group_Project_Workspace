@@ -14,8 +14,9 @@ public class NavigationFrame implements ActionListener{
 	private JButton updateResButton;
 	private JButton manageEmployeeButton;
 	private JButton roomStatusButton;
+	private JButton checkInOutButton;
 	
-	NavigationFrame(String role) {
+	public NavigationFrame(String role) {
 		
 		frame.setVisible(true);
 		this.window();
@@ -38,7 +39,7 @@ public class NavigationFrame implements ActionListener{
     private void viewProfileButton() {
     	viewProfileButton = new JButton("View My Profile");
 		viewProfileButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		viewProfileButton.setBounds(200, 34, 296, 102);
+		viewProfileButton.setBounds(35, 55, 296, 102);
 		frame.getContentPane().add(viewProfileButton);
 		viewProfileButton.addActionListener(this);
     }
@@ -46,7 +47,7 @@ public class NavigationFrame implements ActionListener{
     private void createResFrameButton() {
     	createResFrameButton = new JButton("Create a Reservation");
 		createResFrameButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		createResFrameButton.setBounds(200, 166, 296, 102);
+		createResFrameButton.setBounds(35, 377, 296, 102);
 		frame.getContentPane().add(createResFrameButton);
 		createResFrameButton.addActionListener(this);
     }
@@ -54,7 +55,7 @@ public class NavigationFrame implements ActionListener{
     private void updateResFrameButton() {
     	updateResButton = new JButton("Update Reservation");
 		updateResButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		updateResButton.setBounds(200, 295, 296, 102);
+		updateResButton.setBounds(35, 218, 296, 102);
 		frame.getContentPane().add(updateResButton);
 		updateResButton.addActionListener(this);
     }
@@ -62,7 +63,7 @@ public class NavigationFrame implements ActionListener{
     private void manageEmployeeButton() {	
 		manageEmployeeButton = new JButton("Manage Employees");
 		manageEmployeeButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		manageEmployeeButton.setBounds(200, 422, 296, 102);
+		manageEmployeeButton.setBounds(341, 55, 296, 102);
 		frame.getContentPane().add(manageEmployeeButton);
 		manageEmployeeButton.addActionListener(this);
 	}
@@ -70,23 +71,60 @@ public class NavigationFrame implements ActionListener{
     private void roomStatusButton() {
 		roomStatusButton = new JButton("View Room Status");
 		roomStatusButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		roomStatusButton.setBounds(200, 166, 296, 102);
+		roomStatusButton.setBounds(341, 218, 296, 102);
 		frame.getContentPane().add(roomStatusButton);
 		roomStatusButton.addActionListener(this);
     }
     
+    private void checkInOutButton() {
+		checkInOutButton = new JButton("Check-in/Check-out");
+		checkInOutButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		checkInOutButton.setBounds(341, 377, 296, 102);
+		frame.getContentPane().add(checkInOutButton);
+		checkInOutButton.addActionListener(this);
+    }
+    
     //Display navigation buttons based on role of user
     private void enableRoleButtons(String role) {
+    	if (role == "Manager" || role == "Admin") {
+    		ManagerView();
+    	}
+    	
+    	if (role == "Front Desk") {
+    		FrontDeskView();
+    	}
+    	
     	if (role == "Housekeeping") {
-    		roomStatusButton();
+    		HousekeepingView();
     	}
-    	else { //Create buttons shared by employees and managers
-    		createResFrameButton();
-    		updateResFrameButton();
-    	}
-    	if (role.equalsIgnoreCase("Manager")) {
-    		manageEmployeeButton();
-    	}
+    }
+    
+    private void ManagerView() {
+		createResFrameButton();
+		updateResFrameButton();
+		manageEmployeeButton();
+		roomStatusButton();
+		checkInOutButton();
+    }
+    
+    private void FrontDeskView() {
+    	viewProfileButton.setBounds(200, 34, 296, 102);
+		
+		createResFrameButton();
+		createResFrameButton.setBounds(200, 166, 296, 102);
+		
+		updateResFrameButton();
+		updateResButton.setBounds(200, 295, 296, 102);
+		
+		checkInOutButton();
+		checkInOutButton.setBounds(200, 422, 296, 102);
+    }
+    
+    private void HousekeepingView() {
+    	viewProfileButton.setBounds(200, 34, 296, 102);
+		
+		roomStatusButton();
+		roomStatusButton.setBounds(200, 166, 296, 102);
     }
     
     //Navigate to selected tab when button is pressed
@@ -106,6 +144,9 @@ public class NavigationFrame implements ActionListener{
 		}
 		if (e.getSource() == roomStatusButton) {
 			new HousekeepingFrame();
+		}
+		if (e.getSource() == checkInOutButton) {
+			//Create check-in/check-out frame
 		}
 		
 		frame.dispose();
