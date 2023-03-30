@@ -110,7 +110,7 @@ public class ReservationController implements ActionListener {
 				newRes.setRoomType(roomtype.getSelectedItem().toString());
 				room.roomReserved();
 				if(reservationLogic.addReservation(newRes)) {
-				CreateReservationFrame.feedback.setText(newRes.toString()); 
+				CreateReservationFrame.feedback.setText(newRes.toString());
 				}else {
 					CreateReservationFrame.feedback.setText("Reservation not Created Please ensure Phone number "
 							+ "is not associated with another reservation");
