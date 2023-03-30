@@ -25,4 +25,10 @@ public class ManagementLogic {
 	public void roomStatusUpdate(String roomNum, String roomStatus) {
 		database.updateRoomStatus(roomNum, roomStatus);
 	}
+	
+	public Employee getEmpyee(String employeeNum) {
+		return database.getEmployee(employeeNum);
+	}
 }
+
+ 

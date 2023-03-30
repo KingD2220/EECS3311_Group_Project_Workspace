@@ -1,4 +1,4 @@
-package application;
+package application.frames;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import application.controllers.ReservationController;
 import domain_objects_Rooms.Reservation;
 
 public class UpdateFrame implements ActionListener {

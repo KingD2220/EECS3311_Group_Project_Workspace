@@ -12,6 +12,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
 
+import application.controllers.ReservationController;
+import application.frames.CreateReservationFrame;
+
 import java.util.Date;
 import java.util.Calendar;
 

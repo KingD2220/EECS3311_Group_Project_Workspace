@@ -1,8 +1,11 @@
-package application;
+package application.frames;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import application.controllers.ManagementController;
+
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JRadioButton;
@@ -19,6 +22,8 @@ public class ManagerFrame implements ActionListener {
     private JTextField hourly;
     private JTextField hoursWorked;
     private JTextField pay;
+    private JButton showJButton;
+    private JButton submitJButton;
     
     
 	public ManagerFrame() {
@@ -52,10 +57,10 @@ public class ManagerFrame implements ActionListener {
 		frame.getContentPane().add(employeeNum);
 	    employeeNum.setColumns(10);
 	    
-	    JButton submitJButton = new JButton("SHOW");
-		submitJButton.addActionListener(this);
-		submitJButton.setBounds(118, 52, 74, 19);
-		frame.getContentPane().add(submitJButton);
+	    showJButton = new JButton("SHOW");
+		showJButton.addActionListener(this);
+		showJButton.setBounds(118, 52, 74, 19);
+		frame.getContentPane().add(showJButton);
 	} 
     //Display employee name
     private void employeeName() {
@@ -127,7 +132,7 @@ public class ManagerFrame implements ActionListener {
 		pay.setBounds(296, 271, 84, 23);
 		frame.getContentPane().add(pay);
 		
-		JButton submitJButton = new JButton("SUBMIT");
+		submitJButton = new JButton("SUBMIT");
 		submitJButton.addActionListener(this);
 		submitJButton.setBounds(411, 273, 84, 19);
 		frame.getContentPane().add(submitJButton);
@@ -135,7 +140,11 @@ public class ManagerFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		ManagementController manage = new ManagementController(employeeNum, emplyeeName, jobType,
+				 employeeEmail, hourly, hoursWorked, pay);
+		if(e.getSource() == showJButton) {
+			manage.getAndDispEmpl();
+		}
 		
 	}
 }

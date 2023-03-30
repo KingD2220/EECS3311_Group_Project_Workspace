@@ -1,4 +1,4 @@
-package application;
+package application.frames;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,6 +19,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JPasswordField;
 
 import com.toedter.calendar.JDateChooser;
+
+import application.controllers.ReservationController;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -32,6 +35,7 @@ public class CreateReservationFrame implements ActionListener {
 	public static  JTextArea feedback;
     public	JButton updateButton;
     private JButton logOutButton;
+    private JButton clearButton;
 	private JComboBox<String> roomSelect;
 	private JDateChooser checkInChooser;
 	private JDateChooser checkOutChooser;
@@ -40,7 +44,7 @@ public class CreateReservationFrame implements ActionListener {
     /**
      * Launch reservation window
      */
-    CreateReservationFrame() {
+     CreateReservationFrame() {
     	frame.setVisible(true);
     	this.window();
     	
@@ -68,6 +72,7 @@ public class CreateReservationFrame implements ActionListener {
 		updateButton();
 		showCreditCardButton();
 		logoutButton();
+		clearButton();
     }
     
     //Initialize Frame
@@ -141,20 +146,20 @@ public class CreateReservationFrame implements ActionListener {
     private void dateChooser() {
     	//Check-in Date
 		JLabel lblCheckinDate = new JLabel("Check-in Date:");
-		lblCheckinDate.setBounds(335, 33, 108, 14);
+		lblCheckinDate.setBounds(294, 33, 108, 14);
 		frame.getContentPane().add(lblCheckinDate);
 		
 		checkInChooser = new JDateChooser();
-		checkInChooser.setBounds(453, 33, 108, 23);
+		checkInChooser.setBounds(397, 33, 164, 23);
 		frame.getContentPane().add(checkInChooser);
 		
 		//Check-out Date
 		JLabel lblCheckoutDate = new JLabel("Check-out Date:");
-		lblCheckoutDate.setBounds(335, 58, 108, 14);
+		lblCheckoutDate.setBounds(294, 58, 108, 14);
 		frame.getContentPane().add(lblCheckoutDate);
 		
 		checkOutChooser = new JDateChooser();
-		checkOutChooser.setBounds(453, 58, 108, 23);
+		checkOutChooser.setBounds(397, 58, 164, 23);
 		frame.getContentPane().add(checkOutChooser);
     }
     
@@ -166,7 +171,7 @@ public class CreateReservationFrame implements ActionListener {
 		
 		roomSelect = new JComboBox<>();
 		roomSelect.setModel(new DefaultComboBoxModel<>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
-		roomSelect.setBounds(26, 196, 94, 22);
+		roomSelect.setBounds(26, 196, 108, 22);
 		frame.getContentPane().add(roomSelect);
     }
     
@@ -229,6 +234,15 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(logOutButton);
     }
     
+    private void clearButton() {
+	    clearButton = new JButton("Clear");
+		clearButton.setFont(new Font("Dialog", Font.PLAIN, 10));
+		clearButton.setFocusable(false);
+		clearButton.addActionListener(this);
+		clearButton.setBounds(603, 347, 68, 18);
+		frame.getContentPane().add(clearButton);
+    }
+    
     //Show/Hide Credit Card Button
     private void showCreditCardButton() {
     	JCheckBox showCreditButton = new JCheckBox("Show/Hide");
@@ -262,5 +276,20 @@ public class CreateReservationFrame implements ActionListener {
 			LoginFrame loginFrame = new LoginFrame();
 			frame.dispose();
 		}
+		if (e.getSource() == clearButton) {
+			clearFields();
+		}
+	}
+	
+	//Clears all input fields
+	public void clearFields() {
+		firstInput.setText("");
+		lastInput.setText("");
+		phoneInput.setText("");
+		addressInput.setText("");
+		creditInput.setText("");
+		roomSelect.setSelectedItem("Standard");
+		checkInChooser.setCalendar(null);
+		checkOutChooser.setCalendar(null);
 	}
 }

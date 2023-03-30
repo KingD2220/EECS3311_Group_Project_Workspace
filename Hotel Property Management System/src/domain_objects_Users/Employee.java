@@ -3,9 +3,37 @@ package domain_objects_Users;
 public class Employee extends Profile {
 	// make separate account class to associate employee for login credentials
 	protected String employeeID;
-	protected double employeeWage; 
-	protected String weeklWage;
+	protected String weeklyWage;
+	protected String hourlyWage;
+	protected String hoursWorked;
+	protected String email;
+	protected String role;
 	
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getHourlyWage() {
+		return hourlyWage;
+	}
+
+	public void setHourlyWage(String hourlyWage) {
+		this.hourlyWage = hourlyWage;
+	}
+
 	public Employee() {
 		super();
 	}
@@ -18,20 +46,25 @@ public class Employee extends Profile {
 		this.employeeID = employeeID;
 	}
 
-	public double getEmployeeWage() {
-		return employeeWage;
-	}
-
-	public void setEmployeeWage(double employeeWage) {
-		this.employeeWage = employeeWage;
-	}
 
 	public String getWeeklyWage() {
-		return weeklWage;
+		int hourly = Integer.parseInt(getHourlyWage());
+		int hours = Integer.parseInt(getHoursWorked());
+		this.weeklyWage = ""+hourly * hours;
+		return this.weeklyWage;
 	}
 
-	public void setWeeklyWage(String string) {
-		this.weeklWage = string;
+	public void setWeeklyWage(String weeklyWage) {
+		
+		this.weeklyWage = weeklyWage;
+	}
+
+	public String getHoursWorked() {
+		return hoursWorked;
+	}
+
+	public void setHoursWorked(String hoursWorked) {
+		this.hoursWorked = hoursWorked;
 	}
 	                                  
 

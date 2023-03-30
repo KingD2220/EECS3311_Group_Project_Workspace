@@ -1,4 +1,4 @@
-package application;
+package application.controllers;
 
 import java.security.MessageDigest;
 import persistence.RealDatabase;

@@ -1,4 +1,4 @@
-package application;
+package application.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +12,8 @@ import javax.swing.JPasswordField;
 
 import com.toedter.calendar.JDateChooser;
 
+import application.frames.CreateReservationFrame;
+import application.frames.UpdateFrame;
 import business_logic.ReservationLogic;
 import domain_objects_Rooms.Reservation;
 import domain_objects_Rooms.Room;
@@ -29,7 +31,7 @@ public class ReservationController implements ActionListener {
 	private JDateChooser endDate;
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
-    Reservation newRes;
+    public Reservation newRes;
     ReservationLogic reservationLogic = new ReservationLogic(new RealDatabase());
 
 /*Constructor*/
@@ -108,7 +110,7 @@ public class ReservationController implements ActionListener {
 				newRes.setRoomType(roomtype.getSelectedItem().toString());
 				room.roomReserved();
 				if(reservationLogic.addReservation(newRes)) {
-				CreateReservationFrame.feedback.setText(newRes.toString()); 
+				CreateReservationFrame.feedback.setText(newRes.toString());
 				}else {
 					CreateReservationFrame.feedback.setText("Reservation not Created Please ensure Phone number "
 							+ "is not associated with another reservation");
