@@ -351,13 +351,10 @@ public class RealDatabase implements Database {
 		if (caller.equals("Arrivals")) {
 			caller = "arrival_date";
 		}else caller = "departure_date";
-System.out.println(caller);
 		try {
 			PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM RESERVATION WHERE %s = ?", caller));
-			//statement.setString(1, caller);
 			statement.setString(1, date);
 	        ResultSet rs = statement.executeQuery();
-	        System.out.println(rs.getFetchSize());
 	        while(rs.next()) {
 	        	Reservation res = populateReservation(rs);
 	        	resList.add(res);
@@ -386,6 +383,7 @@ System.out.println(caller);
 		return null;
 	}
 	
+
 
 }
 
