@@ -30,7 +30,7 @@ public class ManagementController {
     
     public Employee getAndDispEmpl() {
     	StringBuilder name = new StringBuilder();
-    	Employee newEmployee = new Employee();
+    	Employee newEmployee = management.getEmployee(employeeNum.getText());
     	newEmployee = management.getEmployee(employeeNum.getText());
     	name.append(newEmployee.getFirst_name()+" ");
     	name.append(newEmployee.getLast_name());

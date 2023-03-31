@@ -313,7 +313,7 @@ public class RealDatabase implements Database {
 		Employee newEmployee = new Employee();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE employeeNum = ?");
-			statement.setString(1, employeeNum);
+			statement.setInt(1, Integer.parseInt(employeeNum));
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
 				newEmployee.setFirst_name(rs.getString("first_name"));
@@ -383,7 +383,17 @@ public class RealDatabase implements Database {
 		return null;
 	}
 	
-
+	public static void main(String[] args) {
+		ArrayList<Reservation> list = new ArrayList<>();
+		Database db = new RealDatabase();
+        
+		list = db.getResByDate("23-06-12", "Arrivals");
+		for (Reservation reservation : list) {
+			System.out.println(reservation.toString());
+		}
+	db.updateRoomStatus("100", "Dirty");
+		
+	}
 
 }
 
