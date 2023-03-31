@@ -68,7 +68,7 @@ public class EmployeeDetailsFrame implements ActionListener {
     //Display employee name
     private void employeeName() {
 		JLabel name = new JLabel("First Name:");
-		name.setBounds(77, 123, 115, 20);
+		name.setBounds(77, 123, 74, 20);
 		frame.getContentPane().add(name);
 		
 		JTextArea textArea = new JTextArea();
@@ -100,7 +100,7 @@ public class EmployeeDetailsFrame implements ActionListener {
     //Display address
     private void address() {
 		JLabel lblAddress = new JLabel("Address:");
-		lblAddress.setBounds(91, 261, 101, 14);
+		lblAddress.setBounds(91, 261, 60, 14);
 		frame.getContentPane().add(lblAddress);
 		
 		JTextArea textArea_3 = new JTextArea();
@@ -122,7 +122,7 @@ public class EmployeeDetailsFrame implements ActionListener {
     // display email 
     private void email() {
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(105, 302, 101, 14);
+		lblEmail.setBounds(105, 302, 43, 14);
 		frame.getContentPane().add(lblEmail);
 		
 		JTextArea textArea_4 = new JTextArea();
@@ -133,7 +133,7 @@ public class EmployeeDetailsFrame implements ActionListener {
     // display role
     private void role(){
 	JLabel lblRole = new JLabel("Role: ");
-	lblRole.setBounds(117, 91, 115, 20);
+	lblRole.setBounds(117, 91, 43, 20);
 	frame.getContentPane().add(lblRole);
 	
 	JTextArea textArea = new JTextArea();
@@ -144,7 +144,7 @@ public class EmployeeDetailsFrame implements ActionListener {
     // display hourly pay 
     private void hourlypay() {
 		JLabel lblHourlyPay = new JLabel("Hourly Pay:");
-		lblHourlyPay.setBounds(68, 384, 101, 14);
+		lblHourlyPay.setBounds(68, 384, 68, 14);
 		frame.getContentPane().add(lblHourlyPay);
 		
 		JTextArea textArea_5 = new JTextArea();
@@ -155,7 +155,7 @@ public class EmployeeDetailsFrame implements ActionListener {
     // display pay
     private void pay() {
 		JLabel lblPay = new JLabel("Pay:");
-		lblPay.setBounds(105, 422, 101, 14);
+		lblPay.setBounds(105, 422, 34, 14);
 		frame.getContentPane().add(lblPay);
 		
 		JTextArea textArea_5_1 = new JTextArea();
@@ -164,7 +164,7 @@ public class EmployeeDetailsFrame implements ActionListener {
     }
     
     private void returnButton() {
-		JButton returnButton = new JButton("<<");
+		returnButton = new JButton("<<");
 		returnButton.setFont(new Font("Dialog", Font.PLAIN, 10));
 		returnButton.setFocusable(false);
 		returnButton.setBounds(557, 16, 68, 18);
@@ -178,8 +178,8 @@ public class EmployeeDetailsFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == returnButton) {
-			frame.dispose();
 			NavigationFrame.showNav();
+			frame.dispose();
 		}
 		
 	}
