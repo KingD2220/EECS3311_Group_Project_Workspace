@@ -343,7 +343,7 @@ public class HousekeepingFrame implements ActionListener {
 			NavigationFrame.showNav();
 		}
 		if (e.getSource() == searchButton) {
-			HousekeepingController ctrl = new HousekeepingController((String) fromComboBox.getSelectedItem(), (String) toComboBox.getSelectedItem(), dirty, clean, inspected, occupied, vacant);
+			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), dirty, clean, inspected, occupied, vacant);
 			ctrl.displayRoomDetails();
 		}
 		if (e.getSource() == selectAllButton) {
@@ -362,6 +362,7 @@ public class HousekeepingFrame implements ActionListener {
 		}
 	}
 	
+	// to be removed later	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
