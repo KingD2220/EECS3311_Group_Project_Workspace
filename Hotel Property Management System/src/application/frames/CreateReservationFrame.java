@@ -34,8 +34,8 @@ public class CreateReservationFrame implements ActionListener {
 	private JPasswordField creditInput;
 	public static  JTextArea feedback;
     public	JButton updateButton;
-    private JButton logOutButton;
     private JButton clearButton;
+    private JButton returnButton;
 	private JComboBox<String> roomSelect;
 	private JDateChooser checkInChooser;
 	private JDateChooser checkOutChooser;
@@ -71,8 +71,8 @@ public class CreateReservationFrame implements ActionListener {
 		createReservationButton();
 		updateButton();
 		showCreditCardButton();
-		logoutButton();
 		clearButton();
+		returnButton();
     }
     
     //Initialize Frame
@@ -224,14 +224,14 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(updateButton);
     }
     
-    //Logout Button
-    private void logoutButton() {
-		logOutButton = new JButton("Logout");
-		logOutButton.setFont(new Font(null, Font.PLAIN, 10));
-		logOutButton.setBounds(603, 11, 68, 18);
-		logOutButton.setFocusable(false);
-		logOutButton.addActionListener(this);
-		frame.getContentPane().add(logOutButton);
+    //Return to Navigation Frame
+    private void returnButton() {
+		returnButton = new JButton("<<");
+		returnButton.setFont(new Font(null, Font.PLAIN, 10));
+		returnButton.setBounds(603, 11, 68, 18);
+		returnButton.setFocusable(false);
+		returnButton.addActionListener(this);
+		frame.getContentPane().add(returnButton);
     }
     
     private void clearButton() {
@@ -262,8 +262,7 @@ public class CreateReservationFrame implements ActionListener {
 		
     }
     
-    
-	//Update Button Pressed
+	//Button Pressed
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// if the button pressed is the update button
@@ -271,13 +270,14 @@ public class CreateReservationFrame implements ActionListener {
 			UpdateFrame upFrame = new UpdateFrame();
 			frame.setVisible(false);
 		}
-		// logout button leads user back to login screen
-		if (e.getSource() == logOutButton) {
-			LoginFrame loginFrame = new LoginFrame();
-			frame.dispose();
-		}
+		// clears input fields
 		if (e.getSource() == clearButton) {
 			clearFields();
+		}
+		// returns user back to navigation frame
+		if (e.getSource() == returnButton) {
+			frame.dispose();
+			NavigationFrame.showNav();
 		}
 	}
 	

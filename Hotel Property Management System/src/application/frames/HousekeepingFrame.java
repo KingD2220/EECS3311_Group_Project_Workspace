@@ -37,7 +37,7 @@ public class HousekeepingFrame implements ActionListener {
 	private Checkbox[] checkboxArray;
 	private JComboBox<Object> fromComboBox;
 	private JComboBox<Object> toComboBox;
-	private JButton logOutButton;
+	private JButton returnButton;
 	private JButton searchButton;
 	private JButton selectAllButton;
 	private JButton clearAllButton;
@@ -295,12 +295,12 @@ public class HousekeepingFrame implements ActionListener {
 	
 	// Buttons
 	private void buttons() {		
-		logOutButton = new JButton("Logout");
-		logOutButton.setFont(new Font("Dialog", Font.PLAIN, 10));
-		logOutButton.setBounds(605, 11, 68, 18);
-		logOutButton.setFocusable(false);
-		logOutButton.addActionListener(this);
-		frame.getContentPane().add(logOutButton);
+		returnButton = new JButton("<<");
+		returnButton.setFont(new Font("Dialog", Font.PLAIN, 10));
+		returnButton.setBounds(605, 11, 68, 18);
+		returnButton.setFocusable(false);
+		returnButton.addActionListener(this);
+		frame.getContentPane().add(returnButton);
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(null);
@@ -338,12 +338,12 @@ public class HousekeepingFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		checkboxArray = new Checkbox[] {checkDirty, checkClean, checkInspected, checkOccupied, checkVacant};
 	
-		if (e.getSource() == logOutButton) {
-			new LoginFrame();
+		if (e.getSource() == returnButton) {
 			frame.dispose();
+			NavigationFrame.showNav();
 		}
 		if (e.getSource() == searchButton) {
-			HousekeepingController ctrl = new HousekeepingController((String) fromComboBox.getSelectedItem(), (String) toComboBox.getSelectedItem(), dirty, clean, inspected, occupied, vacant);
+			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), dirty, clean, inspected, occupied, vacant);
 			ctrl.displayRoomDetails();
 		}
 		if (e.getSource() == selectAllButton) {
@@ -360,23 +360,6 @@ public class HousekeepingFrame implements ActionListener {
 				}
 			}	
 		}
-	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if("Nimbus".equals(info.getName()))
-						 UIManager.setLookAndFeel(info.getClassName());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				ActionListener hskpFrame  = new HousekeepingFrame();
-
-			}
-		});
 	}
 	
 }

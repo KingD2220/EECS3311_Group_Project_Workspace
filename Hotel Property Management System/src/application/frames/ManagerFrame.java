@@ -11,6 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 public class ManagerFrame implements ActionListener {
     public JFrame frame = new JFrame();
@@ -24,6 +25,7 @@ public class ManagerFrame implements ActionListener {
     private JTextField pay;
     private JButton showJButton;
     private JButton submitJButton;
+    private JButton returnButton;
     
     
 	public ManagerFrame() {
@@ -36,12 +38,13 @@ public class ManagerFrame implements ActionListener {
 		hourlyPay();
 		hoursWorked();
 		pay();
+		returnButton();
 	}
     
     //Initialize Frame
     private void window() {
   
-		frame.setBounds(100, 100, 631, 478);
+    	frame.setBounds(100, 100, 631, 478);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
     }
@@ -137,6 +140,16 @@ public class ManagerFrame implements ActionListener {
 		submitJButton.setBounds(411, 273, 84, 19);
 		frame.getContentPane().add(submitJButton);
 	}
+    
+	//Return to Navigation Frame
+	public void returnButton() {
+		returnButton = new JButton("<<");
+		returnButton.setBounds(537, 11, 68, 18);
+		returnButton.setFocusable(false);
+		returnButton.setFont(new Font(null, Font.PLAIN, 10));
+		frame.getContentPane().add(returnButton);
+		returnButton.addActionListener(this);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -144,6 +157,10 @@ public class ManagerFrame implements ActionListener {
 				 employeeEmail, hourly, hoursWorked, pay);
 		if(e.getSource() == showJButton) {
 			manage.getAndDispEmpl();
+		}
+		if(e.getSource() == returnButton) {
+			frame.dispose();
+			NavigationFrame.showNav();
 		}
 		
 	}

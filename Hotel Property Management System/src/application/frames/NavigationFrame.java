@@ -8,21 +8,26 @@ import java.awt.event.ActionListener;
 
 public class NavigationFrame implements ActionListener{
 	
-	private JFrame frame = new JFrame();
+	private static JFrame frame = new JFrame();
 	private JButton viewProfileButton;
 	private JButton createResFrameButton;
 	private JButton updateResButton;
 	private JButton manageEmployeeButton;
 	private JButton roomStatusButton;
 	private JButton checkInOutButton;
+	private JButton logoutButton;
 	
 	public NavigationFrame(String role) {
 		
+		//Reset frame every time a new user logs in
+		frame.getContentPane().removeAll();
+		frame.repaint();
 		frame.setVisible(true);
 		this.window();
 		
-		//View My Profile Button
+		//Shared Buttons between all users
 		viewProfileButton();
+		logoutButton();
 		
 		//Display buttons based on role
 		enableRoleButtons(role);
@@ -82,6 +87,15 @@ public class NavigationFrame implements ActionListener{
 		checkInOutButton.setBounds(341, 377, 296, 102);
 		frame.getContentPane().add(checkInOutButton);
 		checkInOutButton.addActionListener(this);
+    }
+    
+    private void logoutButton() {
+		logoutButton = new JButton("Logout");
+		logoutButton.setFont(new Font(null, Font.PLAIN, 10));
+		logoutButton.setBounds(603, 11, 68, 18);
+		logoutButton.setFocusable(false);
+		logoutButton.addActionListener(this);
+		frame.getContentPane().add(logoutButton);
     }
     
     //Display navigation buttons based on role of user
@@ -148,7 +162,16 @@ public class NavigationFrame implements ActionListener{
 		if (e.getSource() == checkInOutButton) {
 			//Create check-in/check-out frame
 		}
+		if (e.getSource() == logoutButton) {
+			frame.dispose();
+			new LoginFrame();
+		}
 		
-		frame.dispose();
+		frame.setVisible(false);
+    }
+    
+    //Used to go back to Navigation Frame from other frames
+    public static void showNav() {
+    	frame.setVisible(true);
     }
 }
