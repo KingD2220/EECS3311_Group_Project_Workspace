@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import domain_objects_Rooms.*;
 import domain_objects_Users.Employee;
@@ -121,13 +122,8 @@ public class RealDatabase implements Database {
 			ResultSet rs = statement.executeQuery();
 			// though using rs.next() it is only expected to return one tuple as resNum is a primary key
 			while (rs.next()) {
-				Reservation reservation = new Reservation(rs.getString("first_name"), rs.getString("last_name"),
-						rs.getString("address"), rs.getString("phone_num"), rs.getString("credit_card"));
-				reservation.setArrival_date(rs.getString("arrival_date"));
-				reservation.setDeparture_date(rs.getString("departure_date"));
-				reservation.setRoomType(rs.getString("roomType"));
-				reservation.setResNumber(resNum);
-				return reservation;
+			 Reservation res = populateReservation(rs);
+			 return res;
 			}
 			statement.close();
 			rs.close();
@@ -293,6 +289,7 @@ public class RealDatabase implements Database {
 			return new ArrayList<>();
 		}
 	}
+	
 	// helps assign data to each room type
 	public Room roomHelper(ResultSet rs, Room room) {
 		try {
@@ -310,7 +307,7 @@ public class RealDatabase implements Database {
 	}
 
 
-
+// gets an Employees data by means of an employee number
 	@Override
 	public Employee getEmployee(String employeeNum) {
 		Employee newEmployee = new Employee();
@@ -324,29 +321,69 @@ public class RealDatabase implements Database {
 				newEmployee.setWeeklyWage(rs.getString("weeklyWage"));
 				newEmployee.setAddress(rs.getString("address"));
 				newEmployee.setHourlyWage(rs.getString("hourlyPay"));
-				
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;
 	}
-	public static void main(String[] args) {
-		
-	}
-
 
 
 	@Override
 	public void updateRoomStatus(String roomNum, String roomStatus) {
 		try {
 			PreparedStatement statement = connection.prepareStatement(String.format("UPDATE ROOM SET %s=? WHERE roomNumber = ?", "roomSatus"));
-			statement.setString(1, roomStatus);
+			statement.setString(1, roomStatus.toUpperCase());
 			statement.setString(2, roomNum);
+			statement.executeUpdate();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
+	}
+
+
+// This gets a list of reservations from the database with matching dates, because there two columns with dates
+// witch are arrivals and departures, we will need to identify what date needs to be matched hence a caller is passed
+	@Override
+	public ArrayList<Reservation> getResByDate(String date, String caller) {
+		ArrayList<Reservation> resList = new ArrayList<>();
+		if (caller.equals("Arrivals")) {
+			caller = "arrival_date";
+		}else caller = "departure_date";
+System.out.println(caller);
+		try {
+			PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM RESERVATION WHERE %s = ?", caller));
+			//statement.setString(1, caller);
+			statement.setString(1, date);
+	        ResultSet rs = statement.executeQuery();
+	        System.out.println(rs.getFetchSize());
+	        while(rs.next()) {
+	        	Reservation res = populateReservation(rs);
+	        	resList.add(res);
+	        }
+	        return resList; 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+	
+	
+// populates a reservation object	
+	public Reservation populateReservation(ResultSet rs) {
+		try {
+		Reservation reservation = new Reservation(rs.getString("first_name"), rs.getString("last_name"),
+				rs.getString("address"), rs.getString("phone_num"), rs.getString("credit_card"));
+		reservation.setArrival_date(rs.getString("arrival_date"));
+		reservation.setDeparture_date(rs.getString("departure_date"));
+		reservation.setRoomType(rs.getString("roomType"));
+		reservation.setResNumber(rs.getInt("resNum"));
+		return reservation;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 

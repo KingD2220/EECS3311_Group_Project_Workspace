@@ -145,7 +145,7 @@ public class NavigationFrame implements ActionListener{
     @Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == viewProfileButton) {
-			//Create Profile Frame
+			new EmployeeDetailsFrame();
 		}
 		if (e.getSource() == createResFrameButton) {
 			new CreateReservationFrame();
