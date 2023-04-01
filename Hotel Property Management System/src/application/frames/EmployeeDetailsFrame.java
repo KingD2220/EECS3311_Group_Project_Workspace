@@ -22,8 +22,17 @@ import java.awt.event.MouseEvent;
 public class EmployeeDetailsFrame implements ActionListener {
     
 	public JFrame frame = new JFrame();
-    private JTextField employeeNum;
-    private JButton returnButton;
+    public JTextField employeeNum;
+    public JButton returnButton;
+    public JTextArea roleName;
+    public JTextArea firstName;
+    public JTextArea lastName;
+    public JTextArea phoneNum;
+    public JTextArea address;
+    public JTextArea email;
+    public JTextArea hoursWorked;
+    public JTextArea hourlyPay;
+    public JTextArea pay;
     
 	public EmployeeDetailsFrame() {
 		frame.setVisible(true);
@@ -71,17 +80,17 @@ public class EmployeeDetailsFrame implements ActionListener {
 		name.setBounds(77, 123, 74, 20);
 		frame.getContentPane().add(name);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(181, 117, 150, 31);
-		frame.getContentPane().add(textArea);
+		firstName = new JTextArea();
+		firstName.setBounds(181, 117, 150, 31);
+		frame.getContentPane().add(firstName);
 		
     	JLabel jobLabel = new JLabel("Last Name:");
 		jobLabel.setBounds(77, 167, 74, 14);
 		frame.getContentPane().add(jobLabel);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(181, 155, 150, 31);
-		frame.getContentPane().add(textArea_1);
+		lastName = new JTextArea();
+		lastName.setBounds(181, 155, 150, 31);
+		frame.getContentPane().add(lastName);
 		
 	}
     
@@ -91,9 +100,9 @@ public class EmployeeDetailsFrame implements ActionListener {
 		emailLabel.setBounds(50, 210, 101, 14);
 		frame.getContentPane().add(emailLabel);
 		
-		JTextArea textArea_2 = new JTextArea();
-		textArea_2.setBounds(181, 198, 150, 31);
-		frame.getContentPane().add(textArea_2);
+		phoneNum = new JTextArea();
+		phoneNum.setBounds(181, 198, 150, 31);
+		frame.getContentPane().add(phoneNum);
 		
 	}
     
@@ -103,9 +112,9 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lblAddress.setBounds(91, 261, 60, 14);
 		frame.getContentPane().add(lblAddress);
 		
-		JTextArea textArea_3 = new JTextArea();
-		textArea_3.setBounds(181, 255, 305, 31);
-		frame.getContentPane().add(textArea_3);
+		address = new JTextArea();
+		address.setBounds(181, 255, 305, 31);
+		frame.getContentPane().add(address);
 		
 	}
     //Display hours worked
@@ -114,9 +123,9 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lblHoursWorked.setBounds(50, 341, 101, 14);
 		frame.getContentPane().add(lblHoursWorked);
 		
-		JTextArea textArea_5 = new JTextArea();
-		textArea_5.setBounds(181, 340, 74, 31);
-		frame.getContentPane().add(textArea_5);
+		hoursWorked = new JTextArea();
+		hoursWorked.setBounds(181, 340, 74, 31);
+		frame.getContentPane().add(hoursWorked);
     	
 	}
     // display email 
@@ -125,9 +134,9 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lblEmail.setBounds(105, 302, 43, 14);
 		frame.getContentPane().add(lblEmail);
 		
-		JTextArea textArea_4 = new JTextArea();
-		textArea_4.setBounds(181, 301, 305, 31);
-		frame.getContentPane().add(textArea_4);
+		email = new JTextArea();
+		email.setBounds(181, 301, 305, 31);
+		frame.getContentPane().add(email);
     	
     }
     // display role
@@ -136,9 +145,9 @@ public class EmployeeDetailsFrame implements ActionListener {
 	lblRole.setBounds(117, 91, 43, 20);
 	frame.getContentPane().add(lblRole);
 	
-	JTextArea textArea = new JTextArea();
-	textArea.setBounds(183, 83, 150, 31);
-	frame.getContentPane().add(textArea);
+	roleName = new JTextArea();
+	roleName.setBounds(183, 83, 150, 31);
+	frame.getContentPane().add(roleName);
     }
     
     // display hourly pay 
@@ -147,9 +156,9 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lblHourlyPay.setBounds(68, 384, 68, 14);
 		frame.getContentPane().add(lblHourlyPay);
 		
-		JTextArea textArea_5 = new JTextArea();
-		textArea_5.setBounds(181, 377, 74, 31);
-		frame.getContentPane().add(textArea_5);
+		hourlyPay = new JTextArea();
+		hourlyPay.setBounds(181, 377, 74, 31);
+		frame.getContentPane().add(hourlyPay);
     }
     
     // display pay
@@ -158,9 +167,9 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lblPay.setBounds(105, 422, 34, 14);
 		frame.getContentPane().add(lblPay);
 		
-		JTextArea textArea_5_1 = new JTextArea();
-		textArea_5_1.setBounds(181, 415, 115, 31);
-		frame.getContentPane().add(textArea_5_1);
+		pay = new JTextArea();
+		pay.setBounds(181, 415, 115, 31);
+		frame.getContentPane().add(pay);
     }
     
     private void returnButton() {
