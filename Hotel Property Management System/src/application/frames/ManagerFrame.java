@@ -139,19 +139,19 @@ public class ManagerFrame implements ActionListener {
 		
 		pay = new JTextField();
 		pay.setColumns(10);
-		pay.setBounds(296, 271, 84, 23);
+		pay.setBounds(296, 273, 84, 23);
 		frame.getContentPane().add(pay);
 		
 		submitJButton = new JButton("SUBMIT");
 		submitJButton.addActionListener(this);
-		submitJButton.setBounds(411, 273, 84, 19);
+		submitJButton.setBounds(406, 273, 74, 19);
 		frame.getContentPane().add(submitJButton);
 	}
     
     //Add employee button to change view to add employees
     private void addEmployeeButton() {
     	addEmployeeButton = new JButton("Add Employee");
-		addEmployeeButton.setBounds(230, 350, 150, 23);
+		addEmployeeButton.setBounds(340, 350, 150, 23);
 		frame.getContentPane().add(addEmployeeButton);
 		addEmployeeButton.addActionListener(this);
     }
@@ -159,15 +159,15 @@ public class ManagerFrame implements ActionListener {
     //Search employee button to change view to search employees
     private void searchEmployeeButton() {
     	searchEmployeesButton = new JButton("Search Employees");
-		searchEmployeesButton.setBounds(230, 350, 150, 23);
+		searchEmployeesButton.setBounds(169, 350, 150, 23);
 		frame.getContentPane().add(searchEmployeesButton);
 		searchEmployeesButton.addActionListener(this);
-		searchEmployeesButton.setVisible(false);
+		searchEmployeesButton.setEnabled(false);
     }
     
     private void addButton() {
     	addButton = new JButton("ADD");
-		addButton.setBounds(296, 273, 74, 19);
+		addButton.setBounds(296, 272, 74, 19);
 		frame.getContentPane().add(addButton);
 		addButton.addActionListener(this);
 		addButton.setVisible(false);
@@ -176,9 +176,10 @@ public class ManagerFrame implements ActionListener {
     //Add employee button pressed
     private void addEmployeeView() {
     	//Show/Hide appropriate buttons and labels
-    	addEmployeeButton.setVisible(false);
-    	searchEmployeesButton.setVisible(true);
+    	addEmployeeButton.setEnabled(false);
+    	searchEmployeesButton.setEnabled(true);
     	showJButton.setVisible(false);
+    	submitJButton.setVisible(false);
     	addButton.setVisible(true);
     	
     	payLabel.setVisible(false);
@@ -193,9 +194,10 @@ public class ManagerFrame implements ActionListener {
     //Search employee button pressed
     private void searchEmployeeView() {
     	//Show/Hide appropriate buttons and labels
-    	addEmployeeButton.setVisible(true);
-    	searchEmployeesButton.setVisible(false);
+    	addEmployeeButton.setEnabled(true);
+    	searchEmployeesButton.setEnabled(false);
     	showJButton.setVisible(true);
+    	submitJButton.setVisible(true);
     	addButton.setVisible(false);
     	
     	payLabel.setVisible(true);
