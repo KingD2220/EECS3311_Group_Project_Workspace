@@ -3,18 +3,22 @@ package application.frames;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 
 import application.controllers.HousekeepingController;
 
 import javax.swing.JScrollPane;
 import java.awt.Checkbox;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -46,6 +50,7 @@ public class HousekeepingFrame implements ActionListener {
 	private boolean inspected;
 	private boolean occupied;
 	private boolean vacant; 
+	HousekeepingController ctrl;
 	
 	public HousekeepingFrame() {
 		window();
@@ -244,53 +249,73 @@ public class HousekeepingFrame implements ActionListener {
 	}
 	
 	/**
-	 * Display of room numbers, status, conditions, etc. 
-	 * @Override method for DefaultTableModel is to make cells in the table non-editable.
+	 * Display of room numbers, room type, room status, etc. 
 	 */
-	private void roomsDisplay() {
-		Object[] columnHeaders = {"Room Number", "Room Status", "Room Type", "Reserv. Status", "Arrival Date", "Departure Date"};
-		model = new DefaultTableModel() { 
-			@Override
-			public boolean isCellEditable(int row, int column) {	
-				return column == 1;
-			}		
-		};
-		model.setColumnIdentifiers(columnHeaders);
-		
+	private void roomsDisplay() {	
 		// add column headers to table and make 2nd column cells have drop-down options
-		table = new JTable(model);
+		table = new JTable() {
+			public TableCellEditor getCellEditor(int row, int column) {
+                int modelColumn = convertColumnIndexToModel(column);
+                //create a custom cell editor for the second column
+                if (modelColumn == 1) {
+                    return (TableCellEditor) new DefaultCellEditor(createComboBox());
+                } else {
+                    return super.getCellEditor(row, column);
+                }
+            }
+        };
 		table.setBounds(10, 288, 663, 264);
 		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		// add scroll capability to room status display
+		Object[] columnHeaders = {"Room Number", "Room Status", "Room Type", "Reserv. Status", "Arrival Date", "Departure Date"};
+		model = new DefaultTableModel();
+		model.setColumnIdentifiers(columnHeaders);
+		table.setModel(model);
+		
+		// add scroll capability to room status table
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBounds(10,218,663,334);
 		frame.getContentPane().add(scroll);
 		
 		// show all rooms and room status by default when frame first appears
-		HousekeepingController ctlr = new HousekeepingController("100", "509", true, true, true, true, true);
-		ctlr.displayRoomDetails();;
-		
-		// drop-down selection for room status column - updates database when changed
+		ctrl = new HousekeepingController("100", "509", true, true, true, true, true);
+		ctrl.displayRoomDetails();;	
+	}
+	
+	private JComboBox<String> createComboBox() {
 		JComboBox<String> roomStatusBox = new JComboBox<>();
-		roomStatusBox.setModel(new DefaultComboBoxModel<>(new String[] {"DIRTY", "CLEAN", "INSPECTED"}));	
-		table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(roomStatusBox));
-//		roomStatusBox.addItemListener(new ItemListener() {
-//			public void itemStateChanged(ItemEvent e) {
-//				if ((e.getStateChange() == ItemEvent.SELECTED)) {
-//					int index = table.getSelectedRow();
-//					Object roomNum = model.getValueAt(index, 0);
-//					Object roomStatus = model.getValueAt(index, 1);
-//					ctlr.roomStatusUpdate(String.valueOf(roomNum), String.valueOf(roomStatus));
-//				}
-//			}
-//		});
+		roomStatusBox.setEditable(true);
+		roomStatusBox.addItem("DIRTY");
+		roomStatusBox.addItem("CLEAN");
+		roomStatusBox.addItem("INSPECTED");
+		roomStatusBox.setEditable(false);
 		
-		// manual rows added for preview purposes - comment out when using database
-//		model.addRow(new Object[] {"100", "Clean", "Suite", "Occupied", "2023-04-01", "2023-04-02"} );
-//		model.addRow(new Object[] {"101", "Dirty", "Presidential Suite", "Vacant", "2023-04-03", "2023-04-05"} );
-		
+		roomStatusBox.addActionListener(new ActionListener() {
+			// listen for user to select an item from the roomStatusBox and make an update call to controller
+			boolean doubleClick = false;
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (doubleClick) {
+					int selectedRow = table.getSelectedRow();
+					selectedRow = table.convertRowIndexToModel(selectedRow);
+                    Object selected = roomStatusBox.getSelectedItem();
+                    if (selectedRow != -1 && selected != null) {
+                    	String roomNum = (String) table.getValueAt(selectedRow, 0);
+                    	String roomStatus = (String) roomStatusBox.getSelectedItem();
+                    	ctrl.roomStatusUpdate(roomNum, roomStatus);
+                    	
+                    	System.out.println(roomNum + ": " + roomStatus);			//remove comment
+                    }
+                    doubleClick = false;
+				}
+				doubleClick = true;
+			}
+		});
+		return roomStatusBox;
 	}
 	
 	// Buttons
@@ -343,6 +368,10 @@ public class HousekeepingFrame implements ActionListener {
 			NavigationFrame.showNav();
 		}
 		if (e.getSource() == searchButton) {
+			model.setRowCount(0);
+			if ( (checkDirty.getState() == false) && (checkClean.getState() == false) && (checkInspected.getState() == false) && (checkOccupied.getState() == false) && (checkVacant.getState() == false) ) {
+				JOptionPane.showMessageDialog(frame, "Please select at least one checkbox!");
+			}
 			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), dirty, clean, inspected, occupied, vacant);
 			ctrl.displayRoomDetails();
 		}
@@ -362,5 +391,23 @@ public class HousekeepingFrame implements ActionListener {
 		}
 	}
 	
+	
+	// to be removed later	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+						if("Nimbus".equals(info.getName()))
+						 UIManager.setLookAndFeel(info.getClassName());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				ActionListener hskpFrame  = new HousekeepingFrame();
+
+			}
+		});
+	}
 }
 
