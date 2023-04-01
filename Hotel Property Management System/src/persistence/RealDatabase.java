@@ -309,11 +309,11 @@ public class RealDatabase implements Database {
 
 // gets an Employees data by means of an employee number
 	@Override
-	public Employee getEmployee(String employeeNum) {
+	public Employee getEmployee(int employeeNum) {
 		Employee newEmployee = new Employee();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE employeeNum = ?");
-			statement.setInt(1, Integer.parseInt(employeeNum));
+			statement.setInt(1, employeeNum);
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
 				newEmployee.setFirst_name(rs.getString("first_name"));
@@ -321,6 +321,11 @@ public class RealDatabase implements Database {
 				newEmployee.setWeeklyWage(rs.getString("weeklyWage"));
 				newEmployee.setAddress(rs.getString("address"));
 				newEmployee.setHourlyWage(rs.getString("hourlyPay"));
+				newEmployee.setEmail(rs.getString("email"));
+				newEmployee.setRole(rs.getString("emplRole"));
+				newEmployee.setHoursWorked(rs.getString("hoursWorked"));
+				newEmployee.setPhone_num(rs.getString("phone_num"));
+				return newEmployee;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -383,17 +388,7 @@ public class RealDatabase implements Database {
 		return null;
 	}
 	
-	public static void main(String[] args) {
-		ArrayList<Reservation> list = new ArrayList<>();
-		Database db = new RealDatabase();
-        
-		list = db.getResByDate("23-06-12", "Arrivals");
-		for (Reservation reservation : list) {
-			System.out.println(reservation.toString());
-		}
-	db.updateRoomStatus("100", "Dirty");
-		
-	}
+
 
 }
 

@@ -28,14 +28,17 @@ public class ManagementController {
 		this.pay = pay;
 	}
     
-    public Employee getAndDispEmpl() {
+    public void getAndDispEmpl() {
     	StringBuilder name = new StringBuilder();
-    	Employee newEmployee = management.getEmployee(employeeNum.getText());
-    	newEmployee = management.getEmployee(employeeNum.getText());
+    	Employee newEmployee = management.getEmployee(Integer.parseInt(employeeNum.getText()));
     	name.append(newEmployee.getFirst_name()+" ");
     	name.append(newEmployee.getLast_name());
     	emplyeeName.setText(name.toString());
-		return newEmployee;
+        jobType.setText(newEmployee.getRole());
+        employeeEmail.setText(newEmployee.getEmail());
+        hoursWorked.setText(newEmployee.getHoursWorked());
+        hourly.setText(newEmployee.getHourlyWage());
+        pay.setText(newEmployee.getWeeklyWage());
     	
     }
 	

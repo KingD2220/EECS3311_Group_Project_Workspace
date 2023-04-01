@@ -343,7 +343,8 @@ public class HousekeepingFrame implements ActionListener {
 			NavigationFrame.showNav();
 		}
 		if (e.getSource() == searchButton) {
-			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), dirty, clean, inspected, occupied, vacant);
+			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(),
+					toComboBox.getSelectedItem().toString(), dirty, clean, inspected, occupied, vacant);
 			ctrl.displayRoomDetails();
 		}
 		if (e.getSource() == selectAllButton) {

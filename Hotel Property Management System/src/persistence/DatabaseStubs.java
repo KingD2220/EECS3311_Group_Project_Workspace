@@ -87,7 +87,7 @@ public class DatabaseStubs implements Database {
 		return null;
 	}
 	@Override
-	public Employee getEmployee(String employeeNum) {
+	public Employee getEmployee(int employeeNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
