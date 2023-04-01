@@ -83,7 +83,7 @@ public class DatabaseStubs implements Database {
 	}
 	@Override
 	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	@Override
@@ -95,6 +95,11 @@ public class DatabaseStubs implements Database {
 	public void updateRoomStatus(String roomNum, String roomStatus) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public ArrayList<Reservation> getResByDate(String date, String caller) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
