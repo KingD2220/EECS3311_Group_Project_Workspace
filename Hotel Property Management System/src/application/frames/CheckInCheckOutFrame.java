@@ -32,7 +32,9 @@ public class CheckInCheckOutFrame implements ActionListener {
 	private JFrame frame = new JFrame();
 	private JTable table;
 	public static DefaultTableModel model;
-	JTextField resNumInput;
+	private JTextField resNumInput;
+	private JTextField roomNumInput;
+	private JTextField dateField;
     private JRadioButton rdbtnArr;
     private JRadioButton rdbtnDep;
     private JButton logOutButton;
@@ -85,22 +87,33 @@ public class CheckInCheckOutFrame implements ActionListener {
 		
 		//-----labels and textfields-----
 		JLabel lblResNum = new JLabel("Reservation No.");
-		lblResNum.setBounds(19, 25, 97, 20);
+		lblResNum.setBounds(22, 25, 97, 20);
 		queryPanel.add(lblResNum);
 		lblResNum.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		resNumInput = new JTextField();
 		resNumInput.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		resNumInput.setBounds(126, 25, 99, 20);
+		resNumInput.setBounds(129, 25, 99, 20);
 		queryPanel.add(resNumInput);
 		resNumInput.setColumns(10);
+		
+		JLabel lblRoomNum = new JLabel("Room No.");
+		lblRoomNum.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRoomNum.setBounds(57, 80, 59, 20);
+		queryPanel.add(lblRoomNum);
+		
+		roomNumInput = new JTextField();
+		roomNumInput.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		roomNumInput.setColumns(10);
+		roomNumInput.setBounds(129, 80, 99, 20);
+		queryPanel.add(roomNumInput);
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblDate.setBounds(78, 134, 38, 20);
 		queryPanel.add(lblDate);
 		
-		JTextField dateField = new JTextField();
+		dateField = new JTextField();
 		dateField.setHorizontalAlignment(SwingConstants.CENTER);
 		dateField.setEditable(false);
 		dateField.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -117,9 +130,12 @@ public class CheckInCheckOutFrame implements ActionListener {
 		rdbtnArr.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
+					resNumInput.setEditable(true);
 					btnCheckIn.setEnabled(true);
 					btnCheckOut.setEnabled(false);
 					btnCancel.setEnabled(true);
+					roomNumInput.setEditable(false);
+					roomNumInput.setText("");
 				}
 			}
 		});
@@ -132,9 +148,12 @@ public class CheckInCheckOutFrame implements ActionListener {
 		rdbtnDep.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
+					roomNumInput.setEditable(true);
 					btnCheckOut.setEnabled(true);
 					btnCheckIn.setEnabled(false);
 					btnCancel.setEnabled(false);
+					resNumInput.setEditable(false);
+					resNumInput.setText("");
 				}
 			}
 		});
@@ -222,12 +241,24 @@ public class CheckInCheckOutFrame implements ActionListener {
 		buttonsPanel.add(btnBilling);
 	}
 	
-	// user alert method
+	//user alert method
 	private void alertMsg(String msg) {
 		JOptionPane.showMessageDialog(frame, msg);
 	}
 	
+	//common method used in search button action implementation
+	private void checkNullAddRow(Object[] row, String msg) {
+		if (row != null) {
+			model.addRow(row);
+		}
+		else {
+			this.alertMsg(msg);
+		}
+	}
 
+	/**
+	 * All actions to action listeners
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == logOutButton) {
@@ -239,45 +270,31 @@ public class CheckInCheckOutFrame implements ActionListener {
 		if (e.getSource() == btnSearch) {	
 			CheckInCheckOutController ctrl = new CheckInCheckOutController();
 			boolean resNumIsEmpty = resNumInput.getText().isEmpty();
+			boolean roomNumIsEmpty = roomNumInput.getText().isEmpty();
 			
-			//when user searches without any selections
-			if ( !rdbtnArr.isSelected() && !rdbtnDep.isSelected() ) {
+			if ( !rdbtnArr.isSelected() && !rdbtnDep.isSelected() ) {	//when user doesn't select Arrivals or Departures
 				this.alertMsg("Please select Arrivals or Departures!");
 			}
-			//when user searches for a specific arrival
-			if (rdbtnArr.isSelected() && !resNumIsEmpty) {
+			if (rdbtnArr.isSelected() && !resNumIsEmpty) {		//when user searches for a specific arrival
 				model.setRowCount(0);
-				Object[] arr = ctrl.getResByNum(resNumInput.getText(), "Arrivals");
+				Object[] row = ctrl.getResByNum(resNumInput.getText());
 				resNumInput.setText("");
-				if (arr != null) {
-					model.addRow(arr);
-				}
-				else {
-					this.alertMsg("The reservation number does not match today's arrivals");
-				}
+				this.checkNullAddRow(row, "The reservation number does not match today's arrivals");
 			}
-			//when user searches for a specific departure
-			if (rdbtnDep.isSelected() && !resNumIsEmpty) {
-				// call controller to display the res details for specified room
+			if (rdbtnDep.isSelected() && !roomNumIsEmpty) {		//when user searches for a specific departure
 				model.setRowCount(0);
-				Object[] arr = ctrl.getResByNum(resNumInput.getText(), "Departures");
-				resNumInput.setText("");
-				if (arr != null) {
-					model.addRow(arr);
-				}
-				else {
-					this.alertMsg("The reservation number does not match today's departures!");
-				}
-			}
-			//when user searches for all arrivals
-			if (rdbtnArr.isSelected() && resNumIsEmpty) {
-				// call controller to display all arrivals for this day
 				
 			}
-			//when user searches for all departures
-			if (rdbtnDep.isSelected() && resNumIsEmpty) {
-				// call controller to display all departures for this day
+			if (rdbtnArr.isSelected() && resNumIsEmpty) {		//when user searches for all arrivals
+				model.setRowCount(0);
+				boolean flag = ctrl.getResByDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yy-MM-dd")), "Arrivals");
+				if (flag == false) this.alertMsg("There are no arrivals for today!");
 				
+			}
+			if (rdbtnDep.isSelected() && roomNumIsEmpty) {		//when user searches for all departures
+				model.setRowCount(0);
+				boolean flag = ctrl.getResByDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yy-MM-dd")), "Departures");
+				if (flag == false) this.alertMsg("There are no departures for today!");
 			}
 		}
 		

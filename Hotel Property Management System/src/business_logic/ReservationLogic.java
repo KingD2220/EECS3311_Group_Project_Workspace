@@ -1,5 +1,7 @@
 package business_logic;
 
+import java.util.ArrayList;
+
 import domain_objects_Rooms.DeluxeRoom;
 import domain_objects_Rooms.ExecutiveSuite;
 import domain_objects_Rooms.PresidentialSuite;
@@ -40,10 +42,15 @@ public class ReservationLogic {
 	
    public Reservation getReservation(int resNum) {
 	   return database.getReservation(resNum);
-}
+   }
+   
+   public ArrayList<Reservation> getReservationsByDate(String date, String type) {
+	   return database.getResByDate(date, type);
+   }
+   
    public boolean getUser(String userName, String password, String jobType) {
-	return database.getUser(userName, password, jobType);
-}
+	   return database.getUser(userName, password, jobType);
+   }
 	
 	public Reservation changeResDates(Reservation reservation, String newArrivalDate, String newDepartDate) {
 		reservation.arrival_date = newArrivalDate;
