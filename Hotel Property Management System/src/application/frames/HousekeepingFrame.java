@@ -2,26 +2,28 @@ package application.frames;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
 
 import application.controllers.HousekeepingController;
 
 import javax.swing.JScrollPane;
-import java.awt.Checkbox;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,29 +35,24 @@ public class HousekeepingFrame implements ActionListener {
 	private JFrame frame =new JFrame();
 	private JTable table;
 	public static DefaultTableModel model;
-	private Checkbox checkDirty;
-	private Checkbox checkClean;
-	private Checkbox checkInspected;
-	private Checkbox checkOccupied;
-	private Checkbox checkVacant;
-	private Checkbox[] checkboxArray;
+	private JRadioButton checkDirty;
+	private JRadioButton checkClean;
+	private JRadioButton checkInspected;
+	private JRadioButton checkOccupied;
+	private JRadioButton checkVacant;
+	private JRadioButton[] radioButtonArray; 
 	private JComboBox<Object> fromComboBox;
 	private JComboBox<Object> toComboBox;
 	private JButton returnButton;
 	private JButton searchButton;
 	private JButton selectAllButton;
-	private JButton clearAllButton;
-	private boolean dirty;
-	private boolean clean;
-	private boolean inspected;
-	private boolean occupied;
-	private boolean vacant; 
+	private JButton clearAllButton; 
 	HousekeepingController ctrl;
 	
 	public HousekeepingFrame() {
 		window();
 		roomsDisplay();
-		checkBoxSelection();
+		radioButtonSelection();
 		roomRangeSelection();
 		buttons();
 	}
@@ -77,24 +74,21 @@ public class HousekeepingFrame implements ActionListener {
 	}
 		
 	/**
-	 * Checkboxes for filtering search.
+	 * Checkboxes for filtering search. Only one button/room status can be selected at a time and searched.
 	 */
-	private void checkBoxSelection() {
+	private void radioButtonSelection() {
 		JPanel checkPanel = new JPanel();
 		checkPanel.setBounds(10, 36, 246, 171);
 		checkPanel.setLayout(null);
 		checkPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		frame.getContentPane().add(checkPanel);
 		
-		checkDirty = new Checkbox("Dirty");
+		checkDirty = new JRadioButton("Dirty");
 		checkDirty.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					dirty = true;
-				}
-				else {
-					dirty = false;
-				}
+					setRadioButtons(checkDirty);			// deselects all other buttons so that user selects only one at a time.
+				}	
 			}
 		});
 		checkDirty.setBounds(29, 21, 56, 33);
@@ -102,14 +96,11 @@ public class HousekeepingFrame implements ActionListener {
 		checkDirty.setFocusable(false);
 		checkPanel.add(checkDirty);
 		
-		checkClean = new Checkbox("Clean");
+		checkClean = new JRadioButton("Clean");
 		checkClean.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					clean = true;
-				}
-				else {
-					clean = false;
+					setRadioButtons(checkClean);
 				}
 			}
 		});
@@ -118,15 +109,10 @@ public class HousekeepingFrame implements ActionListener {
 		checkClean.setFocusable(false);
 		checkPanel.add(checkClean);
 		
-		checkInspected = new Checkbox("Inspected");
+		checkInspected = new JRadioButton("Inspected");
 		checkInspected.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					inspected = true;
-				}
-				else {
-					inspected = false;
-				}
+				setRadioButtons(checkInspected);
 			}
 		});
 		checkInspected.setBounds(29, 115, 100, 33);
@@ -134,15 +120,10 @@ public class HousekeepingFrame implements ActionListener {
 		checkInspected.setFocusable(false);
 		checkPanel.add(checkInspected);
 		
-		checkOccupied = new Checkbox("Occupied");
+		checkOccupied = new JRadioButton("Occupied");
 		checkOccupied.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					occupied = true;
-				}
-				else {
-					occupied = false;
-				}
+				setRadioButtons(checkOccupied);
 			}
 		});
 		checkOccupied.setBounds(125, 21, 92, 33);
@@ -150,21 +131,31 @@ public class HousekeepingFrame implements ActionListener {
 		checkOccupied.setFocusable(false);
 		checkPanel.add(checkOccupied);
 		
-		checkVacant = new Checkbox("Available");
+		checkVacant = new JRadioButton("Available");
 		checkVacant.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					vacant = true;
-				}
-				else {
-					vacant = false;
-				}
+				setRadioButtons(checkVacant);
 			}
 		});
 		checkVacant.setBounds(125, 66, 92, 37);
 		checkVacant.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		checkVacant.setFocusable(false);
 		checkPanel.add(checkVacant);
+	}
+	
+	/**
+	 * Radio buttons helper method so only one button can be selected at a time.
+	 * @param button - selected button is left as true.
+	 */
+	private void setRadioButtons(JRadioButton button) {
+		radioButtonArray = new JRadioButton[] {checkDirty, checkClean, checkInspected, checkOccupied, checkVacant};
+		for (int i = 0; i < radioButtonArray.length; i++) {
+			if (radioButtonArray[i].equals(button)) {
+				continue;
+			} else {
+				radioButtonArray[i].setSelected(false);
+			}
+		}
 	}
 	
 	/**
@@ -275,24 +266,73 @@ public class HousekeepingFrame implements ActionListener {
 		model.setColumnIdentifiers(columnHeaders);
 		table.setModel(model);
 		
-		// add scroll capability to room status table
+		//add scroll capability to room status table
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBounds(10,218,663,334);
 		frame.getContentPane().add(scroll);
 		
-		// show all rooms and room status by default when frame first appears
+		//show all rooms and room status by default when frame first appears
 		ctrl = new HousekeepingController("100", "509", true, true, true, true, true);
 		ctrl.displayRoomDetails();;	
+		
+		//set colors for room status column depending on values
+		TableColumn roomStatusColumn = table.getColumnModel().getColumn(1);
+		roomStatusColumn.setCellRenderer(new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+					int row, int column) {
+				Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				if (value.equals("DIRTY")) {
+					cell.setBackground(Color.RED);
+				} else if (value.equals("CLEAN")) {
+					cell.setBackground(new Color(51, 153, 255));
+				} else if (value.equals("INSPECTED")) {
+					cell.setBackground(Color.GREEN);
+				}
+				return cell;
+			}
+		});
+		//set colors for reservation status column depending on values
+		TableColumn resStatusColumn = table.getColumnModel().getColumn(3);
+		resStatusColumn.setCellRenderer(new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+					int row, int column) {
+				Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				if (value.equals("OCCUPIED")) {
+					cell.setBackground(Color.RED);
+				} else if (value.equals("AVAILABLE")) {
+					cell.setBackground(Color.GREEN);
+				} 
+				return cell;
+			}
+		});
 	}
 	
+	/**
+	 * roomsDisplay() helper method to create/add JComboBox for room status.
+	 * When user selects a room status from the combobox, the room status in the database is updated.
+	 * @return JComboBox<String>
+	 */
 	private JComboBox<String> createComboBox() {
-		JComboBox<String> roomStatusBox = new JComboBox<>();
-		roomStatusBox.setEditable(true);
-		roomStatusBox.addItem("DIRTY");
-		roomStatusBox.addItem("CLEAN");
-		roomStatusBox.addItem("INSPECTED");
+		final String[] VALUES = new String[] {"DIRTY", "CLEAN", "INSPECTED"};
+		JComboBox<String> roomStatusBox = new JComboBox<>(VALUES);
 		roomStatusBox.setEditable(false);
-		
+		roomStatusBox.setOpaque(false);
+		roomStatusBox.setRenderer(new DefaultListCellRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value.equals("DIRTY")) {
+					setBackground(Color.RED);
+				} else if (value.equals("CLEAN")) {
+					setBackground(new Color(51, 153, 255));
+				} else if (value.equals("INSPECTED")) {
+					setBackground(Color.GREEN);
+				}
+				return c;
+			}
+		});
 		roomStatusBox.addActionListener(new ActionListener() {
 			// listen for user to select an item from the roomStatusBox and make an update call to controller
 			boolean doubleClick = false;
@@ -307,8 +347,6 @@ public class HousekeepingFrame implements ActionListener {
                     	String roomNum = (String) table.getValueAt(selectedRow, 0);
                     	String roomStatus = (String) roomStatusBox.getSelectedItem();
                     	ctrl.roomStatusUpdate(roomNum, roomStatus);
-                    	
-                    	System.out.println(roomNum + ": " + roomStatus);			//remove comment
                     }
                     doubleClick = false;
 				}
@@ -361,53 +399,19 @@ public class HousekeepingFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		checkboxArray = new Checkbox[] {checkDirty, checkClean, checkInspected, checkOccupied, checkVacant};
-	
 		if (e.getSource() == returnButton) {
 			frame.dispose();
 			NavigationFrame.showNav();
 		}
 		if (e.getSource() == searchButton) {
 			model.setRowCount(0);
-			if ( (checkDirty.getState() == false) && (checkClean.getState() == false) && (checkInspected.getState() == false) && (checkOccupied.getState() == false) && (checkVacant.getState() == false) ) {
+			if ( (checkDirty.isSelected() == false) && (checkClean.isSelected() == false) && (checkInspected.isSelected() == false) && (checkOccupied.isSelected() == false) && (checkVacant.isSelected() == false) ) {
 				JOptionPane.showMessageDialog(frame, "Please select at least one checkbox!");
 			}
-			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), dirty, clean, inspected, occupied, vacant);
+			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), checkDirty.isSelected(), checkClean.isSelected(), checkInspected.isSelected(), checkOccupied.isSelected(), checkVacant.isSelected());
 			ctrl.displayRoomDetails();
 		}
-		if (e.getSource() == selectAllButton) {
-			for (int i = 0; i < checkboxArray.length; i++) {
-				if (checkboxArray[i].getState() == false) {
-					checkboxArray[i].setState(true);
-				}
-			}
-		}
-		if (e.getSource() == clearAllButton) {
-			for (int i = 0; i < checkboxArray.length; i++) {
-				if (checkboxArray[i].getState() == true) {
-					checkboxArray[i].setState(false);
-				}
-			}	
-		}
 	}
-	
-	
-	// to be removed later	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if("Nimbus".equals(info.getName()))
-						 UIManager.setLookAndFeel(info.getClassName());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				ActionListener hskpFrame  = new HousekeepingFrame();
 
-			}
-		});
-	}
 }
 
