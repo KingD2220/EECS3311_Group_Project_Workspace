@@ -188,8 +188,9 @@ public class ManagerFrame implements ActionListener {
     	payLabel.setVisible(false);
     	pay.setVisible(false);
     	
-    	//Set fields editable
+    	//Set fields editable and clear fields
     	fieldsEditable(true);
+    	clearFields();
     }
     
     //Search employee button pressed
@@ -225,6 +226,15 @@ public class ManagerFrame implements ActionListener {
     	employeeEmail.setEditable(editable);
 		hoursWorked.setEditable(editable);
     	hourly.setEditable(editable);
+	}
+	
+	//Clear text fields
+	private void clearFields() {
+    	emplyeeName.setText("");
+    	jobType.setText("");
+    	employeeEmail.setText("");
+		hoursWorked.setText("");
+    	hourly.setText("");
 	}
 	
 	@Override
