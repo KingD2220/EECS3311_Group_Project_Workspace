@@ -260,7 +260,12 @@ public class HousekeepingFrame implements ActionListener {
 		table.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		Object[] columnHeaders = {"Room Number", "Room Status", "Room Type", "Reserv. Status", "Arrival Date", "Departure Date"};
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return column == 1;
+			}
+		};
 		model.setColumnIdentifiers(columnHeaders);
 		table.setModel(model);
 		
