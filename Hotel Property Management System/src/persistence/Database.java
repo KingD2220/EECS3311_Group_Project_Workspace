@@ -17,4 +17,5 @@ public interface Database {
 	public void updateRoomStatus(String roomNum, String roomStatus);
 	public Employee getEmployee(String employeeNum);
 	public ArrayList<Reservation> getResByDate(String date, String caller);
+	public boolean checkInReservation(int resNum, String roomNum);
 }
