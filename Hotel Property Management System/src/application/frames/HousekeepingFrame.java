@@ -45,8 +45,6 @@ public class HousekeepingFrame implements ActionListener {
 	private JComboBox<Object> toComboBox;
 	private JButton returnButton;
 	private JButton searchButton;
-	private JButton selectAllButton;
-	private JButton clearAllButton; 
 	HousekeepingController ctrl;
 	
 	public HousekeepingFrame() {
@@ -372,26 +370,11 @@ public class HousekeepingFrame implements ActionListener {
 		frame.getContentPane().add(buttonsPanel);
 		
 		searchButton = new JButton("Search");
-		searchButton.setBounds(10, 11, 89, 23);
+		searchButton.setBounds(10, 28, 89, 23);
 		searchButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		searchButton.setFocusable(false);
 		searchButton.addActionListener(this);
 		buttonsPanel.add(searchButton);
-		
-		selectAllButton = new JButton("Select All");
-		selectAllButton.setBounds(10, 38, 89, 23);
-		selectAllButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		selectAllButton.setFocusable(false);
-		selectAllButton.addActionListener(this);
-		buttonsPanel.add(selectAllButton);
-		
-		clearAllButton = new JButton("Clear All");
-		clearAllButton.setBounds(10, 65, 89, 23);
-		clearAllButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		clearAllButton.setFocusable(false);
-		clearAllButton.addActionListener(this);
-		buttonsPanel.add(clearAllButton);
-		
 	}
 
 	/**
@@ -405,13 +388,17 @@ public class HousekeepingFrame implements ActionListener {
 		}
 		if (e.getSource() == searchButton) {
 			model.setRowCount(0);
+			//alert user to select one filter button before clicking search
 			if ( (checkDirty.isSelected() == false) && (checkClean.isSelected() == false) && (checkInspected.isSelected() == false) && (checkOccupied.isSelected() == false) && (checkVacant.isSelected() == false) ) {
 				JOptionPane.showMessageDialog(frame, "Please select at least one checkbox!");
+				HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), true, true, true, true, true);
+				ctrl.displayRoomDetails();
 			}
-			HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), checkDirty.isSelected(), checkClean.isSelected(), checkInspected.isSelected(), checkOccupied.isSelected(), checkVacant.isSelected());
-			ctrl.displayRoomDetails();
+			else {
+				HousekeepingController ctrl = new HousekeepingController(fromComboBox.getSelectedItem().toString(), toComboBox.getSelectedItem().toString(), checkDirty.isSelected(), checkClean.isSelected(), checkInspected.isSelected(), checkOccupied.isSelected(), checkVacant.isSelected());
+				ctrl.displayRoomDetails();
+			}	
 		}
 	}
-
 }
 
