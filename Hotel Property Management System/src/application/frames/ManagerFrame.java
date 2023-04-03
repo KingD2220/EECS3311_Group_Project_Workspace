@@ -23,9 +23,13 @@ public class ManagerFrame implements ActionListener {
     private JTextField hourly;
     private JTextField hoursWorked;
     private JTextField pay;
+    private JLabel payLabel;
     private JButton showJButton;
     private JButton submitJButton;
     private JButton returnButton;
+    private JButton addEmployeeButton;
+    private JButton searchEmployeesButton;
+    private JButton addButton;
     
     
 	public ManagerFrame() {
@@ -39,6 +43,9 @@ public class ManagerFrame implements ActionListener {
 		hoursWorked();
 		pay();
 		returnButton();
+		addEmployeeButton();
+		searchEmployeeButton();
+		addButton();
 	}
     
     //Initialize Frame
@@ -126,23 +133,84 @@ public class ManagerFrame implements ActionListener {
 	}
     
     private void pay() {
-    	JLabel payLabel = new JLabel("Pay:");
+    	payLabel = new JLabel("Pay:");
 		payLabel.setBounds(169, 277, 34, 14);
 		frame.getContentPane().add(payLabel);
 		
 		pay = new JTextField();
 		pay.setColumns(10);
-		pay.setBounds(296, 271, 84, 23);
+		pay.setBounds(296, 273, 84, 23);
 		frame.getContentPane().add(pay);
 		
 		submitJButton = new JButton("SUBMIT");
 		submitJButton.addActionListener(this);
-		submitJButton.setBounds(411, 273, 84, 19);
+		submitJButton.setBounds(406, 273, 74, 19);
 		frame.getContentPane().add(submitJButton);
 	}
     
+    //Add employee button to change view to add employees
+    private void addEmployeeButton() {
+    	addEmployeeButton = new JButton("Add Employee");
+		addEmployeeButton.setBounds(340, 350, 150, 23);
+		frame.getContentPane().add(addEmployeeButton);
+		addEmployeeButton.addActionListener(this);
+    }
+    
+    //Search employee button to change view to search employees
+    private void searchEmployeeButton() {
+    	searchEmployeesButton = new JButton("Search Employees");
+		searchEmployeesButton.setBounds(169, 350, 150, 23);
+		frame.getContentPane().add(searchEmployeesButton);
+		searchEmployeesButton.addActionListener(this);
+		searchEmployeesButton.setEnabled(false);
+    }
+    
+    private void addButton() {
+    	addButton = new JButton("ADD");
+		addButton.setBounds(296, 272, 74, 19);
+		frame.getContentPane().add(addButton);
+		addButton.addActionListener(this);
+		addButton.setVisible(false);
+    }
+    
+    //Add employee button pressed
+    private void addEmployeeView() {
+    	//Show/Hide appropriate buttons and labels
+    	addEmployeeButton.setEnabled(false);
+    	searchEmployeesButton.setEnabled(true);
+    	showJButton.setVisible(false);
+    	submitJButton.setVisible(false);
+    	addButton.setVisible(true);
+    	
+    	payLabel.setVisible(false);
+    	pay.setVisible(false);
+    	
+    	//Set fields editable
+    	emplyeeName.setEditable(true);
+    	jobType.setEditable(true);
+    	hourly.setEditable(true);
+    }
+    
+    //Search employee button pressed
+    private void searchEmployeeView() {
+    	//Show/Hide appropriate buttons and labels
+    	addEmployeeButton.setEnabled(true);
+    	searchEmployeesButton.setEnabled(false);
+    	showJButton.setVisible(true);
+    	submitJButton.setVisible(true);
+    	addButton.setVisible(false);
+    	
+    	payLabel.setVisible(true);
+    	pay.setVisible(true);
+    	
+    	//Set fields not editable
+    	emplyeeName.setEditable(false);
+    	jobType.setEditable(false);
+    	hourly.setEditable(false);
+    }
+    
 	//Return to Navigation Frame
-	public void returnButton() {
+	private void returnButton() {
 		returnButton = new JButton("<<");
 		returnButton.setBounds(537, 11, 68, 18);
 		returnButton.setFocusable(false);
@@ -150,7 +218,7 @@ public class ManagerFrame implements ActionListener {
 		frame.getContentPane().add(returnButton);
 		returnButton.addActionListener(this);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		ManagementController manage = new ManagementController(employeeNum, emplyeeName, jobType,
@@ -162,6 +230,14 @@ public class ManagerFrame implements ActionListener {
 			frame.dispose();
 			NavigationFrame.showNav();
 		}
-		
+		if(e.getSource() == addEmployeeButton) {
+			addEmployeeView();
+		}
+		if(e.getSource() == searchEmployeesButton) {
+			searchEmployeeView();
+		}
+		if(e.getSource() == addButton) {
+			//Add employee to list
+		}
 	}
 }

@@ -90,6 +90,11 @@ public class ReservationController implements ActionListener {
 	}
 	}
 	
+	//Remove reservation from database
+	public void remove(int resNum) {
+		reservationLogic.removeReservation(resNum);
+	}
+	
 	//Create Reservation Button Pressed
 	@Override
 	public void actionPerformed(ActionEvent e) {

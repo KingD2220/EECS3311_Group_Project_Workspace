@@ -34,48 +34,37 @@ public class HousekeepingController {
     public void displayRoomDetails() {
     	ArrayList<Room> roomsList = managementLogic.roomSearch(rangeStart, rangeEnd);	// get array of rooms that was searched
     	ArrayList<ArrayList<Object>> rowValuesList = new ArrayList<ArrayList<Object>>();
-    	
     	// if client request matches database, display room details on the frame
     	for (int i = 0; i < roomsList.size(); i++) {
     		Room room = roomsList.get(i);
     		String roomNum = room.getRoomNum();
     		String roomStatus = room.getRoomStatus();
-    		String reservationStatus = room.getReservationStatus();
-        	String lastRoomInput = "";
-    		
-    		if (this.dirty) {
-    			if (roomStatus.equals("DIRTY")) {
-    				rowValuesList.add(displayHelper(room));
-    			}	
+    		String lastRoomInput = "";
+        	
+    		if (this.dirty && roomStatus.equals("DIRTY")) {
+    			rowValuesList.add(displayHelper(room));
+    			lastRoomInput = roomNum;
     		}
-    		if (this.clean) {
-    			if (roomStatus.equals("CLEAN")) {
-    				rowValuesList.add(displayHelper(room));
-    				lastRoomInput = roomNum;  			
-    			}
+    		if (this.clean && roomStatus.equals("CLEAN")) {
+    			rowValuesList.add(displayHelper(room));
+    			lastRoomInput = roomNum;
     		}
-    		if (this.inspected) {
-    			if (roomStatus.equals("INSPECTED")) {
-    				rowValuesList.add(displayHelper(room));
-    				lastRoomInput = roomNum;
-    			}
+    		if (this.inspected && roomStatus.equals("INSPECTED")) {
+    			rowValuesList.add(displayHelper(room)); 
+    			lastRoomInput = roomNum;
     		}
-    		if (this.occupied) {
-    			if ( reservationStatus.equals("OCCUPIED") && !roomNum.equals(lastRoomInput) ) {
-    				rowValuesList.add(displayHelper(room));
-    			}
+    		if (isOccupiedMatching(room) && !roomNum.equals(lastRoomInput)) {
+    			rowValuesList.add(displayHelper(room)); 
     		}
-    		if (this.vacant) {
-    			if ( reservationStatus.equals("AVAILABLE") && !roomNum.equals(lastRoomInput) ) {
-    				rowValuesList.add(displayHelper(room));
-    			}
+    		if (isVacantMatching(room) && !roomNum.equals(lastRoomInput)) {
+    			rowValuesList.add(displayHelper(room));
     		}
     	}
     	this.insertRows(rowValuesList);
-    }
+    }	
     
     // displayRoomsDetail() helper method
-    public ArrayList<Object> displayHelper(Room room) {
+    private ArrayList<Object> displayHelper(Room room) {
     	ArrayList<Object> objArray = new ArrayList<>();
     	objArray.add(room.getRoomNum());
     	objArray.add(room.getRoomStatus());
@@ -87,7 +76,7 @@ public class HousekeepingController {
     }
     
     // Place all bucket elements of rowValuesList into an array to insert as a row in HousekeepingFrame 
-    public void insertRows(ArrayList<ArrayList<Object>> list) {
+    private void insertRows(ArrayList<ArrayList<Object>> list) {
     	Object[] rowArray = new Object[6];
     	if (list.size() != 0) {
     		for (int i = 0; i < list.size(); i++) {
@@ -102,7 +91,25 @@ public class HousekeepingController {
     	}
     }
     
-    // update room status in database
+    //checks if reservation status "OCCUPIED" matches user selection
+    private boolean isOccupiedMatching(Room room) {
+    	if (this.occupied && room.getReservationStatus().equals("OCCUPIED")) {
+    		return true;
+    	} else {
+    		return false;
+    	}	
+    }
+    
+    //checks if reseration status "AVAILABLE" matches user selection
+    private boolean isVacantMatching(Room room) {
+    	if (this.vacant && room.getReservationStatus().equals("AVAILABLE")) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }	
+    
+    //update room status in database
     public void roomStatusUpdate(String roomNum, String roomStatus) {
     	managementLogic.roomStatusUpdate(roomNum, roomStatus);
     }
