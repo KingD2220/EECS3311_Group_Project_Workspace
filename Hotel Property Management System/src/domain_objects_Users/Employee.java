@@ -47,10 +47,13 @@ public class Employee extends Profile {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Employee [employeeID=" + employeeID + ", weeklyWage=" + weeklyWage + ", hourlyWage=" + hourlyWage
+				+ ", hoursWorked=" + hoursWorked + ", email=" + email + ", role=" + role + "]";
+	}
+
 	public String getWeeklyWage() {
-		int hourly = Integer.parseInt(getHourlyWage());
-		int hours = Integer.parseInt(getHoursWorked());
-		this.weeklyWage = ""+hourly * hours;
 		return this.weeklyWage;
 	}
 

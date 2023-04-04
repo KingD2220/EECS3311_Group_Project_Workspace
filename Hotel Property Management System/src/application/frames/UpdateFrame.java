@@ -17,6 +17,7 @@ import domain_objects_Rooms.Reservation;
 public class UpdateFrame implements ActionListener {
 	public JButton findButton;
 	public JButton update; 
+	public JButton remove;
 	public JButton returnButton;
 	public JTextField resNum;
 	public JTextField firstInput;
@@ -39,6 +40,7 @@ public class UpdateFrame implements ActionListener {
 		//Buttons
 		findButton();
 		updateButton();
+		removeButton();
 		returnButton();
 		
 		//Feedback Text Window
@@ -122,9 +124,17 @@ public class UpdateFrame implements ActionListener {
 	//Update Reservation Button
 	public void updateButton() {
 		update = new JButton("Update Reservation");
-		update.setBounds(273, 342, 155, 23);
+		update.setBounds(160, 342, 155, 23);
 		frame.getContentPane().add(update);
 		update.addActionListener(this);
+	}
+	
+	//Remove Reservation Button
+	public void removeButton() {
+		remove = new JButton("Remove Reservation");
+		remove.setBounds(360, 342, 155, 23);
+		frame.getContentPane().add(remove);
+		remove.addActionListener(this);
 	}
 	
 	//Return to Navigation Frame
@@ -157,6 +167,9 @@ public class UpdateFrame implements ActionListener {
 		}
 		if (e.getSource() == update) {
 			control.update();
+		}
+		if (e.getSource() == remove) {
+			control.remove(Integer.parseInt(resNum.getText()));
 		}
 		if (e.getSource() == returnButton) {
 			frame.dispose();
