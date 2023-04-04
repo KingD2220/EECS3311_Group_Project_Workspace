@@ -51,6 +51,7 @@ public class HousekeepingFrame implements ActionListener {
 	public HousekeepingFrame() {
 		window();
 		roomsDisplay();
+		setTableColumnColors();
 		radioButtonSelection();
 		roomRangeSelection();
 		buttons();
@@ -298,7 +299,12 @@ public class HousekeepingFrame implements ActionListener {
 		//show all rooms and room status by default when frame first appears
 		ctrl = new HousekeepingController("100", "509", true, true, true, true, true);
 		ctrl.displayRoomDetails();;	
-		
+	}
+	
+	/**
+	 * Set color scheme for room status and reservation status columns
+	 */
+	public void setTableColumnColors() {
 		//set colors for room status column depending on values
 		TableColumn roomStatusColumn = table.getColumnModel().getColumn(1);
 		roomStatusColumn.setCellRenderer(new DefaultTableCellRenderer() {
@@ -357,6 +363,7 @@ public class HousekeepingFrame implements ActionListener {
 				return c;
 			}
 		});
+		
 		roomStatusBox.addActionListener(new ActionListener() {
 			// listen for user to select an item from the roomStatusBox and make an update call to controller
 			boolean doubleClick = false;
