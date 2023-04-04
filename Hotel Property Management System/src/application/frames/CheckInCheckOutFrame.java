@@ -8,18 +8,28 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableModel;
 
 import application.controllers.CheckInCheckOutController;
+import application.controllers.HousekeepingController;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import java.awt.event.ItemListener;
@@ -27,11 +37,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.awt.event.ItemEvent;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CheckInCheckOutFrame implements ActionListener {
 	private JFrame frame = new JFrame();
 	private JTable table;
 	public static DefaultTableModel model;
+	private JPanel queryPanel;
+	private JPanel buttonsPanel;
 	private JTextField resNumInput;
 	private JTextField roomNumInput;
 	private JTextField dateField;
@@ -42,8 +58,7 @@ public class CheckInCheckOutFrame implements ActionListener {
     private JButton btnCheckOut;
     private JButton btnSearch;
     private JButton btnCancel;
-    private JButton btnBilling;
-    
+    private JButton btnBilling;    
 	
 	public CheckInCheckOutFrame() {
 		window();
@@ -79,13 +94,17 @@ public class CheckInCheckOutFrame implements ActionListener {
 	 */
 	private void queryPanel() {
 		//create panel
-		JPanel queryPanel = new JPanel();
+		queryPanel = new JPanel();
 		queryPanel.setBounds(10, 38, 560, 178);
 		queryPanel.setLayout(null);
 		queryPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		frame.getContentPane().add(queryPanel);
-		
-		//-----labels and textfields-----
+		labelsAndFields();
+		radioButtons();
+
+	}
+	
+	private void labelsAndFields() {
 		JLabel lblResNum = new JLabel("Reservation No.");
 		lblResNum.setBounds(22, 25, 97, 20);
 		queryPanel.add(lblResNum);
@@ -93,7 +112,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		
 		resNumInput = new JTextField();
 		resNumInput.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		resNumInput.setBounds(129, 25, 99, 20);
+		resNumInput.setBounds(129, 25, 99, 24);
 		queryPanel.add(resNumInput);
 		resNumInput.setColumns(10);
 		
@@ -105,7 +124,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		roomNumInput = new JTextField();
 		roomNumInput.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		roomNumInput.setColumns(10);
-		roomNumInput.setBounds(129, 80, 99, 20);
+		roomNumInput.setBounds(129, 80, 99, 24);
 		queryPanel.add(roomNumInput);
 		
 		JLabel lblDate = new JLabel("Date");
@@ -122,10 +141,11 @@ public class CheckInCheckOutFrame implements ActionListener {
 		dateField.setColumns(10);
 		dateField.setBounds(126, 134, 86, 20);
 		queryPanel.add(dateField);
-		//-----End of labels and texfields-----
-		
-		//-------radio buttons-------
-		//selecting one or the other will disable certain features in window
+	}
+	//------------------End of labelsAndFields()-----------------
+	
+	//selecting one or the other will disable certain features in window
+	private void radioButtons() {
 		rdbtnArr = new JRadioButton("Arrivals");
 		rdbtnArr.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -133,9 +153,11 @@ public class CheckInCheckOutFrame implements ActionListener {
 					resNumInput.setEditable(true);
 					btnCheckIn.setEnabled(true);
 					btnCheckOut.setEnabled(false);
+					btnBilling.setEnabled(false);
 					btnCancel.setEnabled(true);
 					roomNumInput.setEditable(false);
 					roomNumInput.setText("");
+					model.setNumRows(0);
 				}
 			}
 		});
@@ -151,9 +173,11 @@ public class CheckInCheckOutFrame implements ActionListener {
 					roomNumInput.setEditable(true);
 					btnCheckOut.setEnabled(true);
 					btnCheckIn.setEnabled(false);
+					btnBilling.setEnabled(true);
 					btnCancel.setEnabled(false);
 					resNumInput.setEditable(false);
 					resNumInput.setText("");
+					model.setNumRows(0);
 				}
 			}
 		});
@@ -166,27 +190,45 @@ public class CheckInCheckOutFrame implements ActionListener {
 		ButtonGroup buttonGroup = new ButtonGroup();
 		buttonGroup.add(rdbtnArr);
 		buttonGroup.add(rdbtnDep);
-		//-------End of radio buttons-------
 	}
+	//------------------------End of radio buttons------------------------
 	
 	/**
 	 * Set reservations display
 	 */
 	private void reservationsDisplay() {
-		Object[] columnHeaders = {"Name", "Arrival Date", "Departure Date", "Room Type", "Room Number", "Reservation No."};
+		Object[] columnHeaders = {"Name", "Arrival", "Departure", "Room Type", "Room No.", "Reserv. No."};
 		model = new DefaultTableModel() { 
 			@Override
-			public boolean isCellEditable(int row, int column) {	
-				return false;
+			public boolean isCellEditable(int row, int column) {
+				if (rdbtnArr.isSelected()) {
+					return column == 4;
+				} else {
+					return false;
+				}
 			}
 		};
 		model.setColumnIdentifiers(columnHeaders);
 		
-		table = new JTable(model);
+		table = new JTable(model) {
+			public TableCellEditor getCellEditor(int row, int column) {
+                int modelColumn = convertColumnIndexToModel(column);
+                //create a custom cell editor for the second column
+                if (modelColumn == 4 && rdbtnArr.isSelected()) {
+                    return (TableCellEditor) new DefaultCellEditor(createComboBox());
+                } else {
+                    return super.getCellEditor(row, column);
+                }
+            }
+        };;
 		table.setBounds(10, 288, 663, 264);
 		table.setRowHeight(25);
-		table.setAutoCreateRowSorter(true);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setAutoCreateRowSorter(true);			
+		table.setRowSelectionAllowed(true);
+		table.getColumnModel().getColumn(0).setPreferredWidth(115);
+		table.getColumnModel().getColumn(3).setMinWidth(80);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBounds(10,218,560,334);
@@ -195,16 +237,28 @@ public class CheckInCheckOutFrame implements ActionListener {
 		//center-align table cell values
 		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(Object.class);
 	    renderer.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		// manual row insert - delete later
-		model.addRow(new Object[] {"Wayne, Bruce", "01-04-2023", "03-04-2023", "Standard", "100"} );
 	}
+	//-----------------------End of reservations display----------------------------
+	
+	/**
+	 * reservationDisplay() helper method
+	 * @return 
+	 */
+	private JComboBox<String> createComboBox() {
+		HousekeepingController hskpController = new HousekeepingController("100", "509", false, false, true, false, true);
+		int selectedRow = table.getSelectedRow();
+		String[] rooms = hskpController.getAvailableRooms(table.getValueAt(selectedRow, 3).toString());
+		JComboBox<String> roomSelectBox = new JComboBox<>(rooms);
+		roomSelectBox.setEditable(false);
+		roomSelectBox.setOpaque(false);
+		return roomSelectBox;
+	}	
 	
 	/**
 	 * Set buttons panel
 	 */
 	private void buttonsPanel() {		
-		JPanel buttonsPanel = new JPanel();
+		buttonsPanel = new JPanel();
 		buttonsPanel.setBounds(572, 38, 101, 514);
 		buttonsPanel.setLayout(null);
 		buttonsPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
@@ -246,18 +300,17 @@ public class CheckInCheckOutFrame implements ActionListener {
 		JOptionPane.showMessageDialog(frame, msg);
 	}
 	
-	//common method used in search button action implementation
+	//common method used in search button action implementation alerting user
 	private void checkNullAddRow(Object[] row, String msg) {
 		if (row != null) {
 			model.addRow(row);
-		}
-		else {
+		} else {
 			this.alertMsg(msg);
 		}
 	}
 
 	/**
-	 * All actions to action listeners
+	 * All action performed methods to action listeners for this class
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -278,8 +331,8 @@ public class CheckInCheckOutFrame implements ActionListener {
 			if (rdbtnArr.isSelected() && !resNumIsEmpty) {		//when user searches for a specific arrival
 				model.setRowCount(0);
 				Object[] row = ctrl.getResByNum(resNumInput.getText());
-				resNumInput.setText("");
 				this.checkNullAddRow(row, "The reservation number does not match today's arrivals");
+				resNumInput.setText("");
 			}
 			if (rdbtnDep.isSelected() && !roomNumIsEmpty) {		//when user searches for a specific departure
 				model.setRowCount(0);
@@ -298,15 +351,62 @@ public class CheckInCheckOutFrame implements ActionListener {
 			}
 		}
 		
+		//check-in button calls controller to update database
+		if (e.getSource() == btnCheckIn) {
+			if (table.getSelectionModel().isSelectionEmpty()) {
+				this.alertMsg("Please select a reservation to check-in!");
+			}
+			else {
+				int selectedRow = table.getSelectedRow();
+				String roomNum = table.getValueAt(selectedRow, 4).toString();
+				String resNum = table.getValueAt(selectedRow, 5).toString();
+				if (!roomNum.equals("") && roomNum!= null) {
+					CheckInCheckOutController ctrl = new CheckInCheckOutController();			
+					boolean checkInGood = ctrl.checkInReservation(resNum, roomNum);
+					if (checkInGood) {
+						model.removeRow(selectedRow);
+						this.alertMsg("Check-In is successful!");
+					} else {
+						this.alertMsg("Check-In not sucessful!!");
+					}
+				} 
+				else {
+					this.alertMsg("Please ensure a room number has been selected!");
+				}
+
+			}
+		}
+		if (e.getSource() == btnCheckOut) {
+			
+		}
+		
+		//billing button (at check-out) populates a pop-up window detailing all charges for the reservation
+		if (e.getSource() == btnBilling) {
+			if (!table.getSelectionModel().isSelectionEmpty()) {
+				int column = 5;
+				int row = table.getSelectedRow();
+				String resNum = table.getModel().getValueAt(row, column).toString();
+				new BillingFrame(resNum);
+			}
+			else {
+				this.alertMsg("Please select a reservation!");
+			}
+		}
 		
 	}
 	
 	// main method - delete later
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-			
-			@Override
 			public void run() {
+				try {
+					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+						if("Nimbus".equals(info.getName()))
+						 UIManager.setLookAndFeel(info.getClassName());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				new CheckInCheckOutFrame();
 			}
 		});

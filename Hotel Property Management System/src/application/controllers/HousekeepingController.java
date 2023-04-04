@@ -113,4 +113,21 @@ public class HousekeepingController {
     public void roomStatusUpdate(String roomNum, String roomStatus) {
     	managementLogic.roomStatusUpdate(roomNum, roomStatus);
     }
+    
+    //search available rooms for check-in based on room type
+    public String[] getAvailableRooms(String roomType) {
+    	ArrayList<Room> roomsList = managementLogic.roomSearch(rangeStart, rangeEnd);	// get array of rooms that was searched
+    	ArrayList<String> roomsAvail = new ArrayList<>();
+    	for (int i = 0; i < roomsList.size(); i++) {
+    		Room room = roomsList.get(i);
+    		if (room.getRoomType().equals(roomType) && room.getRoomStatus().equals("INSPECTED") && room.getReservationStatus().equals("AVAILABLE")) {
+    			roomsAvail.add(room.getRoomNum());
+    		}
+    	}
+    	String[] rooms = new String[roomsAvail.size()];
+    	for (int j = 0; j < rooms.length; j++) {
+    		rooms[j] = roomsAvail.get(j);
+    	}    	
+    	return rooms;
+    }
 }
