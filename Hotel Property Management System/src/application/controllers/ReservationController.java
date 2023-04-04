@@ -69,7 +69,7 @@ public class ReservationController implements ActionListener {
 	  phoneNum.setText(newRes.customer.getPhone_num());
 	  adress.setText(newRes.customer.getAddress());
 	  }else {
-		  UpdateFrame.feedback.setText("Reservation not found please Try Again");
+		  UpdateFrame.feedback.setText("Reservation not found. Please try again");
 	}
 	  
 	}
@@ -86,8 +86,18 @@ public class ReservationController implements ActionListener {
 		UpdateFrame.feedback.setText(newRes.toString());
 		}
 	else {
-		UpdateFrame.feedback.setText("Reservation not Updated please Try Again");
+		UpdateFrame.feedback.setText("Reservation not updated. Please try again");
 	}
+	}
+	
+	//Remove reservation from database
+	public void remove(int resNum) {
+		if(reservationLogic.removeReservation(resNum)) {
+			UpdateFrame.feedback.setText("Reservation " + resNum + " successfully removed.");
+		}
+		else {
+			UpdateFrame.feedback.setText("Reservation not removed. Please try again.");
+		}
 	}
 	
 	//Create Reservation Button Pressed
@@ -112,7 +122,7 @@ public class ReservationController implements ActionListener {
 				if(reservationLogic.addReservation(newRes)) {
 				CreateReservationFrame.feedback.setText(newRes.toString());
 				}else {
-					CreateReservationFrame.feedback.setText("Reservation not Created Please ensure Phone number "
+					CreateReservationFrame.feedback.setText("Reservation not created. Please ensure phone number "
 							+ "is not associated with another reservation");
 				}
 			}
@@ -157,6 +167,4 @@ public class ReservationController implements ActionListener {
 		
 		return valid;
 	}
-		
-	
 }

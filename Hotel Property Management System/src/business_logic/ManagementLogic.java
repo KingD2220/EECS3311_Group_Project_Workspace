@@ -17,7 +17,7 @@ public class ManagementLogic {
 		return database.getRoomStatus(roomRangeStart, roomRangeEnd);
 	}
 	
-	public Employee getEmployee(String employeeNum) {
+	public Employee getEmployee(int employeeNum) {
 		return database.getEmployee(employeeNum);
 	}
 
@@ -25,10 +25,5 @@ public class ManagementLogic {
 	public void roomStatusUpdate(String roomNum, String roomStatus) {
 		database.updateRoomStatus(roomNum, roomStatus);
 	}
-	
-	public Employee getEmpyee(String employeeNum) {
-		return database.getEmployee(employeeNum);
-	}
 }
-
  

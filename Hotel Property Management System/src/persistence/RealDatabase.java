@@ -309,11 +309,11 @@ public class RealDatabase implements Database {
 
 // gets an Employees data by means of an employee number
 	@Override
-	public Employee getEmployee(String employeeNum) {
+	public Employee getEmployee(int employeeNum) {
 		Employee newEmployee = new Employee();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE employeeNum = ?");
-			statement.setString(1, employeeNum);
+			statement.setInt(1, employeeNum);
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
 				newEmployee.setFirst_name(rs.getString("first_name"));
@@ -321,6 +321,11 @@ public class RealDatabase implements Database {
 				newEmployee.setWeeklyWage(rs.getString("weeklyWage"));
 				newEmployee.setAddress(rs.getString("address"));
 				newEmployee.setHourlyWage(rs.getString("hourlyPay"));
+				newEmployee.setEmail(rs.getString("email"));
+				newEmployee.setRole(rs.getString("emplRole"));
+				newEmployee.setHoursWorked(rs.getString("hoursWorked"));
+				newEmployee.setPhone_num(rs.getString("phone_num"));
+				return newEmployee;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -351,13 +356,10 @@ public class RealDatabase implements Database {
 		if (caller.equals("Arrivals")) {
 			caller = "arrival_date";
 		}else caller = "departure_date";
-System.out.println(caller);
 		try {
 			PreparedStatement statement = connection.prepareStatement(String.format("SELECT * FROM RESERVATION WHERE %s = ?", caller));
-			//statement.setString(1, caller);
 			statement.setString(1, date);
 	        ResultSet rs = statement.executeQuery();
-	        System.out.println(rs.getFetchSize());
 	        while(rs.next()) {
 	        	Reservation res = populateReservation(rs);
 	        	resList.add(res);
@@ -386,6 +388,7 @@ System.out.println(caller);
 		return null;
 	}
 	
+
 
 }
 
