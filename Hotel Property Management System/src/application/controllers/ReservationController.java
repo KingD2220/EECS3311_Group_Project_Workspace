@@ -122,7 +122,7 @@ public class ReservationController implements ActionListener {
 				if(reservationLogic.addReservation(newRes)) {
 				CreateReservationFrame.feedback.setText(newRes.toString());
 				}else {
-					CreateReservationFrame.feedback.setText("Reservation not Created Please ensure Phone number "
+					CreateReservationFrame.feedback.setText("Reservation not created. Please ensure phone number "
 							+ "is not associated with another reservation");
 				}
 			}
@@ -167,6 +167,4 @@ public class ReservationController implements ActionListener {
 		
 		return valid;
 	}
-		
-	
 }
