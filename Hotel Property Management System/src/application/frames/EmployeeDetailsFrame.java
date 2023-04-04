@@ -12,9 +12,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Font;
 
-import com.toedter.calendar.JDateChooser;
-
-import application.controllers.ReservationController;
+import application.controllers.EmployeeDetailsController;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,7 +21,6 @@ public class EmployeeDetailsFrame implements ActionListener {
     
 	public JFrame frame = new JFrame();
     public JTextField employeeNum;
-    public JButton returnButton;
     public JTextArea roleName;
     public JTextArea firstName;
     public JTextArea lastName;
@@ -33,6 +30,8 @@ public class EmployeeDetailsFrame implements ActionListener {
     public JTextArea hoursWorked;
     public JTextArea hourlyPay;
     public JTextArea pay;
+    public JButton returnButton;
+    public JButton submitJButton;
     
 	public EmployeeDetailsFrame() {
 		frame.setVisible(true);
@@ -46,6 +45,7 @@ public class EmployeeDetailsFrame implements ActionListener {
 		hourlypay();
 		pay();
 		role();
+		searchButton();
 		returnButton();
 		
 	}
@@ -60,36 +60,33 @@ public class EmployeeDetailsFrame implements ActionListener {
     //Employee number input
     private void employeeNum() {
     	JLabel search = new JLabel("Employee #"); 
-		search.setBounds(67, 54, 94, 14);
+		search.setBounds(48, 27, 94, 14);
 		frame.getContentPane().add(search);
 		
 	    employeeNum = new JTextField();
-		employeeNum.setBounds(181, 49, 80, 28);
+		employeeNum.setBounds(162, 22, 80, 25);
 		frame.getContentPane().add(employeeNum);
 	    employeeNum.setColumns(10);
-	    
-	    JButton submitJButton = new JButton("Search");
-		submitJButton.addActionListener(this);
-		submitJButton.setBounds(304, 52, 74, 19);
-		frame.getContentPane().add(submitJButton);
 	} 
     
     //Display employee name
     private void employeeName() {
-		JLabel name = new JLabel("First Name:");
-		name.setBounds(77, 123, 74, 20);
-		frame.getContentPane().add(name);
+		JLabel firstLabel = new JLabel("First Name:");
+		firstLabel.setBounds(48, 120, 74, 20);
+		frame.getContentPane().add(firstLabel);
 		
 		firstName = new JTextArea();
-		firstName.setBounds(181, 117, 150, 31);
+		firstName.setEditable(false);
+		firstName.setBounds(162, 118, 150, 25);
 		frame.getContentPane().add(firstName);
 		
-    	JLabel jobLabel = new JLabel("Last Name:");
-		jobLabel.setBounds(77, 167, 74, 14);
-		frame.getContentPane().add(jobLabel);
+    	JLabel lastLabel = new JLabel("Last Name:");
+		lastLabel.setBounds(48, 159, 74, 14);
+		frame.getContentPane().add(lastLabel);
 		
 		lastName = new JTextArea();
-		lastName.setBounds(181, 155, 150, 31);
+		lastName.setEditable(false);
+		lastName.setBounds(162, 154, 150, 25);
 		frame.getContentPane().add(lastName);
 		
 	}
@@ -97,11 +94,12 @@ public class EmployeeDetailsFrame implements ActionListener {
     //Display employeePhoneNumber
     private void employeePhoneNumber() {
     	JLabel emailLabel = new JLabel("Phone Number:");
-		emailLabel.setBounds(50, 210, 101, 14);
+		emailLabel.setBounds(48, 195, 101, 14);
 		frame.getContentPane().add(emailLabel);
 		
 		phoneNum = new JTextArea();
-		phoneNum.setBounds(181, 198, 150, 31);
+		phoneNum.setEditable(false);
+		phoneNum.setBounds(162, 190, 150, 25);
 		frame.getContentPane().add(phoneNum);
 		
 	}
@@ -109,74 +107,91 @@ public class EmployeeDetailsFrame implements ActionListener {
     //Display address
     private void address() {
 		JLabel lblAddress = new JLabel("Address:");
-		lblAddress.setBounds(91, 261, 60, 14);
+		lblAddress.setBounds(48, 231, 60, 14);
 		frame.getContentPane().add(lblAddress);
 		
 		address = new JTextArea();
-		address.setBounds(181, 255, 305, 31);
+		address.setEditable(false);
+		address.setBounds(162, 226, 305, 25);
 		frame.getContentPane().add(address);
 		
 	}
+   
     //Display hours worked
     private void hoursWorked() {
 		JLabel lblHoursWorked = new JLabel("Hours Worked:");
-		lblHoursWorked.setBounds(50, 341, 101, 14);
+		lblHoursWorked.setBounds(48, 330, 101, 14);
 		frame.getContentPane().add(lblHoursWorked);
 		
 		hoursWorked = new JTextArea();
-		hoursWorked.setBounds(181, 340, 74, 31);
+		hoursWorked.setEditable(false);
+		hoursWorked.setBounds(162, 325, 74, 25);
 		frame.getContentPane().add(hoursWorked);
     	
 	}
-    // display email 
+    
+    //display email 
     private void email() {
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(105, 302, 43, 14);
+		lblEmail.setBounds(48, 267, 43, 14);
 		frame.getContentPane().add(lblEmail);
 		
 		email = new JTextArea();
-		email.setBounds(181, 301, 305, 31);
+		email.setEditable(false);
+		email.setBounds(162, 262, 305, 25);
 		frame.getContentPane().add(email);
-    	
-    }
-    // display role
-    private void role(){
-	JLabel lblRole = new JLabel("Role: ");
-	lblRole.setBounds(117, 91, 43, 20);
-	frame.getContentPane().add(lblRole);
-	
-	roleName = new JTextArea();
-	roleName.setBounds(183, 83, 150, 31);
-	frame.getContentPane().add(roleName);
     }
     
-    // display hourly pay 
+    //display role
+    private void role(){
+    	JLabel lblRole = new JLabel("Role: ");
+    	lblRole.setBounds(48, 69, 43, 20);
+    	frame.getContentPane().add(lblRole);
+	
+    	roleName = new JTextArea();
+    	roleName.setEditable(false);
+    	roleName.setBounds(162, 67, 150, 25);
+    	frame.getContentPane().add(roleName);
+    }
+    
+    //display hourly pay 
     private void hourlypay() {
 		JLabel lblHourlyPay = new JLabel("Hourly Pay:");
-		lblHourlyPay.setBounds(68, 384, 68, 14);
+		lblHourlyPay.setBounds(48, 366, 68, 14);
 		frame.getContentPane().add(lblHourlyPay);
 		
 		hourlyPay = new JTextArea();
-		hourlyPay.setBounds(181, 377, 74, 31);
+		hourlyPay.setEditable(false);
+		hourlyPay.setBounds(162, 361, 74, 25);
 		frame.getContentPane().add(hourlyPay);
     }
     
-    // display pay
+    //display pay
     private void pay() {
 		JLabel lblPay = new JLabel("Pay:");
-		lblPay.setBounds(105, 422, 34, 14);
+		lblPay.setBounds(48, 402, 34, 14);
 		frame.getContentPane().add(lblPay);
 		
 		pay = new JTextArea();
-		pay.setBounds(181, 415, 115, 31);
+		pay.setEditable(false);
+		pay.setBounds(162, 397, 115, 25);
 		frame.getContentPane().add(pay);
     }
     
+    //Button to search and display employee info
+    private void searchButton() {
+    	submitJButton = new JButton("Search");
+ 		submitJButton.addActionListener(this);
+ 		submitJButton.setBounds(252, 25, 74, 19);
+ 		frame.getContentPane().add(submitJButton);
+    }
+    
+    //Button to return to navigation
     private void returnButton() {
 		returnButton = new JButton("<<");
 		returnButton.setFont(new Font("Dialog", Font.PLAIN, 10));
 		returnButton.setFocusable(false);
-		returnButton.setBounds(557, 16, 68, 18);
+		returnButton.setBounds(537, 11, 68, 18);
 		returnButton.addActionListener(this);
 		frame.getContentPane().add(returnButton);
     	
@@ -185,7 +200,12 @@ public class EmployeeDetailsFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		EmployeeDetailsController empDetails = new EmployeeDetailsController(employeeNum, roleName, firstName, lastName, 
+											   phoneNum, address, email, hoursWorked, hourlyPay, pay);
+		
+		if (e.getSource() == submitJButton) {
+			empDetails.getAndDisplayEmployee();
+		}
 		if (e.getSource() == returnButton) {
 			NavigationFrame.showNav();
 			frame.dispose();
