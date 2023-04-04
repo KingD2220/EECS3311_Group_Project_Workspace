@@ -17,6 +17,7 @@ import application.controllers.HousekeepingController;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -41,6 +42,8 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CheckInCheckOutFrame implements ActionListener {
 	private JFrame frame = new JFrame();
@@ -73,6 +76,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 	private void window() {
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 697, 600);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -89,9 +93,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		frame.getContentPane().add(logOutButton);
 	}
 	
-	/**
-	 * Set search options
-	 */
+	//-------------------labels and textfields----------------------
 	private void queryPanel() {
 		//create panel
 		queryPanel = new JPanel();
@@ -99,12 +101,14 @@ public class CheckInCheckOutFrame implements ActionListener {
 		queryPanel.setLayout(null);
 		queryPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		frame.getContentPane().add(queryPanel);
-		labelsAndFields();
+		resInputComponents();
+		roomInputComponents();
+		dateOutput();
 		radioButtons();
 
 	}
 	
-	private void labelsAndFields() {
+	private void resInputComponents() {
 		JLabel lblResNum = new JLabel("Reservation No.");
 		lblResNum.setBounds(22, 25, 97, 20);
 		queryPanel.add(lblResNum);
@@ -115,7 +119,9 @@ public class CheckInCheckOutFrame implements ActionListener {
 		resNumInput.setBounds(129, 25, 99, 24);
 		queryPanel.add(resNumInput);
 		resNumInput.setColumns(10);
-		
+	}
+	
+	private void roomInputComponents() {
 		JLabel lblRoomNum = new JLabel("Room No.");
 		lblRoomNum.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblRoomNum.setBounds(57, 80, 59, 20);
@@ -124,9 +130,11 @@ public class CheckInCheckOutFrame implements ActionListener {
 		roomNumInput = new JTextField();
 		roomNumInput.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		roomNumInput.setColumns(10);
-		roomNumInput.setBounds(129, 80, 99, 24);
+		roomNumInput.setBounds(129, 79, 99, 24);
 		queryPanel.add(roomNumInput);
-		
+	}
+	
+	private void dateOutput() {
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblDate.setBounds(78, 134, 38, 20);
@@ -142,9 +150,12 @@ public class CheckInCheckOutFrame implements ActionListener {
 		dateField.setBounds(126, 134, 86, 20);
 		queryPanel.add(dateField);
 	}
-	//------------------End of labelsAndFields()-----------------
+	//------------------End of labels and textfields-----------------
 	
-	//selecting one or the other will disable certain features in window
+	/**
+	 * Set radio buttons
+	 * Selecting one or the other will disable certain features in window.
+	 */
 	private void radioButtons() {
 		rdbtnArr = new JRadioButton("Arrivals");
 		rdbtnArr.addItemListener(new ItemListener() {
@@ -238,11 +249,10 @@ public class CheckInCheckOutFrame implements ActionListener {
 		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(Object.class);
 	    renderer.setHorizontalAlignment(SwingConstants.CENTER);
 	}
-	//-----------------------End of reservations display----------------------------
 	
 	/**
 	 * reservationDisplay() helper method
-	 * @return 
+	 * @return dropdown menu of rooms ready for check-in based on room type
 	 */
 	private JComboBox<String> createComboBox() {
 		HousekeepingController hskpController = new HousekeepingController("100", "509", false, false, true, false, true);
@@ -253,6 +263,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		roomSelectBox.setOpaque(false);
 		return roomSelectBox;
 	}	
+	//-----------------------End of reservations display----------------------------
 	
 	/**
 	 * Set buttons panel
@@ -294,6 +305,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		btnBilling.addActionListener(this);
 		buttonsPanel.add(btnBilling);
 	}
+	//---------------End of buttons-----------------
 	
 	//user alert method
 	private void alertMsg(String msg) {
@@ -309,9 +321,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		}
 	}
 
-	/**
-	 * All action performed methods to action listeners for this class
-	 */
+	//all action performed methods to action listeners for this class
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == logOutButton) {
@@ -328,30 +338,47 @@ public class CheckInCheckOutFrame implements ActionListener {
 			if ( !rdbtnArr.isSelected() && !rdbtnDep.isSelected() ) {	//when user doesn't select Arrivals or Departures
 				this.alertMsg("Please select Arrivals or Departures!");
 			}
-			if (rdbtnArr.isSelected() && !resNumIsEmpty) {		//when user searches for a specific arrival
-				model.setRowCount(0);
-				Object[] row = ctrl.getResByNum(resNumInput.getText());
+			if (rdbtnArr.isSelected() && !resNumIsEmpty) {		//when user searches for a specific arrival w/ reseration number
+				model.setRowCount(0);	
+				try {
+					int n = Integer.parseInt(resNumInput.getText());
+					resNumInput.setText("");
+				} catch (NumberFormatException e1) {
+					alertMsg("Invalid reservation number!");
+					resNumInput.setText("");
+				}
+				Object[] row = ctrl.getResByResNum(resNumInput.getText());
 				this.checkNullAddRow(row, "The reservation number does not match today's arrivals");
 				resNumInput.setText("");
 			}
-			if (rdbtnDep.isSelected() && !roomNumIsEmpty) {		//when user searches for a specific departure
+			if (rdbtnDep.isSelected() && !roomNumIsEmpty) {		//when user searches for a specific departure w/ room number
 				model.setRowCount(0);
-				
+				try {	//ensure room number input is in the range of the hotel's room numbers, otherwise notify user
+					int i = Integer.parseInt(roomNumInput.getText());
+					if (100 < i && i < 509) {
+						Object[] row = ctrl.getResByRoomNum(roomNumInput.getText());
+						model.addRow(row);
+						resNumInput.setText("");
+					}
+				} catch (NumberFormatException e1) {
+					alertMsg("Invalid room number!");
+					resNumInput.setText("");
+				}
 			}
 			if (rdbtnArr.isSelected() && resNumIsEmpty) {		//when user searches for all arrivals
 				model.setRowCount(0);
-				boolean flag = ctrl.getResByDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yy-MM-dd")), "Arrivals");
+				boolean flag = ctrl.getResByDate("Arrivals");
 				if (flag == false) this.alertMsg("There are no arrivals for today!");
 				
 			}
 			if (rdbtnDep.isSelected() && roomNumIsEmpty) {		//when user searches for all departures
 				model.setRowCount(0);
-				boolean flag = ctrl.getResByDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yy-MM-dd")), "Departures");
+				boolean flag = ctrl.getResByDate("Departures");
 				if (flag == false) this.alertMsg("There are no departures for today!");
 			}
 		}
 		
-		//check-in button calls controller to update database
+		//check-in button gets selected row/reservation and calls controller to update database 
 		if (e.getSource() == btnCheckIn) {
 			if (table.getSelectionModel().isSelectionEmpty()) {
 				this.alertMsg("Please select a reservation to check-in!");
@@ -360,9 +387,10 @@ public class CheckInCheckOutFrame implements ActionListener {
 				int selectedRow = table.getSelectedRow();
 				String roomNum = table.getValueAt(selectedRow, 4).toString();
 				String resNum = table.getValueAt(selectedRow, 5).toString();
+				
 				if (!roomNum.equals("") && roomNum!= null) {
 					CheckInCheckOutController ctrl = new CheckInCheckOutController();			
-					boolean checkInGood = ctrl.checkInReservation(resNum, roomNum);
+					boolean checkInGood = ctrl.updateRoomResStatus(resNum, roomNum);
 					if (checkInGood) {
 						model.removeRow(selectedRow);
 						this.alertMsg("Check-In is successful!");
@@ -373,11 +401,27 @@ public class CheckInCheckOutFrame implements ActionListener {
 				else {
 					this.alertMsg("Please ensure a room number has been selected!");
 				}
-
 			}
 		}
+		
+		//check-out button gets selected row/reservation and calls controller to update database
 		if (e.getSource() == btnCheckOut) {
-			
+			if (table.getSelectionModel().isSelectionEmpty()) {
+				this.alertMsg("Please select a reservation!");
+			}
+			else {	
+				int selectedRow = table.getSelectedRow();
+				String roomNum = table.getValueAt(selectedRow, 4).toString();
+				String resNum = table.getValueAt(selectedRow, 5).toString();
+				CheckInCheckOutController ctrl = new CheckInCheckOutController();
+				boolean checkOutGood = ctrl.updateRoomResStatus(resNum, roomNum);
+				if (checkOutGood) {
+					this.alertMsg("Check-Out successful!");
+					model.removeRow(selectedRow);
+				} else {
+					this.alertMsg("Check-Out unsucessful!!");
+				}
+			}
 		}
 		
 		//billing button (at check-out) populates a pop-up window detailing all charges for the reservation
@@ -385,7 +429,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 			if (!table.getSelectionModel().isSelectionEmpty()) {
 				int column = 5;
 				int row = table.getSelectedRow();
-				String resNum = table.getModel().getValueAt(row, column).toString();
+				String resNum = table.getValueAt(row, column).toString();
 				new BillingFrame(resNum);
 			}
 			else {
