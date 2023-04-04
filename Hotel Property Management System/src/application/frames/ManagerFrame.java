@@ -103,6 +103,7 @@ public class ManagerFrame implements ActionListener {
 		frame.getContentPane().add(emailLabel);
 		
 		employeeEmail = new JTextField();
+		employeeEmail.setEditable(false);
 		employeeEmail.setColumns(10);
 		employeeEmail.setBounds(296, 202, 181, 23);
 		frame.getContentPane().add(employeeEmail);
@@ -127,6 +128,7 @@ public class ManagerFrame implements ActionListener {
 		frame.getContentPane().add(hoursWorkedLabel);
 		
 		hoursWorked = new JTextField();
+		hoursWorked.setEditable(false);
 		hoursWorked.setColumns(10);
 		hoursWorked.setBounds(492, 239, 58, 23);
 		frame.getContentPane().add(hoursWorked);
@@ -138,6 +140,7 @@ public class ManagerFrame implements ActionListener {
 		frame.getContentPane().add(payLabel);
 		
 		pay = new JTextField();
+		pay.setEditable(false);
 		pay.setColumns(10);
 		pay.setBounds(296, 273, 84, 23);
 		frame.getContentPane().add(pay);
@@ -185,10 +188,9 @@ public class ManagerFrame implements ActionListener {
     	payLabel.setVisible(false);
     	pay.setVisible(false);
     	
-    	//Set fields editable
-    	emplyeeName.setEditable(true);
-    	jobType.setEditable(true);
-    	hourly.setEditable(true);
+    	//Set fields editable and clear fields
+    	fieldsEditable(true);
+    	clearFields();
     }
     
     //Search employee button pressed
@@ -204,9 +206,7 @@ public class ManagerFrame implements ActionListener {
     	pay.setVisible(true);
     	
     	//Set fields not editable
-    	emplyeeName.setEditable(false);
-    	jobType.setEditable(false);
-    	hourly.setEditable(false);
+    	fieldsEditable(false);
     }
     
 	//Return to Navigation Frame
@@ -217,6 +217,24 @@ public class ManagerFrame implements ActionListener {
 		returnButton.setFont(new Font(null, Font.PLAIN, 10));
 		frame.getContentPane().add(returnButton);
 		returnButton.addActionListener(this);
+	}
+	
+	//Enable/Disable editable fields for Search/Add view
+	private void fieldsEditable(boolean editable) {
+    	emplyeeName.setEditable(editable);
+    	jobType.setEditable(editable);
+    	employeeEmail.setEditable(editable);
+		hoursWorked.setEditable(editable);
+    	hourly.setEditable(editable);
+	}
+	
+	//Clear text fields
+	private void clearFields() {
+    	emplyeeName.setText("");
+    	jobType.setText("");
+    	employeeEmail.setText("");
+		hoursWorked.setText("");
+    	hourly.setText("");
 	}
 	
 	@Override
