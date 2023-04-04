@@ -17,9 +17,14 @@ public class CheckInCheckOutController {
 	String dateToday = LocalDate.now().format(DateTimeFormatter.ofPattern("yy-MM-dd"));
 	
 	public CheckInCheckOutController() {
-		
 	}
 
+	//JTable row builder 
+	public Object[] buildRow(Reservation res) {
+		return new Object[] {res.customer.getLast_name() + ", " + res.customer.getFirst_name(), 
+				res.getArrival_date(), res.getDeparture_date(), res.getRoomType(), /*****res.getRoom().getRoomNum()*****/ "", res.getResNumber()};
+	}
+	
 	public Object[] getResByResNum(String resNum) {
 		Reservation res = reservationLogic.getReservation(Integer.parseInt(resNum));
 		if (res != null && res.getArrival_date().equals(dateToday)) {
@@ -29,13 +34,7 @@ public class CheckInCheckOutController {
 			return null;
 		}
 	}
-		
-	//JTable row builder 
-	public Object[] buildRow(Reservation res) {
-		return new Object[] {res.customer.getLast_name() + ", " + res.customer.getFirst_name(), 
-				res.getArrival_date(), res.getDeparture_date(), res.getRoomType(), /*****res.getRoom().getRoomNum()*****/ "", res.getResNumber()};
-	}
-	
+			
 	//get all reservations by date based on selection = {arrival, departure} and filter out any res that were already checked-in.
 	public boolean getResByDate(String type) {
 		ArrayList<Reservation> resList = reservationLogic.getReservationsByDate(dateToday, type);

@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.Font;
 
 public class BillingFrame {
 	private JFrame frame = new JFrame("Billing");
@@ -35,12 +37,17 @@ public class BillingFrame {
 	private JTextField inputRoomType;
 	private JTextField inputRoomNum;
 	private JTextField inputName;
+	private JButton btnClose;
+	private JButton btnCheckOut;
+	private JButton btnRemove;
+	private JButton btnPost;
 	
 	public BillingFrame(String resNum) {
 		this.resNum = resNum;
 		window();
 		table();
 		topPanel();
+		buttons();
 	}
 	
 	private void window() {
@@ -61,7 +68,7 @@ public class BillingFrame {
 		table.setModel(model);
 		table.getColumnModel().getColumn(1).setPreferredWidth(200);
 		JScrollPane scroll = new JScrollPane(table);
-		scroll.setSize(416, 290);
+		scroll.setSize(416, 297);
 		scroll.setLocation(10, 76);
 		frame.getContentPane().add(scroll);	
 	}
@@ -86,6 +93,7 @@ public class BillingFrame {
 		setResInfo();
 	}
 	
+	//-----------------Labels and fields-----------------
 	private void labels() {
 		lblArrivalDate = new JLabel("Arrival");
 		lblArrivalDate.setBounds(283, 9, 40, 14);
@@ -150,6 +158,29 @@ public class BillingFrame {
 		inputDepart.setColumns(10);
 		inputDepart.setBounds(323, 35, 83, 24);
 		topPanel.add(inputDepart);
+	}
+	//-----------------End of labels and fields-----------------
+	
+	private void buttons() {
+		btnClose = new JButton("Close");
+		btnClose.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnClose.setBounds(337, 379, 89, 23);
+		frame.getContentPane().add(btnClose);
+		
+		btnCheckOut = new JButton("Check Out");
+		btnCheckOut.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnCheckOut.setBounds(244, 380, 89, 23);
+		frame.getContentPane().add(btnCheckOut);
+		
+		btnRemove = new JButton("Remove");
+		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnRemove.setBounds(149, 380, 89, 23);
+		frame.getContentPane().add(btnRemove);
+		
+		btnPost = new JButton("Post");
+		btnPost.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnPost.setBounds(56, 380, 89, 23);
+		frame.getContentPane().add(btnPost);
 	}
 	
 	private void setResInfo() {
