@@ -127,3 +127,17 @@ James and Dexter - work on the back end and front end of authorizing and authent
 - Miguel & James --> Work on front-end and back-end backend for checking in / checking out customers who have reservations user story.
 
 =========================================================================================
+
+10. April 3, 2023 (19:00 - 19:50)
+
+- Each Team member provided an update on their work and assigned remaining tasks that need to be complete to wrap up iteration 3
+
+- Humud --> implement customer profile user story, add additional Junit tests for new methods, closes remaining issues reported from QA team 
+
+- Dexter --> help with the implementation of the billing user story, add additional Junit tests, close remaining issues reported from QA team, refractor current code. 
+
+- Miguel --> Add integration tests, implement methods that are required for the additional user stories 
+
+- James --> Finish working on checking in / checking out user stories, implement billing user story. 
+
+=========================================================================================
