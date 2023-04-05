@@ -56,7 +56,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 	private JTextField dateField;
     private JRadioButton rdbtnArr;
     private JRadioButton rdbtnDep;
-    private JButton logOutButton;
+    private JButton returnButton;
     private JButton btnCheckIn;
     private JButton btnCheckOut;
     private JButton btnSearch;
@@ -85,12 +85,12 @@ public class CheckInCheckOutFrame implements ActionListener {
 		lblHeader.setBounds(25, 11, 120, 24);
 		frame.getContentPane().add(lblHeader);
 		
-		logOutButton = new JButton("Logout");
-		logOutButton.setFont(new Font("Dialog", Font.PLAIN, 10));
-		logOutButton.setBounds(605, 11, 68, 18);
-		logOutButton.setFocusable(false);
-		logOutButton.addActionListener(this);
-		frame.getContentPane().add(logOutButton);
+		returnButton = new JButton("<<");
+		returnButton.setFont(new Font("Dialog", Font.PLAIN, 10));
+		returnButton.setBounds(605, 11, 68, 18);
+		returnButton.setFocusable(false);
+		returnButton.addActionListener(this);
+		frame.getContentPane().add(returnButton);
 	}
 	
 	//-------------------labels and textfields----------------------
@@ -324,9 +324,9 @@ public class CheckInCheckOutFrame implements ActionListener {
 	//all action performed methods to action listeners for this class
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == logOutButton) {
-			new LoginFrame();
+		if (e.getSource() == returnButton) {
 			frame.dispose();
+			NavigationFrame.showNav();
 		}
 		
 		//search button clicked w/ empty fields and no selections alerts user
@@ -338,7 +338,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 			if ( !rdbtnArr.isSelected() && !rdbtnDep.isSelected() ) {	//when user doesn't select Arrivals or Departures
 				this.alertMsg("Please select Arrivals or Departures!");
 			}
-			if (rdbtnArr.isSelected() && !resNumIsEmpty) {		//when user searches for a specific arrival w/ reseration number
+			if (rdbtnArr.isSelected() && !resNumIsEmpty) {		//when user searches for a specific arrival w/ reservation number
 				model.setRowCount(0);	
 				try {
 					int n = Integer.parseInt(resNumInput.getText());
