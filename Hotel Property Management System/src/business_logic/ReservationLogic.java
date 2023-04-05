@@ -108,5 +108,9 @@ public class ReservationLogic {
 		
 		return daysBetween;
 	}
+	public Reservation getResByRoomNum(String roomNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
