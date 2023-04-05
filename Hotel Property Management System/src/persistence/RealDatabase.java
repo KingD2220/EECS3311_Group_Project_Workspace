@@ -7,9 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import domain_objects_Rooms.*;
 import domain_objects_Users.Employee;
 
@@ -381,6 +378,7 @@ public class RealDatabase implements Database {
 		reservation.setDeparture_date(rs.getString("departure_date"));
 		reservation.setRoomType(rs.getString("roomType")); 
 		reservation.setResNumber(rs.getInt("resNum"));
+		reservation.setRoomNum(rs.getString("roomNumber"));
 		return reservation;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -389,7 +387,7 @@ public class RealDatabase implements Database {
 	}
 
 
-
+// Updates room and reservation to reflect whether a reservation is checked in or out and the room assigned
 	@Override
 	public boolean updateResStatus(int resNum, String roomNum, String caller) {
 		Reservation res = getReservation(resNum);
@@ -419,7 +417,7 @@ public class RealDatabase implements Database {
 		return false;
 	}
 	
-	
+// Does the Checkin or chekout for the rooms
 	public boolean roomCheckin(Reservation res, String roomNum, String caller, String resStatus) {
 		String inDate="";
 		String outDate="";
@@ -444,7 +442,7 @@ public class RealDatabase implements Database {
 	public static void main(String[] args) {
 		RealDatabase db = new RealDatabase();
 		boolean test = false; 
-		test = db.updateResStatus(1, "101", "Check In");
+		test = db.updateResStatus(1, "101", "Check 0ut");
 		 System.out.println(test);
 	}
 
