@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -29,6 +30,7 @@ public class CheckInCheckOutController {
 				res.getArrival_date(), res.getDeparture_date(), res.getRoomType(), res.getRoomNum(), res.getResNumber()};
 	}
 	
+	//fetches a reservation based on a reservation number displays it on frame
 	public Object[] getResByResNum(String resNum) {
 		Reservation res = reservationLogic.getReservation(Integer.parseInt(resNum));
 		if (res != null && res.getArrival_date().equals(dateToday)) {
@@ -47,7 +49,7 @@ public class CheckInCheckOutController {
 				if (caller.equals("Arrivals") && res.getRoomNum() == null) {
 					CheckInCheckOutFrame.model.addRow(buildRow(res)); 
 				}	
-				if (caller.equals("Departures") && res.getRoomNum() != null) {
+				if (caller.equals("Departures") /*&& res.getCheckedOut().equals("NO")*/) {
 					CheckInCheckOutFrame.model.addRow(buildRow(res));
 				}
 			}
@@ -58,6 +60,7 @@ public class CheckInCheckOutController {
 		}
 	}	
 	
+	//fetches a reservation based on the room number used for checking out reservation
 	public Object[] getResByRoomNum(String roomNum) {	//---------NEEDS TO BE IMPLEMENTED-----MAYBE USE getResByDate()
 		Reservation res = reservationLogic.getResByRoomNum(roomNum);
 		if (res != null && res.getDeparture_date().equals(dateToday)) {
@@ -76,19 +79,40 @@ public class CheckInCheckOutController {
 		return reservationLogic.getReservation(Integer.parseInt(resNum));
 	}
 	
+	public Object[] buildRow4Billing(String date, String item, String  price) {
+		return new Object[] {date, item, price};
+	}
+	
 	public void displayCharges(Reservation res) {
-		DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
-		long numOfNights = reservationLogic.daysBetween(res);
-		String arrivalDate = res.getArrival_date();
-		Date startDate = null;
-		try {
-			startDate = dateFormat.parse(arrivalDate);
+		DateFormat resDateFormat = new SimpleDateFormat("yy-MM-dd");
+		DateFormat billDateFormat = new SimpleDateFormat("MM-dd");
+		Date arrival = null;
+		//turn String date back into a Date object
+		try {	
+			arrival = resDateFormat.parse(res.getArrival_date());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		
-		// for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1))
+		//convert Date to Calendar for iteration
+		Calendar startDate = Calendar.getInstance();
+		startDate.setTime(arrival);
 		
+		long numOfNights = reservationLogic.daysBetween(res);
+		String roomType = res.getRoomType();
+//		String roomRate = Double.toString(res.getRoom().getRate());
+		
+		for (int i = 0; i < numOfNights; i++){
+			String monthDay = billDateFormat.format(startDate.getTime());
+			BillingFrame.model.addRow(buildRow4Billing(monthDay, roomType, "200.00"));
+			
+			startDate.add(Calendar.DATE, 1);
+		}
+
 	}
 
+	public static void main(String[] args) {
+		CheckInCheckOutController ctrl = new CheckInCheckOutController();
+		ctrl.displayCharges(ctrl.getResInfo("7"));
+	}
 }

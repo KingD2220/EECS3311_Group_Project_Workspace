@@ -34,6 +34,7 @@ public class BillingFrame implements ActionListener {
 	private JLabel lblRoomType;
 	private JLabel lblName;
 	private JLabel lblRoomNumber;
+	private JLabel lblTotal;
 	private JTextField inputArrival;
 	private JTextField inputDepart;
 	public String resNum = "";
@@ -47,9 +48,17 @@ public class BillingFrame implements ActionListener {
 	private JButton btnPost;
 	CheckInCheckOutController ctrl = new CheckInCheckOutController();
 	
-	public BillingFrame(String resNum, JTable table) {
+	public BillingFrame(String resNum, JTable table) {	
 		this.resNum = resNum;
 		this.table = table;
+		window();
+		table();
+		topPanel();
+		buttons();
+	}
+	
+	public BillingFrame(String resNum) {	//FOR TESTING - DELETE LATER!!!!!
+		this.resNum = resNum;
 		window();
 		table();
 		topPanel();
@@ -75,8 +84,8 @@ public class BillingFrame implements ActionListener {
 		table.setModel(model);
 		table.getColumnModel().getColumn(1).setPreferredWidth(200);
 		JScrollPane scroll = new JScrollPane(table);
-		scroll.setSize(466, 347);
-		scroll.setLocation(10, 76);
+		scroll.setSize(466, 328);
+		scroll.setLocation(10, 95);
 		frame.getContentPane().add(scroll);	
 	}
 	
@@ -125,6 +134,12 @@ public class BillingFrame implements ActionListener {
 		lblRoomNumber = new JLabel("Room");
 		lblRoomNumber.setBounds(21, 9, 34, 14);
 		topPanel.add(lblRoomNumber);
+		
+		lblTotal = new JLabel("$1000.00");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTotal.setBounds(375, 71, 100, 23);
+		frame.getContentPane().add(lblTotal);
 	}
 	
 	private void setRoomInfoFields() {
@@ -225,4 +240,20 @@ public class BillingFrame implements ActionListener {
 		}
 	}
 		
+	// main method - delete later
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+						if("Nimbus".equals(info.getName()))
+						 UIManager.setLookAndFeel(info.getClassName());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				new BillingFrame("7");
+			}
+		});
+	}
 }
