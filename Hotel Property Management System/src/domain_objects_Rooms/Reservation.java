@@ -10,7 +10,8 @@ public class Reservation {
 	private int resNumber;
 	private String roomType ="";
 	private String roomNum;
-	
+	private String checkedOut;
+	private String checkedIn;
 
 	private Room room;
 	
@@ -24,6 +25,22 @@ public class Reservation {
 
 	public String getArrival_date() {
 		return arrival_date;
+	}
+
+	public String getCheckedOut() {
+		return checkedOut;
+	}
+
+	public void setCheckedOut(String checkedOut) {
+		this.checkedOut = checkedOut;
+	}
+
+	public String getCheckedIn() {
+		return checkedIn;
+	}
+
+	public void setCheckedIn(String checkedIn) {
+		this.checkedIn = checkedIn;
 	}
 
 	public void setArrival_date(String arrival_date) {

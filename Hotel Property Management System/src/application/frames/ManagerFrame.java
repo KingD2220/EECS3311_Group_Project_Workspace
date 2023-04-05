@@ -153,7 +153,7 @@ public class ManagerFrame implements ActionListener {
     
     //Add employee button to change view to add employees
     private void addEmployeeButton() {
-    	addEmployeeButton = new JButton("Add Employee");
+    	addEmployeeButton = new JButton("Add an Employee");
 		addEmployeeButton.setBounds(361, 350, 150, 23);
 		frame.getContentPane().add(addEmployeeButton);
 		addEmployeeButton.addActionListener(this);
@@ -161,7 +161,7 @@ public class ManagerFrame implements ActionListener {
     
     //Search employee button to change view to search employees
     private void searchEmployeeButton() {
-    	searchEmployeesButton = new JButton("Search Employees");
+    	searchEmployeesButton = new JButton("Search for Employees");
 		searchEmployeesButton.setBounds(130, 350, 150, 23);
 		frame.getContentPane().add(searchEmployeesButton);
 		searchEmployeesButton.addActionListener(this);
