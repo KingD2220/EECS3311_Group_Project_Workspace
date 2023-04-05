@@ -21,8 +21,7 @@ public class DatabaseStubs implements Database {
 	private static List<Employee> employee = new ArrayList<>();
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Account> accounts = new ArrayList<>(); 
-	private static List<Room> rooms = new ArrayList<>();
-	private static List<Employee> employee = new ArrayList<>();
+
 	
 	
     public DatabaseStubs() {
