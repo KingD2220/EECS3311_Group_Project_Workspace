@@ -16,26 +16,26 @@ public class ManagementLogicTest {
 	
 	@Test
 	public void testRoomSearch() {
+		//Setup rooms
 		Room room1 = new StandardRoom();
 		room1.setRoomNum("1");
-		stubs.addRoom(room1);
-		
 		Room room2 = new DeluxeRoom();
 		room2.setRoomNum("2");
-		stubs.addRoom(room2);
-		
 		Room room3 = new ExecutiveSuite();
 		room3.setRoomNum("3");
-		stubs.addRoom(room3);
-		
 		Room room4 = new PresidentialSuite();
 		room4.setRoomNum("4");
-		stubs.addRoom(room4);
-		
 		Room room5 = new SuiteRoom();
 		room5.setRoomNum("5");
+		
+		//Add rooms to test database
+		stubs.addRoom(room1);
+		stubs.addRoom(room2);
+		stubs.addRoom(room3);
+		stubs.addRoom(room4);
 		stubs.addRoom(room5);
 		
+		//Create list of expected rooms
 		ArrayList <Room> list = new ArrayList<>();
 		list.add(room2);
 		list.add(room3);
@@ -43,9 +43,10 @@ public class ManagementLogicTest {
 		
 		assertEquals(list, test.roomSearch("2", "4"));
 	}
-
+	
 	@Test
 	public void testGetEmployee() {
+		//Add employee to test database
 		Employee emp = new Employee();
 		emp.setEmployeeID("1");
 		
@@ -56,12 +57,13 @@ public class ManagementLogicTest {
 	
 	@Test
 	public void testRoomStatusUpdate() {
+		//Add room to test database
 		Room room = new StandardRoom();
 		room.setRoomNum("1");
 		stubs.addRoom(room);
 		
+		//Set room status
 		String status = "DIRTY";
-		
 		test.roomStatusUpdate("1", status);
 		
 		assertEquals(status, room.getRoomStatus());
