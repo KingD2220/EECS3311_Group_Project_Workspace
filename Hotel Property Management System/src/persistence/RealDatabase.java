@@ -292,7 +292,7 @@ public class RealDatabase implements Database {
 		try {
 		room.setRoomNum(rs.getString("roomNumber"));
 		room.setArrivalDate(rs.getString("start_date"));
-		room.setArrivalDate(rs.getString("end_date"));
+		room.setDepartureDate(rs.getString("end_date"));
 		room.setRoomStatus(rs.getString("roomSatus"));
 	    room.setRoomType(rs.getString("roomType"));
 	    room.setReservationStatus(rs.getString("reservationStatus"));
@@ -426,7 +426,7 @@ public class RealDatabase implements Database {
 		String outDate="";
 		if (caller.equals("Check In")) {
 			inDate = res.getArrival_date();
-			outDate =res.departure_date;
+			outDate =res.getDeparture_date();
 		}
 		try {
 			PreparedStatement statement =connection.prepareStatement(String.format("UPDATE ROOM SET %s = ?, %s =?, %s =?, %s =? WHERE %s = ?","reservationStatus", 
@@ -444,10 +444,16 @@ public class RealDatabase implements Database {
 	}
   
 	public static void main(String[] args) {
+		ArrayList<Room> rooms = new ArrayList<>();
 		RealDatabase db = new RealDatabase();
 		boolean test = false; 
-		test = db.updateResStatus(1, "101", "Check 0ut");
+		test = db.updateResStatus(1, "101", "Check In");
 		 System.out.println(test);
+		 rooms = db.getRoomStatus("100", "105");
+		 for (Room room : rooms) {
+			System.out.println(room.toString());
+		}
+		 
 	}
 
 }
