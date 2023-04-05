@@ -15,6 +15,7 @@ import application.frames.BillingFrame;
 import application.frames.CheckInCheckOutFrame;
 import business_logic.ReservationLogic;
 import domain_objects_Rooms.Reservation;
+import domain_objects_Rooms.Room;
 import persistence.RealDatabase;
 
 public class CheckInCheckOutController {
@@ -87,6 +88,7 @@ public class CheckInCheckOutController {
 		DateFormat resDateFormat = new SimpleDateFormat("yy-MM-dd");
 		DateFormat billDateFormat = new SimpleDateFormat("MM-dd");
 		Date arrival = null;
+		double total = 0;
 		//turn String date back into a Date object
 		try {	
 			arrival = resDateFormat.parse(res.getArrival_date());
@@ -100,15 +102,15 @@ public class CheckInCheckOutController {
 		
 		long numOfNights = reservationLogic.daysBetween(res);
 		String roomType = res.getRoomType();
-//		String roomRate = Double.toString(res.getRoom().getRate());
+//		String roomRate = Double.toString();
 		
 		for (int i = 0; i < numOfNights; i++){
 			String monthDay = billDateFormat.format(startDate.getTime());
 			BillingFrame.model.addRow(buildRow4Billing(monthDay, roomType, "200.00"));
-			
+			total += 200.00;
 			startDate.add(Calendar.DATE, 1);
 		}
-
+		
 	}
 
 	public static void main(String[] args) {
