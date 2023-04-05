@@ -9,7 +9,9 @@ public class Reservation {
 	public Customer customer = new Customer();
 	private int resNumber;
 	private String roomType ="";
-	
+	private String roomNum;
+	private String checkedOut;
+	private String checkedIn;
 
 	private Room room;
 	
@@ -25,8 +27,32 @@ public class Reservation {
 		return arrival_date;
 	}
 
+	public String getCheckedOut() {
+		return checkedOut;
+	}
+
+	public void setCheckedOut(String checkedOut) {
+		this.checkedOut = checkedOut;
+	}
+
+	public String getCheckedIn() {
+		return checkedIn;
+	}
+
+	public void setCheckedIn(String checkedIn) {
+		this.checkedIn = checkedIn;
+	}
+
 	public void setArrival_date(String arrival_date) {
 		this.arrival_date = arrival_date;
+	}
+
+	public String getRoomNum() {
+		return roomNum;
+	}
+
+	public void setRoomNum(String roomNum) {
+		this.roomNum = roomNum;
 	}
 
 	public String getDeparture_date() {

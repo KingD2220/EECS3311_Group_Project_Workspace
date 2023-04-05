@@ -50,7 +50,7 @@ CREATE TABLE CUSTOMER
 CREATE TABLE ROOM
 	(roomType			VARCHAR(30) 	NOT NULL, 
      reservationStatus  VARCHAR(20)     DEFAULT'AVAILABLE',
-	 roomSatus          VARCHAR (8)     DEFAULT 'CLEAN',
+	 roomSatus          VARCHAR (9)     DEFAULT 'CLEAN',
      roomNumber         VARCHAR(5),
      start_date		    VARCHAR(30),
      end_date           VARCHAR(30),

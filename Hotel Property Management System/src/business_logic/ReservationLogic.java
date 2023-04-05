@@ -61,6 +61,10 @@ public class ReservationLogic {
 		return reservation;
 	}
 	
+	public boolean updateReservationStatus(int roomNum, String resNum, String caller) {
+		return database.updateResStatus(roomNum, resNum, caller);
+	}
+	
 	public static Room roomAvailable(String roomType) {
 		Room room = null;
 		switch(roomType) {
@@ -103,6 +107,10 @@ public class ReservationLogic {
 		long daysBetween = ChronoUnit.DAYS.between(arrival, departure);
 		
 		return daysBetween;
+	}
+	public Reservation getResByRoomNum(String roomNum) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -74,7 +74,7 @@ public class NavigationFrame implements ActionListener{
 	}
     
     private void roomStatusButton() {
-		roomStatusButton = new JButton("View Room Status");
+		roomStatusButton = new JButton("View/Change Room Status");
 		roomStatusButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		roomStatusButton.setBounds(341, 218, 296, 102);
 		frame.getContentPane().add(roomStatusButton);
@@ -160,7 +160,7 @@ public class NavigationFrame implements ActionListener{
 			new HousekeepingFrame();
 		}
 		if (e.getSource() == checkInOutButton) {
-			//Create check-in/check-out frame
+			new CheckInCheckOutFrame();
 		}
 		if (e.getSource() == logoutButton) {
 			frame.dispose();

@@ -7,9 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import domain_objects_Rooms.*;
 import domain_objects_Users.Employee;
 
@@ -379,16 +376,79 @@ public class RealDatabase implements Database {
 				rs.getString("address"), rs.getString("phone_num"), rs.getString("credit_card"));
 		reservation.setArrival_date(rs.getString("arrival_date"));
 		reservation.setDeparture_date(rs.getString("departure_date"));
-		reservation.setRoomType(rs.getString("roomType"));
+		reservation.setRoomType(rs.getString("roomType")); 
 		reservation.setResNumber(rs.getInt("resNum"));
+		reservation.setRoomNum(rs.getString("roomNumber"));
+		reservation.setCheckedIn(rs.getString("checkedIn"));
+		reservation.setCheckedOut(rs.getString("checkedOut"));
 		return reservation;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
 
+
+// Updates room and reservation to reflect whether a reservation is checked in or out and the room assigned
+	@Override
+	public boolean updateResStatus(int resNum, String roomNum, String caller) {
+		Reservation res = getReservation(resNum);
+		String resStatus;
+		String checkInOrOut;
+		boolean updateChecked;
+		if(caller.equalsIgnoreCase("Check In")) {
+			resStatus = "OCCUPIED";
+		    checkInOrOut= "checkedIn";
+		}else {
+			resStatus ="AVAILABLE";
+			checkInOrOut = "checkedOut";
+		}
+		try {
+			PreparedStatement statement = connection.prepareStatement(String.format("UPDATE RESERVATION SET %s = ?, %s =? WHERE resNum = ?",
+					"roomNumber",checkInOrOut));
+			statement.setString(1, roomNum);
+			statement.setString(2,"YES");
+			statement.setInt(3, resNum);
+			updateChecked = retunedRows(statement.executeUpdate());
+			if (updateChecked && roomCheckin(res, roomNum, caller,resStatus)) {
+				return true;
+			}else return false;
+		} catch (Exception e) {
+	    	e.printStackTrace();
+		}
+		return false;
+	}
+	
+// Does the Checkin or chekout for the rooms
+	public boolean roomCheckin(Reservation res, String roomNum, String caller, String resStatus) {
+		
+		String inDate="";
+		String outDate="";
+		if (caller.equals("Check In")) {
+			inDate = res.getArrival_date();
+			outDate =res.departure_date;
+		}
+		try {
+			PreparedStatement statement =connection.prepareStatement(String.format("UPDATE ROOM SET %s = ?, %s =?, %s =?, %s =? WHERE %s = ?","reservationStatus", 
+					"start_date","end_date","roomSatus","roomNumber"));
+			statement.setString(1, resStatus);
+			statement.setString(2, inDate);
+			statement.setString(3, outDate);
+			statement.setString(4, "DIRTY");
+			statement.setString(5, roomNum);
+			return retunedRows(statement.executeUpdate());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+  
+	public static void main(String[] args) {
+		RealDatabase db = new RealDatabase();
+		boolean test = false; 
+		test = db.updateResStatus(1, "101", "Check 0ut");
+		 System.out.println(test);
+	}
 
 }
 
