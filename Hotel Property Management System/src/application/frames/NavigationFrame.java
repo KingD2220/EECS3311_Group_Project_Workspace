@@ -52,7 +52,7 @@ public class NavigationFrame implements ActionListener{
     private void createResFrameButton() {
     	createResFrameButton = new JButton("Create a Reservation");
 		createResFrameButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		createResFrameButton.setBounds(35, 377, 296, 102);
+		createResFrameButton.setBounds(35, 218, 296, 102);
 		frame.getContentPane().add(createResFrameButton);
 		createResFrameButton.addActionListener(this);
     }
@@ -60,7 +60,7 @@ public class NavigationFrame implements ActionListener{
     private void updateResFrameButton() {
     	updateResButton = new JButton("Update Reservation");
 		updateResButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		updateResButton.setBounds(35, 218, 296, 102);
+		updateResButton.setBounds(35, 377, 296, 102);
 		frame.getContentPane().add(updateResButton);
 		updateResButton.addActionListener(this);
     }

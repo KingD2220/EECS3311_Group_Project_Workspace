@@ -12,8 +12,8 @@ import domain_objects_Users.Profile;
 public class DatabaseStubs implements Database {
 	private static List<Profile> customers = new ArrayList<>();
 	private static List<Reservation> reservations = new ArrayList<>();
-	private static List<String> employee = new ArrayList<>();
-	private static List<String> rooms = new ArrayList<>();
+	private static List<Employee> employee = new ArrayList<>();
+	private static List<Room> rooms = new ArrayList<>();
 	private static List<Account> accounts = new ArrayList<>(); 
 	
 	@Override
@@ -83,23 +83,44 @@ public class DatabaseStubs implements Database {
 	}
 	@Override
 	public ArrayList<Room> getRoomStatus(String roomNumStart, String roomNumEnd) {
+		ArrayList<Room> list = new ArrayList<>();
 		
-		return null;
+		for (Room room : rooms) {
+			if (room.getRoomNum().compareTo(roomNumStart) >= 0 && room.getRoomNum().compareTo(roomNumEnd) <= 0) {
+				list.add(room);
+			}
+		}
+		return list;
 	}
 	@Override
 	public Employee getEmployee(int employeeNum) {
-		// TODO Auto-generated method stub
+		for (Employee emp : employee) {
+			if (Integer.parseInt(emp.getEmployeeID()) == employeeNum) {
+				return emp;
+			}
+		}
 		return null;
 	}
 	@Override
 	public void updateRoomStatus(String roomNum, String roomStatus) {
-		// TODO Auto-generated method stub
-		
+		for (Room room : rooms) {
+			if (room.getRoomNum() == roomNum) {
+				room.setRoomStatus(roomStatus);
+			}
+		}
 	}
 	@Override
 	public ArrayList<Reservation> getResByDate(String date, String caller) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public boolean addEmployee(Employee emp) {
+		return employee.add(emp);
+	}
+	
+	public boolean addRoom(Room room) {
+		return rooms.add(room);
 	}
 }
 
