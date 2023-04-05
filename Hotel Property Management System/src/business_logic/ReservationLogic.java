@@ -1,5 +1,8 @@
 package business_logic;
 
+import java.time.temporal.ChronoUnit;
+import java.time.format.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import domain_objects_Rooms.DeluxeRoom;
@@ -88,6 +91,18 @@ public class ReservationLogic {
 			break;
 		}
 		return room;
+	}
+	
+	//Gets the number of days between arrival and departure date of reservation
+	public long daysBetween(Reservation reservation) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy-MM-dd");
+		
+		LocalDate arrival = LocalDate.parse(reservation.arrival_date, format);
+		LocalDate departure = LocalDate.parse(reservation.departure_date, format);
+		
+		long daysBetween = ChronoUnit.DAYS.between(arrival, departure);
+		
+		return daysBetween;
 	}
 
 }

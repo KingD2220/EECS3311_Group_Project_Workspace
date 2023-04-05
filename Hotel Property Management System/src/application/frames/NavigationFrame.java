@@ -92,7 +92,7 @@ public class NavigationFrame implements ActionListener{
     private void logoutButton() {
 		logoutButton = new JButton("Logout");
 		logoutButton.setFont(new Font(null, Font.PLAIN, 10));
-		logoutButton.setBounds(603, 11, 68, 18);
+		logoutButton.setBounds(603, 11, 68, 23);
 		logoutButton.setFocusable(false);
 		logoutButton.addActionListener(this);
 		frame.getContentPane().add(logoutButton);

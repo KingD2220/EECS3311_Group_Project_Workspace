@@ -75,86 +75,86 @@ public class ManagerFrame implements ActionListener {
     //Display employee name
     private void employeeName() {
 		JLabel name = new JLabel("Employee Name:");
-		name.setBounds(169, 140, 115, 20);
+		name.setBounds(130, 123, 115, 20);
 		frame.getContentPane().add(name);
 		
 	    emplyeeName = new JTextField();
 	    emplyeeName.setEditable(false);
-		emplyeeName.setBounds(296, 140, 158, 23);
+		emplyeeName.setBounds(257, 123, 158, 23);
 		frame.getContentPane().add(emplyeeName);
 		emplyeeName.setColumns(10);
 	}
     
     private void jobType() {
     	JLabel jobLabel = new JLabel("Job Type:");
-		jobLabel.setBounds(169, 174, 74, 14);
+		jobLabel.setBounds(130, 157, 74, 14);
 		frame.getContentPane().add(jobLabel);
 		
 		jobType = new JTextField();
 		jobType.setEditable(false);
 		jobType.setColumns(10);
-		jobType.setBounds(296, 171, 108, 23);
+		jobType.setBounds(257, 154, 108, 23);
 		frame.getContentPane().add(jobType);
 	}
     
     private void employeeEmail() {
     	JLabel emailLabel = new JLabel("Email:");
-		emailLabel.setBounds(169, 200, 53, 14);
+		emailLabel.setBounds(130, 183, 53, 14);
 		frame.getContentPane().add(emailLabel);
 		
 		employeeEmail = new JTextField();
 		employeeEmail.setEditable(false);
 		employeeEmail.setColumns(10);
-		employeeEmail.setBounds(296, 202, 181, 23);
+		employeeEmail.setBounds(257, 185, 181, 23);
 		frame.getContentPane().add(employeeEmail);
 	}
     
     private void hourlyPay() {
     	JLabel hourlyLabel = new JLabel("Hourly:");
-		hourlyLabel.setBounds(169, 242, 94, 14);
+		hourlyLabel.setBounds(130, 225, 94, 14);
 		frame.getContentPane().add(hourlyLabel);
 		
 		hourly = new JTextField();
 		hourly.setEditable(false);
 		hourly.setColumns(10);
-		hourly.setBounds(296, 239, 65, 23);
+		hourly.setBounds(257, 222, 65, 23);
 		frame.getContentPane().add(hourly);
 		
 	}
     
     private void hoursWorked() {
     	JLabel hoursWorkedLabel = new JLabel("Hours Worked:");
-		hoursWorkedLabel.setBounds(383, 242, 94, 14);
+		hoursWorkedLabel.setBounds(344, 225, 94, 14);
 		frame.getContentPane().add(hoursWorkedLabel);
 		
 		hoursWorked = new JTextField();
 		hoursWorked.setEditable(false);
 		hoursWorked.setColumns(10);
-		hoursWorked.setBounds(492, 239, 58, 23);
+		hoursWorked.setBounds(453, 222, 58, 23);
 		frame.getContentPane().add(hoursWorked);
 	}
     
     private void pay() {
     	payLabel = new JLabel("Pay:");
-		payLabel.setBounds(169, 277, 34, 14);
+		payLabel.setBounds(130, 260, 34, 14);
 		frame.getContentPane().add(payLabel);
 		
 		pay = new JTextField();
 		pay.setEditable(false);
 		pay.setColumns(10);
-		pay.setBounds(296, 273, 84, 23);
+		pay.setBounds(257, 254, 84, 23);
 		frame.getContentPane().add(pay);
 		
 		submitJButton = new JButton("SUBMIT");
 		submitJButton.addActionListener(this);
-		submitJButton.setBounds(406, 273, 74, 19);
+		submitJButton.setBounds(367, 256, 74, 19);
 		frame.getContentPane().add(submitJButton);
 	}
     
     //Add employee button to change view to add employees
     private void addEmployeeButton() {
     	addEmployeeButton = new JButton("Add Employee");
-		addEmployeeButton.setBounds(340, 350, 150, 23);
+		addEmployeeButton.setBounds(361, 350, 150, 23);
 		frame.getContentPane().add(addEmployeeButton);
 		addEmployeeButton.addActionListener(this);
     }
@@ -162,7 +162,7 @@ public class ManagerFrame implements ActionListener {
     //Search employee button to change view to search employees
     private void searchEmployeeButton() {
     	searchEmployeesButton = new JButton("Search Employees");
-		searchEmployeesButton.setBounds(169, 350, 150, 23);
+		searchEmployeesButton.setBounds(130, 350, 150, 23);
 		frame.getContentPane().add(searchEmployeesButton);
 		searchEmployeesButton.addActionListener(this);
 		searchEmployeesButton.setEnabled(false);
@@ -170,7 +170,7 @@ public class ManagerFrame implements ActionListener {
     
     private void addButton() {
     	addButton = new JButton("ADD");
-		addButton.setBounds(296, 272, 74, 19);
+		addButton.setBounds(257, 255, 74, 19);
 		frame.getContentPane().add(addButton);
 		addButton.addActionListener(this);
 		addButton.setVisible(false);

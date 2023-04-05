@@ -61,5 +61,10 @@ public class ReservationLogicTest {
 		
 		assertNull(ReservationLogic.roomAvailable("Standard"));
 	}
-
+	
+	@Test
+	public void testDaysBetween() {
+		test.changeResDates(Res, "02-02-23", "02-02-26");
+		assertEquals(test.daysBetween(Res), 3);
+	}
 }
