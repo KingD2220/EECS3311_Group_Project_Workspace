@@ -9,6 +9,7 @@ public class Reservation {
 	public Customer customer = new Customer();
 	private int resNumber;
 	private String roomType ="";
+	private String roomNum;
 	
 
 	private Room room;
@@ -27,6 +28,14 @@ public class Reservation {
 
 	public void setArrival_date(String arrival_date) {
 		this.arrival_date = arrival_date;
+	}
+
+	public String getRoomNum() {
+		return roomNum;
+	}
+
+	public void setRoomNum(String roomNum) {
+		this.roomNum = roomNum;
 	}
 
 	public String getDeparture_date() {
