@@ -379,6 +379,8 @@ public class RealDatabase implements Database {
 		reservation.setRoomType(rs.getString("roomType")); 
 		reservation.setResNumber(rs.getInt("resNum"));
 		reservation.setRoomNum(rs.getString("roomNumber"));
+		reservation.setCheckedIn(rs.getString("checkedIn"));
+		reservation.setCheckedOut(rs.getString("checkedOut"));
 		return reservation;
 		} catch(Exception e) {
 			e.printStackTrace();
