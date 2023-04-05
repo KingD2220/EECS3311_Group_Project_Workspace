@@ -35,6 +35,7 @@ public class HousekeepingFrame implements ActionListener {
 	private JFrame frame =new JFrame();
 	private JTable table;
 	public static DefaultTableModel model;
+	private JPanel checkPanel;
 	private JRadioButton checkDirty;
 	private JRadioButton checkClean;
 	private JRadioButton checkInspected;
@@ -50,6 +51,7 @@ public class HousekeepingFrame implements ActionListener {
 	public HousekeepingFrame() {
 		window();
 		roomsDisplay();
+		setCellColors();
 		radioButtonSelection();
 		roomRangeSelection();
 		buttons();
@@ -62,6 +64,7 @@ public class HousekeepingFrame implements ActionListener {
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 697, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblHeader = new JLabel("Room Status");
@@ -72,20 +75,27 @@ public class HousekeepingFrame implements ActionListener {
 	}
 		
 	/**
-	 * Checkboxes for filtering search. Only one button/room status can be selected at a time and searched.
+	 * Radiobuttons for filtering search. Only one button/room status can be selected at a time and searched.
 	 */
 	private void radioButtonSelection() {
-		JPanel checkPanel = new JPanel();
+		checkPanel = new JPanel();
 		checkPanel.setBounds(10, 36, 246, 171);
 		checkPanel.setLayout(null);
 		checkPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		frame.getContentPane().add(checkPanel);
-		
+		checkDirty();
+		checkClean();
+		checkInspected();
+		checkOccupied();
+		checkVacant();
+	}
+	
+	private void checkDirty() {
 		checkDirty = new JRadioButton("Dirty");
 		checkDirty.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					setRadioButtons(checkDirty);			// deselects all other buttons so that user selects only one at a time.
+					setRadioButtons(checkDirty);			
 				}	
 			}
 		});
@@ -93,7 +103,9 @@ public class HousekeepingFrame implements ActionListener {
 		checkDirty.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		checkDirty.setFocusable(false);
 		checkPanel.add(checkDirty);
-		
+	}
+	
+	private void checkClean() {
 		checkClean = new JRadioButton("Clean");
 		checkClean.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -106,7 +118,9 @@ public class HousekeepingFrame implements ActionListener {
 		checkClean.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		checkClean.setFocusable(false);
 		checkPanel.add(checkClean);
-		
+	}
+	
+	private void checkInspected() {
 		checkInspected = new JRadioButton("Inspected");
 		checkInspected.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -117,7 +131,9 @@ public class HousekeepingFrame implements ActionListener {
 		checkInspected.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		checkInspected.setFocusable(false);
 		checkPanel.add(checkInspected);
-		
+	}
+	
+	private void checkOccupied() {
 		checkOccupied = new JRadioButton("Occupied");
 		checkOccupied.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -128,7 +144,9 @@ public class HousekeepingFrame implements ActionListener {
 		checkOccupied.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		checkOccupied.setFocusable(false);
 		checkPanel.add(checkOccupied);
-		
+	}
+	
+	private void checkVacant() {
 		checkVacant = new JRadioButton("Available");
 		checkVacant.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -155,6 +173,7 @@ public class HousekeepingFrame implements ActionListener {
 			}
 		}
 	}
+	//---------------------------End of radio buttons----------------------------
 	
 	/**
 	 * ComboBox for client to search specific range of rooms, if desired.
@@ -236,6 +255,7 @@ public class HousekeepingFrame implements ActionListener {
 		
 		return box;
 	}
+	//-----------------------End of room range combobox-------------------------
 	
 	/**
 	 * Display of room numbers, room type, room status, etc. 
@@ -260,7 +280,12 @@ public class HousekeepingFrame implements ActionListener {
 		table.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		Object[] columnHeaders = {"Room Number", "Room Status", "Room Type", "Reserv. Status", "Arrival Date", "Departure Date"};
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       return column == 1;
+		    }
+		};
 		model.setColumnIdentifiers(columnHeaders);
 		table.setModel(model);
 		
@@ -272,7 +297,12 @@ public class HousekeepingFrame implements ActionListener {
 		//show all rooms and room status by default when frame first appears
 		ctrl = new HousekeepingController("100", "509", true, true, true, true, true);
 		ctrl.displayRoomDetails();
-		
+	}
+	
+	/**
+	 * Set cell colors depending on state for room status and reservation status.
+	 */
+	private void setCellColors() {
 		//set colors for room status column depending on values
 		TableColumn roomStatusColumn = table.getColumnModel().getColumn(1);
 		roomStatusColumn.setCellRenderer(new DefaultTableCellRenderer() {
@@ -353,6 +383,7 @@ public class HousekeepingFrame implements ActionListener {
 		});
 		return roomStatusBox;
 	}
+	//-----------------------------End of rooms display table-------------------------------
 	
 	// Buttons
 	private void buttons() {		
