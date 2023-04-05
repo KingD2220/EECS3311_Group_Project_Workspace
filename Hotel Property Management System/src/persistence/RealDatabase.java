@@ -419,6 +419,7 @@ public class RealDatabase implements Database {
 	
 // Does the Checkin or chekout for the rooms
 	public boolean roomCheckin(Reservation res, String roomNum, String caller, String resStatus) {
+		
 		String inDate="";
 		String outDate="";
 		if (caller.equals("Check In")) {
@@ -426,12 +427,13 @@ public class RealDatabase implements Database {
 			outDate =res.departure_date;
 		}
 		try {
-			PreparedStatement statement =connection.prepareStatement(String.format("UPDATE ROOM SET %s = ?, %s =?, %s =? WHERE %s = ?","reservationStatus", 
-					"start_date","end_date","roomNumber"));
+			PreparedStatement statement =connection.prepareStatement(String.format("UPDATE ROOM SET %s = ?, %s =?, %s =?, %s =? WHERE %s = ?","reservationStatus", 
+					"start_date","end_date","roomSatus","roomNumber"));
 			statement.setString(1, resStatus);
 			statement.setString(2, inDate);
 			statement.setString(3, outDate);
-			statement.setString(4, roomNum);
+			statement.setString(4, "DIRTY");
+			statement.setString(5, roomNum);
 			return retunedRows(statement.executeUpdate());
 		} catch (Exception e) {
 			e.printStackTrace();
