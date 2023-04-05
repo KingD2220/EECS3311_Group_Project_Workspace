@@ -1,8 +1,12 @@
 package application.controllers;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -22,7 +26,7 @@ public class CheckInCheckOutController {
 	//JTable row builder 
 	public Object[] buildRow(Reservation res) {
 		return new Object[] {res.customer.getLast_name() + ", " + res.customer.getFirst_name(), 
-				res.getArrival_date(), res.getDeparture_date(), res.getRoomType(), /*****res.getRoom().getRoomNum()*****/ "", res.getResNumber()};
+				res.getArrival_date(), res.getDeparture_date(), res.getRoomType(), res.getRoomNum(), res.getResNumber()};
 	}
 	
 	public Object[] getResByResNum(String resNum) {
@@ -36,15 +40,20 @@ public class CheckInCheckOutController {
 	}
 			
 	//get all reservations by date based on selection = {arrival, departure}
-	public boolean getResByDate(String type) {
-		ArrayList<Reservation> resList = reservationLogic.getReservationsByDate(dateToday, type);
+	public boolean getResByDate(String caller) {
+		ArrayList<Reservation> resList = reservationLogic.getReservationsByDate(dateToday, caller);
 		if (resList != null && resList.size() != 0) {
-			for (Reservation res : resList) {
-				CheckInCheckOutFrame.model.addRow(buildRow(res)); 
-			}		
+			for (Reservation res : resList) {	
+				if (caller.equals("Arrivals") && res.getRoomNum() == null) {
+					CheckInCheckOutFrame.model.addRow(buildRow(res)); 
+				}	
+				if (caller.equals("Departures") && res.getRoomNum() != null) {
+					CheckInCheckOutFrame.model.addRow(buildRow(res));
+				}
+			}
 			return true;
 		}	
-		else {
+		else  {
 			return false;
 		}
 	}	
@@ -65,6 +74,21 @@ public class CheckInCheckOutController {
 	
 	public Reservation getResInfo(String resNum) {
 		return reservationLogic.getReservation(Integer.parseInt(resNum));
+	}
+	
+	public void displayCharges(Reservation res) {
+		DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
+		long numOfNights = reservationLogic.daysBetween(res);
+		String arrivalDate = res.getArrival_date();
+		Date startDate = null;
+		try {
+			startDate = dateFormat.parse(arrivalDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		// for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1))
+		
 	}
 
 }
