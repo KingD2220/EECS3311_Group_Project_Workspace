@@ -13,6 +13,7 @@ import domain_objects_Rooms.Room;
 import domain_objects_Rooms.StandardRoom;
 import domain_objects_Rooms.SuiteRoom;
 import persistence.Database;
+import persistence.RealDatabase;
 
 public class ReservationLogic {
 	
@@ -70,32 +71,27 @@ public class ReservationLogic {
 		switch(roomType) {
 		case "Standard":
 			StandardRoom standard = new StandardRoom();
-			if (standard.getRoomsAvailable() > 0)
 				room = standard;
 			break;
 		case "Deluxe":
 			DeluxeRoom deluxe = new DeluxeRoom();
-			if (deluxe.getRoomsAvailable() > 0) 
 				room = deluxe;
 			break;
 		case "Suite":
-			SuiteRoom suite = new SuiteRoom();
-			if (suite.getRoomsAvailable() > 0) 
+			SuiteRoom suite = new SuiteRoom(); 
 				room = suite;
 			break;
 		case "Executive":
 			ExecutiveSuite executive = new ExecutiveSuite();
-			if (executive.getRoomsAvailable() > 0) 
 				room = executive;
 			break;
 		case "Presidential":
 			PresidentialSuite presidential = new PresidentialSuite();
-			if (presidential.getRoomsAvailable() > 0) 
 				room = presidential;
 			break;
 		}
 		return room;
-	}
+	} 
 	
 	//Gets the number of days between arrival and departure date of reservation
 	public long daysBetween(Reservation reservation) {
@@ -112,5 +108,12 @@ public class ReservationLogic {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+   public double getRoomPrice(int resNum) {
+	Reservation res = database.getReservation(resNum);
+	Room room = roomAvailable(res.getRoomType());
+	return room.getRate();
+}
+   
 
 }
