@@ -156,6 +156,14 @@ public class UpdateFrame implements ActionListener {
 		frame.getContentPane().add(feedback);
 	}
 	
+	//Clear all input fields
+	public void clearFields() {
+		firstInput.setText("");
+		lastInput.setText("");
+		phoneInput.setText("");
+		addressInput.setText("");
+	}
+	
 	//Button handler
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -163,6 +171,8 @@ public class UpdateFrame implements ActionListener {
 				resNum, phoneInput, addressInput);
 	
 		if (e.getSource() == findButton) {
+			clearFields();
+			feedback.setText("");
 			control.searchAndDisplay();
 		}
 		if (e.getSource() == update) {

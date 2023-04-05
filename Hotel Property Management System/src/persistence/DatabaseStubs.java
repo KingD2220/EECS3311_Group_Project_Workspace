@@ -18,6 +18,8 @@ import domain_objects_Users.Profile;
 public class DatabaseStubs implements Database {
 	private static List<Customer> customers = new ArrayList<>();
 	private static List<Reservation> reservations = new ArrayList<>();
+	private static List<Employee> employee = new ArrayList<>();
+	private static List<Room> rooms = new ArrayList<>();
 	private static List<Account> accounts = new ArrayList<>(); 
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Employee> employee = new ArrayList<>();
@@ -164,7 +166,6 @@ public class DatabaseStubs implements Database {
 				room.setRoomStatus(roomStatus.toUpperCase());
 			}
 		}
-		
 	}
 	
 	
@@ -187,5 +188,12 @@ public class DatabaseStubs implements Database {
 		return false;
 	}
 	
+	public boolean addEmployee(Employee emp) {
+		return employee.add(emp);
+	}
+	
+	public boolean addRoom(Room room) {
+		return rooms.add(room);
+	}
 }
 
