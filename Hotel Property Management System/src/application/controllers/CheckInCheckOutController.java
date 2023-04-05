@@ -35,15 +35,13 @@ public class CheckInCheckOutController {
 		}
 	}
 			
-	//get all reservations by date based on selection = {arrival, departure} and filter out any res that were already checked-in.
+	//get all reservations by date based on selection = {arrival, departure}
 	public boolean getResByDate(String type) {
 		ArrayList<Reservation> resList = reservationLogic.getReservationsByDate(dateToday, type);
 		if (resList != null && resList.size() != 0) {
 			for (Reservation res : resList) {
-//----NEED TO WAIT FOR DB CHECK-IN IMPLEMENTATION TO BE COMPLETE----//	if (res.getRoom().getReservationStatus().equals("AVAILABLE")) {
-					CheckInCheckOutFrame.model.addRow(buildRow(res)); 
-//				}	
-			}	
+				CheckInCheckOutFrame.model.addRow(buildRow(res)); 
+			}		
 			return true;
 		}	
 		else {
@@ -51,7 +49,7 @@ public class CheckInCheckOutController {
 		}
 	}	
 	
-	public Object[] getResByRoomNum(String roomNum) {
+	public Object[] getResByRoomNum(String roomNum) {	//---------NEEDS TO BE IMPLEMENTED-----MAYBE USE getResByDate()
 		Reservation res = reservationLogic.getResByRoomNum(roomNum);
 		if (res != null && res.getDeparture_date().equals(dateToday)) {
 			return buildRow(res);
@@ -61,8 +59,8 @@ public class CheckInCheckOutController {
 		}	
 	}
 	
-	public boolean updateRoomResStatus(String resNum, String roomNum) {		
-		return true; //reservationLogic.updateResStatus(Integer.parseInt(resNum), roomNum);
+	public boolean updateResStatus(String resNum, String roomNum, String caller) {		
+		return reservationLogic.updateReservationStatus(Integer.parseInt(resNum), roomNum, caller);
 	}
 	
 	public Reservation getResInfo(String resNum) {

@@ -390,7 +390,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 				
 				if (!roomNum.equals("") && roomNum!= null) {
 					CheckInCheckOutController ctrl = new CheckInCheckOutController();			
-					boolean checkInGood = ctrl.updateRoomResStatus(resNum, roomNum);
+					boolean checkInGood = ctrl.updateResStatus(resNum, roomNum, "Check In");
 					if (checkInGood) {
 						model.removeRow(selectedRow);
 						this.alertMsg("Check-In is successful!");
@@ -414,7 +414,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 				String roomNum = table.getValueAt(selectedRow, 4).toString();
 				String resNum = table.getValueAt(selectedRow, 5).toString();
 				CheckInCheckOutController ctrl = new CheckInCheckOutController();
-				boolean checkOutGood = ctrl.updateRoomResStatus(resNum, roomNum);
+				boolean checkOutGood = ctrl.updateResStatus(resNum, roomNum, "Check Out");
 				if (checkOutGood) {
 					this.alertMsg("Check-Out successful!");
 					model.removeRow(selectedRow);

@@ -61,6 +61,10 @@ public class ReservationLogic {
 		return reservation;
 	}
 	
+	public boolean updateReservationStatus(int roomNum, String resNum, String caller) {
+		return database.updateResStatus(roomNum, resNum, caller);
+	}
+	
 	public static Room roomAvailable(String roomType) {
 		Room room = null;
 		switch(roomType) {
