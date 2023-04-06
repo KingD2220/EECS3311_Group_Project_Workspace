@@ -333,7 +333,6 @@ public class CheckInCheckOutFrame implements ActionListener {
 				model.setRowCount(0);	
 				try {
 					int n = Integer.parseInt(resNumInput.getText());
-					resNumInput.setText("");
 				} catch (NumberFormatException e1) {
 					alertMsg("Invalid reservation number!");
 					resNumInput.setText("");
