@@ -367,6 +367,7 @@ public class RealDatabase implements Database {
 	}
 	
 	
+	
 // populates a reservation object	
 	public Reservation populateReservation(ResultSet rs) {
 		try {
@@ -441,7 +442,7 @@ public class RealDatabase implements Database {
 		}
 	}
 	
-	
+	@Override
 	public int addEmployee(Employee empl) {
 		try {
 			PreparedStatement statement = connection.prepareStatement(String.format("INSERT INTO EMPLOYEES (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)",
@@ -477,6 +478,7 @@ public class RealDatabase implements Database {
 		}
 		return emplNum;
 	}
+
 	
 	public static void main(String[] args) {
 		ArrayList<Room> rooms = new ArrayList<>();
@@ -489,6 +491,25 @@ public class RealDatabase implements Database {
 			System.out.println(room.toString());
 		}
 		 
+	}
+
+	@Override
+	public ArrayList<Reservation> inHouseReservation() {
+		ArrayList<Reservation> inHouseList = new ArrayList<>();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM RESERVATION WHERE checkedIn = YES AND checkedOut = NO");
+			while (rs.next()) {
+				Reservation res = populateReservation(rs);
+				inHouseList.add(res);
+				return inHouseList;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+		return inHouseList;
 	}
 
 }
