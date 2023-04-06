@@ -61,7 +61,6 @@ public class CheckInCheckOutFrame implements ActionListener {
     private JButton btnCheckOut;
     private JButton btnSearch;
     private JButton btnCancel;
-    private JButton btnBilling;    
 	
 	public CheckInCheckOutFrame() {
 		window();
@@ -164,7 +163,6 @@ public class CheckInCheckOutFrame implements ActionListener {
 					resNumInput.setEditable(true);
 					btnCheckIn.setEnabled(true);
 					btnCheckOut.setEnabled(false);
-					btnBilling.setEnabled(false);
 					btnCancel.setEnabled(true);
 					roomNumInput.setEditable(false);
 					roomNumInput.setText("");
@@ -184,7 +182,6 @@ public class CheckInCheckOutFrame implements ActionListener {
 					roomNumInput.setEditable(true);
 					btnCheckOut.setEnabled(true);
 					btnCheckIn.setEnabled(false);
-					btnBilling.setEnabled(true);
 					btnCancel.setEnabled(false);
 					resNumInput.setEditable(false);
 					resNumInput.setText("");
@@ -282,7 +279,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		buttonsPanel.add(btnCheckIn);
 		
 		btnCheckOut = new JButton("Check Out");
-		btnCheckOut.setBounds(4, 286, 95, 23);
+		btnCheckOut.setBounds(4, 247, 95, 23);
 		btnCheckOut.setFocusable(false);
 		btnCheckOut.addActionListener(this);
 		buttonsPanel.add(btnCheckOut);
@@ -295,15 +292,9 @@ public class CheckInCheckOutFrame implements ActionListener {
 		
 		btnCancel = new JButton("Cancel");
 		btnCancel.setFocusable(false);
-		btnCancel.setBounds(4, 332, 95, 23);
+		btnCancel.setBounds(4, 281, 95, 23);
 		btnCancel.addActionListener(this);
 		buttonsPanel.add(btnCancel);
-		
-		btnBilling = new JButton("Billing");
-		btnBilling.setBounds(4, 258, 95, 23);
-		btnBilling.setFocusable(false);
-		btnBilling.addActionListener(this);
-		buttonsPanel.add(btnBilling);
 	}
 	//---------------End of buttons-----------------
 	
@@ -342,7 +333,6 @@ public class CheckInCheckOutFrame implements ActionListener {
 				model.setRowCount(0);	
 				try {
 					int n = Integer.parseInt(resNumInput.getText());
-					resNumInput.setText("");
 				} catch (NumberFormatException e1) {
 					alertMsg("Invalid reservation number!");
 					resNumInput.setText("");
@@ -355,10 +345,13 @@ public class CheckInCheckOutFrame implements ActionListener {
 				model.setRowCount(0);
 				try {	//ensure room number input is in the range of the hotel's room numbers, otherwise notify user
 					int i = Integer.parseInt(roomNumInput.getText());
-					if (100 < i && i < 509) {
-						Object[] row = ctrl.getResByRoomNum(roomNumInput.getText());
-						model.addRow(row);
-						resNumInput.setText("");
+					if (i >= 100 && i <= 509) {
+						Object[] row = ctrl.getResByRoomNum(roomNumInput.getText(), "Departures");
+						checkNullAddRow(row, "Please double check the room number!");
+						roomNumInput.setText("");
+					} 
+					else {
+						alertMsg("Please double check the room number!");
 					}
 				} catch (NumberFormatException e1) {
 					alertMsg("Invalid room number!");
@@ -406,31 +399,11 @@ public class CheckInCheckOutFrame implements ActionListener {
 		
 		//check-out button gets selected row/reservation and calls controller to update database
 		if (e.getSource() == btnCheckOut) {
-			if (table.getSelectionModel().isSelectionEmpty()) {
-				this.alertMsg("Please select a reservation!");
-			}
-			else {	
-				int selectedRow = table.getSelectedRow();
-				String roomNum = table.getValueAt(selectedRow, 4).toString();
-				String resNum = table.getValueAt(selectedRow, 5).toString();
-				CheckInCheckOutController ctrl = new CheckInCheckOutController();
-				boolean checkOutGood = ctrl.updateResStatus(resNum, roomNum, "Check Out");
-				if (checkOutGood) {
-					this.alertMsg("Check-Out successful!");
-					model.removeRow(selectedRow);
-				} else {
-					this.alertMsg("Check-Out unsucessful!!");
-				}
-			}
-		}
-		
-		//billing button (at check-out) populates a pop-up window detailing all charges for the reservation
-		if (e.getSource() == btnBilling) {
 			if (!table.getSelectionModel().isSelectionEmpty()) {
 				int column = 5;
 				int row = table.getSelectedRow();
 				String resNum = table.getValueAt(row, column).toString();
-				new BillingFrame(resNum);
+				BillingFrame billingFrame = new BillingFrame(resNum, table);
 			}
 			else {
 				this.alertMsg("Please select a reservation!");
@@ -438,21 +411,5 @@ public class CheckInCheckOutFrame implements ActionListener {
 		}
 		
 	}
-	
-	// main method - delete later
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if("Nimbus".equals(info.getName()))
-						 UIManager.setLookAndFeel(info.getClassName());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				new CheckInCheckOutFrame();
-			}
-		});
-	}
+
 }
