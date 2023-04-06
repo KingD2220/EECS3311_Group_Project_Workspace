@@ -25,8 +25,6 @@ public class RealDatabase implements Database {
 		getConnection();
 	}
 	
-
-
 	public boolean getConnection() {
 		if(connection != null) {
 			return false;
@@ -442,7 +440,44 @@ public class RealDatabase implements Database {
 			return false;
 		}
 	}
+	
+	
+	public int addEmployee(Employee empl) {
+		try {
+			PreparedStatement statement = connection.prepareStatement(String.format("INSERT INTO EMPLOYEES (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)",
+					"first_name", "last_name", "address", "phone_num", "hourlyPay", "emplRole", "email"));
+			statement.setString(1, empl.getFirst_name());
+			statement.setString(2, empl.getLast_name());
+			statement.setString(3, empl.getAddress());
+			statement.setString(4, empl.getPhone_num());
+			statement.setString(5, empl.getHourlyWage());
+			statement.setString(6, empl.getRole());
+			statement.setString(7, empl.getEmail());
+			if (retunedRows(statement.executeUpdate())) {
+				return getLastEmployeeNum();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
   
+	public int getLastEmployeeNum() {
+		int emplNum =0;
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT MAX(employeeNum)as MAXNUM FROM EMPLOYEE");
+			while (rs.next()) {
+				emplNum =Integer.parseInt(rs.getString("MAXNUM"));
+				return emplNum;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return emplNum;
+	}
+	
 	public static void main(String[] args) {
 		ArrayList<Room> rooms = new ArrayList<>();
 		RealDatabase db = new RealDatabase();
