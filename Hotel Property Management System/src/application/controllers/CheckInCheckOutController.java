@@ -27,8 +27,14 @@ public class CheckInCheckOutController {
 
 	//JTable row builder 
 	public Object[] buildRow(Reservation res) {
-		return new Object[] {res.customer.getLast_name() + ", " + res.customer.getFirst_name(), 
-				res.getArrival_date(), res.getDeparture_date(), res.getRoomType(), res.getRoomNum(), res.getResNumber()};
+		Object[] rowArray;
+		if (res != null) {
+			rowArray = new Object[] {res.customer.getLast_name() + ", " + res.customer.getFirst_name(), 
+					res.getArrival_date(), res.getDeparture_date(), res.getRoomType(), res.getRoomNum(), res.getResNumber()};
+			return rowArray;
+		} else {
+			return null;
+		}
 	}
 	
 	//fetches a reservation based on a reservation number displays it on frame
@@ -50,7 +56,7 @@ public class CheckInCheckOutController {
 				if (caller.equals("Arrivals") && res.getRoomNum() == null) {
 					CheckInCheckOutFrame.model.addRow(buildRow(res)); 
 				}	
-				if (caller.equals("Departures") /*&& res.getCheckedOut().equals("NO")*/) {
+				if (caller.equals("Departures") && res.getCheckedOut().equals("NO")) {
 					CheckInCheckOutFrame.model.addRow(buildRow(res));
 				}
 			}
@@ -62,16 +68,19 @@ public class CheckInCheckOutController {
 	}	
 	
 	//fetches a reservation based on the room number used for checking out reservation
-	public Object[] getResByRoomNum(String roomNum) {	//---------NEEDS TO BE IMPLEMENTED-----MAYBE USE getResByDate()
-		Reservation res = reservationLogic.getResByRoomNum(roomNum);
-		if (res != null && res.getDeparture_date().equals(dateToday)) {
-			return buildRow(res);
+	public Object[] getResByRoomNum(String roomNum, String caller) {	
+		ArrayList<Reservation> resList = reservationLogic.getReservationsByDate(dateToday, caller);
+		Reservation targetRes = null;
+		for (int i = 0; i < resList.size(); i++) {
+			if (resList.get(i).getRoomNum().equals(roomNum)) {
+				targetRes = resList.get(i);
+				return buildRow(targetRes);
+			}
 		}
-		else {
-			return null;
-		}	
+		return null;
 	}
 	
+	//updates room status and reservation status on check-in and check-out
 	public boolean updateResStatus(String resNum, String roomNum, String caller) {		
 		return reservationLogic.updateReservationStatus(Integer.parseInt(resNum), roomNum, caller);
 	}
@@ -80,16 +89,18 @@ public class CheckInCheckOutController {
 		return reservationLogic.getReservation(Integer.parseInt(resNum));
 	}
 	
-	public Object[] buildRow4Billing(String date, String item, String  price) {
-		return new Object[] {date, item, price};
+	//display table helper method for adding rows
+	public Object[] buildTaxRow(String date, double  price) {
+		double tax = price * 0.13;
+		return new Object[] {date, "HST", String.format("%.2f", tax)};
 	}
 	
-	public void displayCharges(Reservation res) {
+	public double displayCharges(Reservation res) {
 		DateFormat resDateFormat = new SimpleDateFormat("yy-MM-dd");
 		DateFormat billDateFormat = new SimpleDateFormat("MM-dd");
 		Date arrival = null;
 		double total = 0;
-		//turn String date back into a Date object
+		//turn String date into a Date object
 		try {	
 			arrival = resDateFormat.parse(res.getArrival_date());
 		} catch (ParseException e) {
@@ -102,19 +113,22 @@ public class CheckInCheckOutController {
 		
 		long numOfNights = reservationLogic.daysBetween(res);
 		String roomType = res.getRoomType();
-//		String roomRate = Double.toString();
+		double roomRate = reservationLogic.getRoomPrice(res.getResNumber());
 		
-		for (int i = 0; i < numOfNights; i++){
+		for (int i = 0; i < numOfNights; i++) {
 			String monthDay = billDateFormat.format(startDate.getTime());
-			BillingFrame.model.addRow(buildRow4Billing(monthDay, roomType, "200.00"));
-			total += 200.00;
-			startDate.add(Calendar.DATE, 1);
+			BillingFrame.model.addRow(new Object[] {monthDay, roomType + " Room", String.format("%.2f", roomRate)});
+			BillingFrame.model.addRow(buildTaxRow(monthDay, roomRate));
+			total += roomRate + roomRate*0.13;
+			startDate.add(Calendar.DATE, 1);	//starDate++
 		}
 		
+		return total;
+	}
+	
+	public String getRoomRate(String resNum) {
+		double r = reservationLogic.getRoomPrice(Integer.parseInt(resNum));
+		return String.format("%.2f", r);
 	}
 
-	public static void main(String[] args) {
-		CheckInCheckOutController ctrl = new CheckInCheckOutController();
-		ctrl.displayCharges(ctrl.getResInfo("7"));
-	}
 }

@@ -104,16 +104,13 @@ public class ReservationLogic {
 		
 		return daysBetween;
 	}
-	public Reservation getResByRoomNum(String roomNum) {
-		// TODO Auto-generated method stub
-		return null;
+
+	//fetches room rate for the reservation
+	public double getRoomPrice(int resNum) {
+		Reservation res = database.getReservation(resNum);
+		Room room = roomAvailable(res.getRoomType());
+		return room.getRate();
 	}
-	
-   public double getRoomPrice(int resNum) {
-	Reservation res = database.getReservation(resNum);
-	Room room = roomAvailable(res.getRoomType());
-	return room.getRate();
-}
    
 
 }
