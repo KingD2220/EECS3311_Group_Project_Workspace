@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import application.controllers.CheckInCheckOutController;
@@ -22,6 +23,10 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class BillingFrame implements ActionListener {
 	private JFrame frame = new JFrame("Billing");
@@ -35,9 +40,12 @@ public class BillingFrame implements ActionListener {
 	private JLabel lblName;
 	private JLabel lblRoomNumber;
 	private JLabel lblTotal;
+	private JLabel lblCreditCard;
 	private JTextField inputArrival;
 	private JTextField inputDepart;
-	public String resNum = "";
+	private String resNum = "";
+	private String creditCard = "";
+	private double total;
 	private JTextField inputRoomRate;
 	private JTextField inputRoomType;
 	private JTextField inputRoomNum;
@@ -46,19 +54,13 @@ public class BillingFrame implements ActionListener {
 	private JButton btnCheckOut;
 	private JButton btnRemove;
 	private JButton btnPost;
+	private JButton btnPayment;
 	CheckInCheckOutController ctrl = new CheckInCheckOutController();
+
 	
 	public BillingFrame(String resNum, JTable table) {	
 		this.resNum = resNum;
 		this.table = table;
-		window();
-		table();
-		topPanel();
-		buttons();
-	}
-	
-	public BillingFrame(String resNum) {	//FOR TESTING - DELETE LATER!!!!!
-		this.resNum = resNum;
 		window();
 		table();
 		topPanel();
@@ -77,39 +79,54 @@ public class BillingFrame implements ActionListener {
 	
 	private void table() {
 		String[] columnHeader = new String[] {"Date", "Description", "Amount"};
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		};
 		model.setColumnIdentifiers(columnHeader);
 		JTable table = new JTable();
 		table.setBounds(10, 28, 250, 250);
 		table.setModel(model);
-		table.getColumnModel().getColumn(1).setPreferredWidth(200);
+		table.getColumnModel().getColumn(0).setMaxWidth(100);
+		table.getColumnModel().getColumn(1).setMinWidth(250);
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setSize(466, 328);
 		scroll.setLocation(10, 95);
 		frame.getContentPane().add(scroll);	
+		
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setHorizontalAlignment(JLabel.RIGHT);
+		table.getColumnModel().getColumn(2).setCellRenderer(renderer);
+		table.getColumnModel().getColumn(1).setCellRenderer(renderer);
+		renderer = new DefaultTableCellRenderer();
+		renderer.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(renderer);
 	}
 	
 	private void topPanel() {
 		topPanel = new JPanel();
-		topPanel.setBounds(10, 11, 466, 61);
+		topPanel.setBounds(10, 11, 466, 67);
 		topPanel.setLayout(null);
 		topPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		frame.getContentPane().add(topPanel);
 	
 		inputName = new JTextField();
-		inputName.setHorizontalAlignment(SwingConstants.LEFT);
+		inputName.setHorizontalAlignment(SwingConstants.CENTER);
 		inputName.setEditable(false);
 		inputName.setColumns(10);
-		inputName.setBounds(62, 35, 104, 24);
+		inputName.setBounds(62, 35, 113, 24);
 		topPanel.add(inputName);
 		
 		labels();
 		setRoomInfoFields();
 		setDatesFields();
 		setResInfoOnWindow();
+		setCreditCardLabel();
 	}
 	
-	//-----------------Labels and fields-----------------
+	//-----------------Labels and textfields-----------------
 	private void labels() {
 		lblArrivalDate = new JLabel("Arrival");
 		lblArrivalDate.setBounds(333, 9, 40, 14);
@@ -135,11 +152,22 @@ public class BillingFrame implements ActionListener {
 		lblRoomNumber.setBounds(21, 9, 34, 14);
 		topPanel.add(lblRoomNumber);
 		
-		lblTotal = new JLabel("$1000.00");
+		lblTotal = new JLabel();
 		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblTotal.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTotal.setBounds(375, 71, 100, 23);
-		frame.getContentPane().add(lblTotal);
+		lblTotal.setBounds(364, 80, 100, 15);
+		frame.getContentPane().add(lblTotal);		
+	}
+	
+	private void setCreditCardLabel() {
+		lblCreditCard = new JLabel("");
+		lblCreditCard.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblCreditCard.setBounds(10, 81, 154, 15);
+		frame.getContentPane().add(lblCreditCard);
+		Reservation res = ctrl.getResInfo(resNum);
+		creditCard = res.customer.getCredit_card();
+		creditCard = creditCard.substring(0, 4) + "XXXXXXXX" + creditCard.substring(11, 15);
+		lblCreditCard.setText(creditCard);
 	}
 	
 	private void setRoomInfoFields() {
@@ -152,7 +180,7 @@ public class BillingFrame implements ActionListener {
 		
 		inputRoomType = new JTextField();
 		inputRoomType.setText((String) null);
-		inputRoomType.setHorizontalAlignment(SwingConstants.LEFT);
+		inputRoomType.setHorizontalAlignment(SwingConstants.CENTER);
 		inputRoomType.setEditable(false);
 		inputRoomType.setColumns(10);
 		inputRoomType.setBounds(218, 33, 96, 24);
@@ -181,47 +209,59 @@ public class BillingFrame implements ActionListener {
 		inputDepart.setBounds(373, 35, 83, 24);
 		topPanel.add(inputDepart);
 	}
-	//-----------------End of labels and fields-----------------
+	//-----------------End of labels and textfields-----------------
 	
 	private void buttons() {
 		btnClose = new JButton("Close");
 		btnClose.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnClose.setBounds(375, 428, 89, 23);
+		btnClose.setBounds(387, 429, 89, 23);
 		frame.getContentPane().add(btnClose);
 		btnClose.addActionListener(this);
 		
 		btnCheckOut = new JButton("Check Out");
 		btnCheckOut.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnCheckOut.setBounds(282, 429, 89, 23);
+		btnCheckOut.setBounds(292, 429, 89, 23);
 		frame.getContentPane().add(btnCheckOut);
 		btnCheckOut.addActionListener(this);
+		btnCheckOut.setEnabled(false);
 		
 		btnRemove = new JButton("Remove");
 		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnRemove.setBounds(187, 429, 89, 23);
+		btnRemove.setBounds(101, 429, 89, 23);
 		frame.getContentPane().add(btnRemove);
 		btnRemove.addActionListener(this);
+		btnRemove.setEnabled(false);
 		
 		btnPost = new JButton("Post");
 		btnPost.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnPost.setBounds(94, 429, 89, 23);
+		btnPost.setBounds(10, 429, 89, 23);
 		frame.getContentPane().add(btnPost);
 		btnPost.addActionListener(this);
+		btnPost.setEnabled(false);
+		
+		btnPayment = new JButton("Payment");
+		btnPayment.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnPayment.setBounds(200, 429, 89, 23);
+		frame.getContentPane().add(btnPayment);
+		btnPayment.addActionListener(this);
 	}
 	
+	//display reservation information on window
 	private void setResInfoOnWindow() {
 		Reservation res = ctrl.getResInfo(resNum);
 		inputRoomNum.setText(res.getRoomNum());
 		inputName.setText(res.customer.getLast_name() + ", " + res.customer.getFirst_name());
 		inputArrival.setText(res.getArrival_date());
 		inputDepart.setText(res.getDeparture_date());
-//----------inputRoomRate.setText(String.format("%.2f", res.getRoom().getRate()));
+		inputRoomRate.setText(ctrl.getRoomRate(resNum));
 		inputRoomType.setText(res.getRoomType());
-		
-		ctrl.displayCharges(res);
+		total = ctrl.displayCharges(res);
+		lblTotal.setText("$" + String.format("%.2f", total));
 	}
 
-	
+	/**
+	 * All action methods for buttons
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnClose) {
@@ -234,26 +274,20 @@ public class BillingFrame implements ActionListener {
 			if (checkOutGood) {
 				JOptionPane.showMessageDialog(frame, "Check-Out successful!");
 				CheckInCheckOutFrame.model.removeRow(selectedRow);
+				btnPayment.setEnabled(false);
+				btnCheckOut.setEnabled(false);
 			} else {
 				JOptionPane.showMessageDialog(frame, "Check-Out not successful!");
 			}
 		}
+		if (e.getSource() == btnPayment) {
+			DateFormat resDateFormat = new SimpleDateFormat("yy-MM-dd");
+			String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MM-dd"));
+			creditCard = creditCard.substring(8, 16);
+			model.addRow(new Object[] {date, "Payment " + creditCard, "($" + String.format("%.2f", total) + ")"});
+			lblTotal.setText("$0.00");
+			btnCheckOut.setEnabled(true);
+		}
 	}
-		
-	// main method - delete later
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if("Nimbus".equals(info.getName()))
-						 UIManager.setLookAndFeel(info.getClassName());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				new BillingFrame("7");
-			}
-		});
-	}
+
 }

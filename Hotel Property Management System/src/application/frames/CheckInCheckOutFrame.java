@@ -345,10 +345,13 @@ public class CheckInCheckOutFrame implements ActionListener {
 				model.setRowCount(0);
 				try {	//ensure room number input is in the range of the hotel's room numbers, otherwise notify user
 					int i = Integer.parseInt(roomNumInput.getText());
-					if (100 < i && i < 509) {
-						Object[] row = ctrl.getResByRoomNum(roomNumInput.getText());
-						model.addRow(row);
-						resNumInput.setText("");
+					if (i >= 100 && i <= 509) {
+						Object[] row = ctrl.getResByRoomNum(roomNumInput.getText(), "Departures");
+						checkNullAddRow(row, "Please double check the room number!");
+						roomNumInput.setText("");
+					} 
+					else {
+						alertMsg("Please double check the room number!");
 					}
 				} catch (NumberFormatException e1) {
 					alertMsg("Invalid room number!");
@@ -408,21 +411,5 @@ public class CheckInCheckOutFrame implements ActionListener {
 		}
 		
 	}
-	
-	// main method - delete later
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if("Nimbus".equals(info.getName()))
-						 UIManager.setLookAndFeel(info.getClassName());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				new CheckInCheckOutFrame();
-			}
-		});
-	}
+
 }
