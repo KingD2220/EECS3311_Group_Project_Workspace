@@ -2,7 +2,7 @@
 
 CREATE TABLE ACCOUNT 
 	(userName 			VARCHAR(30) 	NOT NULL, 
-     hashPassWord		VARCHAR(30) 	NOT NULL,
+     hashPassWord		VARCHAR(65) 	NOT NULL,
      jobType			VARCHAR(15), 
      PRIMARY KEY (userName));
 

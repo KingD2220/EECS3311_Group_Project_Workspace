@@ -26,7 +26,9 @@ public class ManagerFrame implements ActionListener {
     private JTextField pay;
     private JTextField employeePhone;
     private JTextField employeeAddress;
+    private JLabel search;
     private JLabel payLabel;
+    private JLabel hoursWorkedLabel;
     private JButton showJButton;
     private JButton submitJButton;
     private JButton returnButton;
@@ -68,11 +70,12 @@ public class ManagerFrame implements ActionListener {
     
     //Employee number input
     private void employeeNum() {
-    	JLabel search = new JLabel("Em. #"); 
+    	search = new JLabel("Em. #"); 
 		search.setBounds(42, 11, 94, 14);
 		frame.getContentPane().add(search);
 		
 	    employeeNum = new JTextField();
+	    employeeNum.setEditable(true);
 		employeeNum.setBounds(40, 25, 65, 23);
 		frame.getContentPane().add(employeeNum);
 	    employeeNum.setColumns(10);
@@ -145,12 +148,12 @@ public class ManagerFrame implements ActionListener {
 	}
     
     private void hoursWorked() {
-    	JLabel hoursWorkedLabel = new JLabel("Hours Worked:");
+    	hoursWorkedLabel = new JLabel("Hours Worked:");
 		hoursWorkedLabel.setBounds(344, 287, 94, 14);
 		frame.getContentPane().add(hoursWorkedLabel);
 		
 		hoursWorked = new JTextField();
-		hoursWorked.setEditable(false);
+		hoursWorked.setEditable(true);
 		hoursWorked.setColumns(10);
 		hoursWorked.setBounds(453, 284, 58, 23);
 		frame.getContentPane().add(hoursWorked);
@@ -198,11 +201,10 @@ public class ManagerFrame implements ActionListener {
 	}
     
     private void feedback() {
-		feedback = new JLabel("New Label");
+		feedback = new JLabel("");
 		feedback.setFont(new Font("Tahoma", Font.BOLD, 11));
 		feedback.setBounds(10, 414, 595, 14);
 		frame.getContentPane().add(feedback);
-		feedback.setVisible(false);
     }
     
     //Add employee button to change view to add employees
@@ -239,6 +241,12 @@ public class ManagerFrame implements ActionListener {
     	submitJButton.setVisible(false);
     	addButton.setVisible(true);
     	
+    	search.setVisible(false);
+    	employeeNum.setVisible(false);
+    	
+    	hoursWorkedLabel.setVisible(false);
+    	hoursWorked.setVisible(false);
+    	
     	payLabel.setVisible(false);
     	pay.setVisible(false);
     	
@@ -255,6 +263,12 @@ public class ManagerFrame implements ActionListener {
     	showJButton.setVisible(true);
     	submitJButton.setVisible(true);
     	addButton.setVisible(false);
+    	
+    	search.setVisible(true);
+    	employeeNum.setVisible(true);
+    	
+    	hoursWorkedLabel.setVisible(true);
+    	hoursWorked.setVisible(true);
     	
     	payLabel.setVisible(true);
     	pay.setVisible(true);
@@ -275,33 +289,36 @@ public class ManagerFrame implements ActionListener {
 	
 	//Enable/Disable editable fields for Search/Add view
 	private void fieldsEditable(boolean editable) {
-		employeeNum.setEditable(!editable);
 		employeeFirstName.setEditable(editable);
     	employeeLastName.setEditable(editable);
     	jobType.setEditable(editable);
     	employeeEmail.setEditable(editable);
     	employeePhone.setEditable(editable);
     	employeeAddress.setEditable(editable);
-		hoursWorked.setEditable(editable);
     	hourly.setEditable(editable);
 	}
 	
 	//Clear text fields
 	private void clearFields() {
+		employeeNum.setText("");
+		employeeFirstName.setText("");
     	employeeLastName.setText("");
     	jobType.setText("");
     	employeeEmail.setText("");
+    	employeePhone.setText("");
+    	employeeAddress.setText("");
 		hoursWorked.setText("");
     	hourly.setText("");
+    	pay.setText("");
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		ManagementController manage = new ManagementController(employeeNum, employeeFirstName, employeeLastName, jobType,
-				 employeeEmail, employeePhone, employeeAddress, hourly, hoursWorked, pay);
+				 employeeEmail, employeePhone, employeeAddress, hourly);
 		
 		//reset feedback text
-		feedback.setVisible(false);
+		feedback.setText("");
 		
 		if(e.getSource() == showJButton) {
 			manage.getAndDispEmpl();
@@ -311,13 +328,22 @@ public class ManagerFrame implements ActionListener {
 			NavigationFrame.showNav();
 		}
 		if(e.getSource() == addEmployeeButton) {
+			clearFields();
 			addEmployeeView();
 		}
 		if(e.getSource() == searchEmployeesButton) {
+			clearFields();
 			searchEmployeeView();
 		}
 		if(e.getSource() == addButton) {
-			//Add employee to list
+			if(manage.addEmployee()) {
+				clearFields();
+			}
+		}
+		if(e.getSource() == submitJButton) {
+			double weeklyWage = Double.parseDouble(hourly.getText()) * Integer.parseInt(hoursWorked.getText());
+			String wage = String.format("%.2f", weeklyWage);
+			pay.setText(wage);
 		}
 	}
 }

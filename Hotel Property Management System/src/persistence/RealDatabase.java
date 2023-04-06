@@ -445,7 +445,7 @@ public class RealDatabase implements Database {
 	@Override
 	public int addEmployee(Employee empl) {
 		try {
-			PreparedStatement statement = connection.prepareStatement(String.format("INSERT INTO EMPLOYEES (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)",
+			PreparedStatement statement = connection.prepareStatement(String.format("INSERT INTO EMPLOYEE (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)",
 					"first_name", "last_name", "address", "phone_num", "hourlyPay", "emplRole", "email"));
 			statement.setString(1, empl.getFirst_name());
 			statement.setString(2, empl.getLast_name());

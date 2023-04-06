@@ -2,7 +2,6 @@ package application.controllers;
 
 import javax.swing.JTextField;
 
-import application.frames.CreateReservationFrame;
 import application.frames.ManagerFrame;
 
 import javax.swing.JLabel;
@@ -20,12 +19,10 @@ public class ManagementController {
     private JTextField employeePhone;
     private JTextField employeeAddress;
     private JTextField hourly;
-    private JTextField hoursWorked;
-    private JTextField pay;
     private ManagementLogic management = new ManagementLogic(new RealDatabase());
     
 	public ManagementController(JTextField employeeNum, JTextField employeeFirstName, JTextField employeeLastName, JTextField jobType, JTextField employeeEmail, 
-			JTextField employeePhone, JTextField employeeAddress, JTextField hourly, JTextField hoursWorked, JTextField pay) {
+			JTextField employeePhone, JTextField employeeAddress, JTextField hourly) {
 		super();
 		this.employeeNum = employeeNum;
 		this.employeeFirstName = employeeFirstName;
@@ -35,8 +32,6 @@ public class ManagementController {
 		this.employeePhone = employeePhone;
 		this.employeeAddress = employeeAddress;
 		this.hourly = hourly;
-		this.hoursWorked = hoursWorked;
-		this.pay = pay;
 	}
     
     public void getAndDispEmpl() {
@@ -47,13 +42,14 @@ public class ManagementController {
         employeeEmail.setText(newEmployee.getEmail());
         employeePhone.setText(newEmployee.getPhone_num());
         employeeAddress.setText(newEmployee.getAddress());
-        hoursWorked.setText(newEmployee.getHoursWorked());
         hourly.setText(newEmployee.getHourlyWage());
-        pay.setText(newEmployee.getWeeklyWage());
     }
 	
-    public void addEmployee() {
-    	if (inputValid()) {
+    //Adds employee to list of employees. Returns true if successful and false if an error occurred.
+    public boolean addEmployee() {
+    	boolean added = false;
+    	
+    	if (inputValid()) { //Ensures all input is valid
     		Employee emp = new Employee();
     	
     		emp.setFirst_name(employeeFirstName.getText());
@@ -62,43 +58,54 @@ public class ManagementController {
     		emp.setEmail(employeeEmail.getText());
     		emp.setPhone_num(employeePhone.getText());
     		emp.setAddress(employeeAddress.getText());
-    		emp.setHourlyWage(hourly.getText());
-    		emp.setHoursWorked(hoursWorked.getText());
-    		emp.setWeeklyWage(pay.getText());
-    	
-    		ManagerFrame.feedback.setText("Employee added.");
-    		ManagerFrame.feedback.setVisible(true);
+    		emp.setHourlyWage(hourly.getText());;
+    		
+    		int empId = management.addEmployee(emp);
+    		
+    		if(empId != 0) { //successfully added
+    			ManagerFrame.feedback.setText("Employee " + empId + " added.");
+    			
+    			added = true;
+    		}
+    		else { //error adding employee
+    			ManagerFrame.feedback.setText("Employee not added.");
+    		}
     	}
+    	return added;
     }
     
+    //Checks if input are valid for employee
     public boolean inputValid() {
     	boolean valid = true;
+    	
+    	//Ensures fields are non-empty
+    	if (employeeFirstName.getText().isEmpty() || employeeLastName.getText().isEmpty() || jobType.getText().isEmpty() || employeeEmail.getText().isEmpty() || 
+    			employeePhone.getText().isEmpty() || employeeAddress.getText().isEmpty() || hourly.getText().isEmpty()) {
+    		ManagerFrame.feedback.setText("Employee not added. Make sure all fields are non-empty.");
+    		valid = false;
+    	}
     	
 		//Check phone number
 		if (!employeePhone.getText().matches("^[0-9]{10}$")) { //Invalid if not 10 digit number
 			ManagerFrame.feedback.setText("Phone Number is not valid.");
-			ManagerFrame.feedback.setVisible(true);
 			valid = false;
 		}
 		
 		//Check hourly wage
 		try {
-			double d = Double.parseDouble(hourly.getText());
-		} catch (NumberFormatException nfe) {
-			ManagerFrame.feedback.setText("Hourly wage is not valid.");
-			ManagerFrame.feedback.setVisible(true);
+			double d = Double.parseDouble(hourly.getText()); //Convert hourly into double
+			String[] splitter = hourly.getText().split("\\.");
+			int decimalPlaces = splitter[1].length();
+			
+			if (decimalPlaces != 2) { //Number does not have 2 decimals
+				ManagerFrame.feedback.setText("Hourly wage must have 2 decimals.");
+				valid = false;
+			}
+		} catch (Exception e) {
+			ManagerFrame.feedback.setText("Hourly wage is not valid. Please make sure the value contains dollars and cents.");
 			return false;
 		}
-		
-		//Check hours worked
-		try {
-			Integer i = Integer.parseInt(hoursWorked.getText());
-		} catch (NumberFormatException nfe) {
-			ManagerFrame.feedback.setText("Hours worked is not an integer");
-			ManagerFrame.feedback.setVisible(true);
-			return false;
-		}
-		
+	
 		return valid;
     }
 }
