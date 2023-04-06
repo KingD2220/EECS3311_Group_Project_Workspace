@@ -18,4 +18,7 @@ public interface Database {
 	public Employee getEmployee(int employeeNum);
 	public ArrayList<Reservation> getResByDate(String date, String caller);
 	public boolean updateResStatus(int resNum, String roomNum, String caller);
+	public int addEmployee(Employee empl);
+	public ArrayList<Reservation> inHouseReservation();
+	public boolean setSalary(Employee epml);
 }

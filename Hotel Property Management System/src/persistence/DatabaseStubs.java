@@ -187,12 +187,28 @@ public class DatabaseStubs implements Database {
 		return false;
 	}
 	
-	public boolean addEmployee(Employee emp) {
-		return employee.add(emp);
+	public int addEmployee(Employee emp) {
+		 employee.add(emp);
+		 emp.setEmployeeID(employee.size()+"");
+		 return employee.size();
 	}
 	
 	public boolean addRoom(Room room) {
 		return rooms.add(room);
 	}
+
+	@Override
+	public ArrayList<Reservation> inHouseReservation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean setSalary(Employee epml) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
 }
 

@@ -25,8 +25,6 @@ public class RealDatabase implements Database {
 		getConnection();
 	}
 	
-
-
 	public boolean getConnection() {
 		if(connection != null) {
 			return false;
@@ -322,6 +320,7 @@ public class RealDatabase implements Database {
 				newEmployee.setRole(rs.getString("emplRole"));
 				newEmployee.setHoursWorked(rs.getString("hoursWorked"));
 				newEmployee.setPhone_num(rs.getString("phone_num"));
+				newEmployee.setEmployeeID(String.valueOf(rs.getInt("employeeNum")));
 				return newEmployee;
 			}
 		} catch (Exception e) {
@@ -367,6 +366,7 @@ public class RealDatabase implements Database {
 		}
 		return new ArrayList<>();
 	}
+	
 	
 	
 // populates a reservation object	
@@ -442,19 +442,80 @@ public class RealDatabase implements Database {
 			return false;
 		}
 	}
-  
-	public static void main(String[] args) {
-		ArrayList<Room> rooms = new ArrayList<>();
-		RealDatabase db = new RealDatabase();
-		boolean test = false; 
-		test = db.updateResStatus(1, "101", "Check In");
-		 System.out.println(test);
-		 rooms = db.getRoomStatus("100", "105");
-		 for (Room room : rooms) {
-			System.out.println(room.toString());
+	
+	@Override
+	public int addEmployee(Employee empl) {
+		try {
+			PreparedStatement statement = connection.prepareStatement(String.format("INSERT INTO EMPLOYEE (%s, %s, %s, %s, %s, %s, %s) VALUES(?, ?, ?, ?, ?, ?, ?)",
+					"first_name", "last_name", "address", "phone_num", "hourlyPay", "emplRole", "email"));
+			statement.setString(1, empl.getFirst_name());
+			statement.setString(2, empl.getLast_name());
+			statement.setString(3, empl.getAddress());
+			statement.setString(4, empl.getPhone_num());
+			statement.setString(5, empl.getHourlyWage());
+			statement.setString(6, empl.getRole());
+			statement.setString(7, empl.getEmail());
+			if (retunedRows(statement.executeUpdate())) {
+				return getLastEmployeeNum();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		 
+		return 0;
 	}
+  
+	public int getLastEmployeeNum() {
+		int emplNum =0;
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT MAX(employeeNum)as MAXNUM FROM EMPLOYEE");
+			while (rs.next()) {
+				emplNum =Integer.parseInt(rs.getString("MAXNUM"));
+				return emplNum;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return emplNum;
+	}
+
+
+	@Override
+	public ArrayList<Reservation> inHouseReservation() {
+		ArrayList<Reservation> inHouseList = new ArrayList<>();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM RESERVATION WHERE checkedIn = YES AND checkedOut = NO");
+			while (rs.next()) {
+				Reservation res = populateReservation(rs);
+				inHouseList.add(res);
+				return inHouseList;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return inHouseList;
+	}
+
+	@Override
+	public boolean setSalary(Employee empl) {
+		try {
+			PreparedStatement statement = connection.prepareStatement(String.format("UPDATE EMPLOYEE SET %s = ?, %s =? WHERE %s = ?",
+					"weeklyWage", "hoursWorked","employeeNum"));
+			statement.setString(1, empl.getWeeklyWage());
+			statement.setString(2, empl.getHoursWorked());
+			statement.setString(3, empl.getEmployeeID());
+			return retunedRows(statement.executeUpdate());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
 
 }
 
