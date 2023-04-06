@@ -196,5 +196,11 @@ public class DatabaseStubs implements Database {
 	public boolean addRoom(Room room) {
 		return rooms.add(room);
 	}
+
+	@Override
+	public ArrayList<Reservation> inHouseReservation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
