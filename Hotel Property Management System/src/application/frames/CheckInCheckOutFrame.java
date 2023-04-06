@@ -345,10 +345,13 @@ public class CheckInCheckOutFrame implements ActionListener {
 				model.setRowCount(0);
 				try {	//ensure room number input is in the range of the hotel's room numbers, otherwise notify user
 					int i = Integer.parseInt(roomNumInput.getText());
-					if (100 < i && i < 509) {
-						Object[] row = ctrl.getResByRoomNum(roomNumInput.getText());
-						model.addRow(row);
-						resNumInput.setText("");
+					if (i >= 100 && i <= 509) {
+						Object[] row = ctrl.getResByRoomNum(roomNumInput.getText(), "Departures");
+						checkNullAddRow(row, "Please double check the room number!");
+						roomNumInput.setText("");
+					} 
+					else {
+						alertMsg("Please double check the room number!");
 					}
 				} catch (NumberFormatException e1) {
 					alertMsg("Invalid room number!");
