@@ -320,6 +320,7 @@ public class RealDatabase implements Database {
 				newEmployee.setRole(rs.getString("emplRole"));
 				newEmployee.setHoursWorked(rs.getString("hoursWorked"));
 				newEmployee.setPhone_num(rs.getString("phone_num"));
+				newEmployee.setEmployeeID(String.valueOf(rs.getInt("employeeNum")));
 				return newEmployee;
 			}
 		} catch (Exception e) {
@@ -479,19 +480,6 @@ public class RealDatabase implements Database {
 		return emplNum;
 	}
 
-	
-	public static void main(String[] args) {
-		ArrayList<Room> rooms = new ArrayList<>();
-		RealDatabase db = new RealDatabase();
-		boolean test = false; 
-		test = db.updateResStatus(1, "101", "Check In");
-		 System.out.println(test);
-		 rooms = db.getRoomStatus("100", "105");
-		 for (Room room : rooms) {
-			System.out.println(room.toString());
-		}
-		 
-	}
 
 	@Override
 	public ArrayList<Reservation> inHouseReservation() {
@@ -508,9 +496,26 @@ public class RealDatabase implements Database {
 			e.printStackTrace();
 		}
 
-
 		return inHouseList;
 	}
+
+	@Override
+	public boolean setSalary(Employee empl) {
+		try {
+			PreparedStatement statement = connection.prepareStatement(String.format("UPDATE EMPLOYEE SET %s = ?, %s =? WHERE %s = ?",
+					"weeklyWage", "hoursWorked","employeeNum"));
+			statement.setString(1, empl.getWeeklyWage());
+			statement.setString(2, empl.getHoursWorked());
+			statement.setString(3, empl.getEmployeeID());
+			return retunedRows(statement.executeUpdate());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
 
 }
 

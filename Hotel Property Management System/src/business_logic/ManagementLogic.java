@@ -31,5 +31,9 @@ public class ManagementLogic {
 	public void roomStatusUpdate(String roomNum, String roomStatus) {
 		database.updateRoomStatus(roomNum, roomStatus);
 	}
+	
+	public boolean setSalary(Employee empl) {
+		return database.setSalary(empl);
+	}
 }
  

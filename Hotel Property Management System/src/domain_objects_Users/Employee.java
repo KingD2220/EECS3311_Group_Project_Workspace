@@ -32,6 +32,7 @@ public class Employee extends Profile {
 
 	public void setHourlyWage(String hourlyWage) {
 		this.hourlyWage = hourlyWage;
+		
 	}
 
 	public Employee() {
@@ -68,6 +69,16 @@ public class Employee extends Profile {
 
 	public void setHoursWorked(String hoursWorked) {
 		this.hoursWorked = hoursWorked;
+		
+	}
+	
+	public String calculateWage() {
+		String wage;
+		double hours = Double.parseDouble(getHoursWorked());
+		double hourly = Double.parseDouble(getHourlyWage());
+	    wage =(hours*hourly+"");
+	    setWeeklyWage(wage);
+	    return wage;
 	}
 	                                  
 

@@ -344,6 +344,7 @@ public class ManagerFrame implements ActionListener {
 			double weeklyWage = Double.parseDouble(hourly.getText()) * Integer.parseInt(hoursWorked.getText());
 			String wage = String.format("%.2f", weeklyWage);
 			pay.setText(wage);
+			manage.salaryUpdate(employeeNum.getText(), hoursWorked.getText());
 		}
 	}
 }

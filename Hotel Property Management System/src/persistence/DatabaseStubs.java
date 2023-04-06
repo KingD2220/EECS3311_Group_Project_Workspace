@@ -202,5 +202,13 @@ public class DatabaseStubs implements Database {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean setSalary(Employee epml) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
 }
 

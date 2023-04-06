@@ -58,7 +58,7 @@ public class ManagementController {
     		emp.setEmail(employeeEmail.getText());
     		emp.setPhone_num(employeePhone.getText());
     		emp.setAddress(employeeAddress.getText());
-    		emp.setHourlyWage(hourly.getText());;
+    		emp.setHourlyWage(hourly.getText());
     		
     		int empId = management.addEmployee(emp);
     		
@@ -108,4 +108,14 @@ public class ManagementController {
 	
 		return valid;
     }
+    
+    public boolean salaryUpdate(String emplNum, String hoursWorked) {
+    	Employee employee;
+	    employee = management.getEmployee(Integer.parseInt(emplNum));
+	    employee.setHoursWorked(hoursWorked);
+	    employee.calculateWage();
+	    return management.setSalary(employee);
+	    
+		
+	}
 }

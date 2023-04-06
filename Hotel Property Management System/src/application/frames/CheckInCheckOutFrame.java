@@ -228,7 +228,7 @@ public class CheckInCheckOutFrame implements ActionListener {
                     return super.getCellEditor(row, column);
                 }
             }
-        };;
+        };
 		table.setBounds(10, 288, 663, 264);
 		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);			
@@ -358,13 +358,13 @@ public class CheckInCheckOutFrame implements ActionListener {
 			if (rdbtnArr.isSelected() && resNumIsEmpty) {		//when user searches for all arrivals
 				model.setRowCount(0);
 				boolean flag = ctrl.getResByDate("Arrivals");
-				if (flag == false) this.alertMsg("There are no arrivals for today!");
+				if (!flag) this.alertMsg("There are no arrivals for today!");
 				
 			}
 			if (rdbtnDep.isSelected() && roomNumIsEmpty) {		//when user searches for all departures
 				model.setRowCount(0);
 				boolean flag = ctrl.getResByDate("Departures");
-				if (flag == false) this.alertMsg("There are no departures for today!");
+				if (!flag) this.alertMsg("There are no departures for today!");
 			}
 		}
 		
