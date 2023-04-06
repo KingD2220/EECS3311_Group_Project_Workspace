@@ -95,6 +95,7 @@ public class CheckInCheckOutController {
 		return new Object[] {date, "HST", String.format("%.2f", tax)};
 	}
 	
+	//populates reservation charges
 	public double displayCharges(Reservation res) {
 		DateFormat resDateFormat = new SimpleDateFormat("yy-MM-dd");
 		DateFormat billDateFormat = new SimpleDateFormat("MM-dd");
@@ -130,5 +131,9 @@ public class CheckInCheckOutController {
 		double r = reservationLogic.getRoomPrice(Integer.parseInt(resNum));
 		return String.format("%.2f", r);
 	}
-
+	
+	public boolean cancelReservation(String resNum) {
+		return reservationLogic.removeReservation(Integer.parseInt(resNum));
+	}
+	
 }
