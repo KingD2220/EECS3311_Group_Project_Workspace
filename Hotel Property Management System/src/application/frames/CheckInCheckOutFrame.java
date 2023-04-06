@@ -312,7 +312,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		}
 	}
 
-	//all action performed methods to action listeners for this class
+	//-------------------all action performed methods to action listeners for this class
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == returnButton) {
@@ -410,6 +410,22 @@ public class CheckInCheckOutFrame implements ActionListener {
 			}
 		}
 		
+		//cancel reservation for arrivals
+		if (e.getSource() == btnCancel) {
+			if (!table.getSelectionModel().isSelectionEmpty()) {
+				CheckInCheckOutController ctrl = new CheckInCheckOutController();
+				int column = 5;
+				int row = table.getSelectedRow();
+				String resNum = table.getValueAt(row, column).toString();
+				boolean flag = ctrl.cancelReservation(resNum);
+				if (flag == true) 
+					this.alertMsg("Reservation cancelled!");
+				model.removeRow(row);
+			}
+			else {
+				this.alertMsg("Please select a reservation!");
+			}
+		}
 	}
 
 }
