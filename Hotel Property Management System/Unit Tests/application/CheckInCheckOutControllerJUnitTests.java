@@ -6,11 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.swing.JTextField;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,25 +18,25 @@ import domain_objects_Rooms.Reservation;
 import persistence.DatabaseStubs;
 
 public class CheckInCheckOutControllerJUnitTests {
-	JTextField resNumInput = new JTextField();
-	JTextField roomNumInput = new JTextField();
 	SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
 	String dateToday = LocalDate.now().format(DateTimeFormatter.ofPattern("yy-MM-dd"));
 	Reservation res1;	//arrival reservation for today
 	Reservation res2; 	//departure reservation for today
 	
-	CheckInCheckOutController testController = new CheckInCheckOutController();
-	ReservationLogic logic = new ReservationLogic(new DatabaseStubs());
+	private CheckInCheckOutController testController = new CheckInCheckOutController();
+	private ReservationLogic logic = new ReservationLogic(new DatabaseStubs());
 	
 	@Before
-	public void setUp() {
+	public void setUp() {	//
+		testController.setLogic(new DatabaseStubs());
+		
 		Date today = null;
 		try {
 			today = formatter.parse(dateToday);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		//add one to today's date to set departure date since arrival date will be today's date 
+		//check-in reservation - add one to today's date to set departure date since arrival date will be today's date 
 		Calendar date1 = Calendar.getInstance();
 		date1.setTime(today);
 		date1.add(Calendar.DATE, 1);
@@ -53,7 +50,7 @@ public class CheckInCheckOutControllerJUnitTests {
         res1.setResNumber(1);
         res1.setRoomNum("107");
         
-        //subtract one from today's date to set as arrival date for check-out reservation
+        // check-out reservation - subtract one from today's date to set as arrival date
 		Calendar date2 = Calendar.getInstance();
 		date2.setTime(today);
 		date2.add(Calendar.DATE, -1);
@@ -66,19 +63,44 @@ public class CheckInCheckOutControllerJUnitTests {
         logic.addReservation(res2);
         res2.setResNumber(2);
 		res2.setRoomNum("108");
+		res2.setCheckedOut("NO");
 
+	}
+	
+	//Retrieve specific arrival reservation based off of reservation number
+	@Test
+	public void testGetResByResNum() {
+		String resNum = Integer.toString(res1.getResNumber());	
+		assertNotNull(testController.getResByResNum(resNum));
+	}
+	
+	//Retrieve specific departure reservation based off of room number
+	@Test
+	public void testGetResByRoomNum() {
+		assertNotNull(testController.getResByRoomNum(res2.getRoomNum(), "Departure"));
+	}
+	
+	//Retrieve all reservations that are arriving today 
+	@Test
+	public void testGetResByDate() throws NullPointerException {
+		assertTrue(testController.getResByDate("Arrivals"));
+	}
+
+	@Test
+	public void testCancelReservation() {
+		String resNum = Integer.toString(res1.getResNumber());
+		assertTrue(testController.cancelReservation(resNum));
 	}
 	
 	@Test
-	public void testGetResByResNum() {
-		Object[] rowRes1 = new Object[] {res1.customer.getLast_name() + ", " + res1.customer.getFirst_name() + res1.getArrival_date() 
-			+ res1.getDeparture_date() + res1.getRoomType() + res1.getRoomNum() + res1.getResNumber()};
-	
-		String resNum = Integer.toString(res1.getResNumber());
-		
-		System.out.println(logic.getReservation(res1.getResNumber()));
-		
-//		assertArrayEquals(rowRes1, testController.getResByResNum(Integer.toString(res1.getResNumber())));		
+	public void testBuildRow() {
+		Object[] expectedResult = new Object[] {"Bar, Foo", "23-04-07", "23-04-08", "Executive", "107", 1};
+		assertArrayEquals(expectedResult, testController.buildRow(res1));
 	}
-
+	
+	@Test
+	public void testGetRoomRate() {
+		assertEquals("500.00", testController.getRoomRate(Integer.toString(res1.getResNumber())));
+		assertEquals("1000.00", testController.getRoomRate(Integer.toString(res2.getResNumber())));
+	}
 }

@@ -13,6 +13,7 @@ import application.frames.BillingFrame;
 import application.frames.CheckInCheckOutFrame;
 import business_logic.ReservationLogic;
 import domain_objects_Rooms.Reservation;
+import persistence.Database;
 import persistence.RealDatabase;
 
 public class CheckInCheckOutController {
@@ -133,4 +134,8 @@ public class CheckInCheckOutController {
 		return reservationLogic.removeReservation(Integer.parseInt(resNum));
 	}
 	
+	 //for testing
+    public void setLogic (Database db) {
+    	reservationLogic = new ReservationLogic(db);
+    }
 }
