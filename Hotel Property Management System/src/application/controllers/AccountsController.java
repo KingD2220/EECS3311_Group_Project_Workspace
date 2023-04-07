@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import persistence.RealDatabase;
 
 public class AccountsController {
-	static RealDatabase db = new RealDatabase();
+	static RealDatabase db = (RealDatabase) RealDatabase.getInstance();
 	
 	private AccountsController() {
 		db.getConnection();

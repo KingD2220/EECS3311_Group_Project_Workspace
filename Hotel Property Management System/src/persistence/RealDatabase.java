@@ -13,11 +13,12 @@ import domain_objects_Users.Employee;
 public class RealDatabase implements Database {
 	private static final String HOST = "127.0.0.1";
 	private static final String PORT ="3306";
-	private static final String PASSWORD = "Sean@1234";
+	private static final String PASSWORD = "";
 	private static final String USERNAME ="root";
 	private static final String DATABASE ="domain_objects";
 	private static final String HOST_URL = String.format("jdbc:mysql://%s:%s/%s?useSSL=false", HOST, PORT, DATABASE);	
 	private Connection connection;
+	private static RealDatabase instance;
 	
 	/*Constructor opens a connection to the database so each method does not  have to */
 	public RealDatabase() {
@@ -84,7 +85,7 @@ public class RealDatabase implements Database {
 			rs.close();
 			statement.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		}
 		return false;
@@ -103,7 +104,6 @@ public class RealDatabase implements Database {
 			
 			return retunedRows(changedrows);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return retunedRows(changedrows);
 	}
 	}
@@ -512,7 +512,14 @@ public class RealDatabase implements Database {
 		}
 		return false;
 	}
-	
+	//Singleton
+	public static Database getInstance() {
+		if(instance != null){
+			return instance;
+		}else {
+			return new RealDatabase();
+		}
+	}
 	
 
 }

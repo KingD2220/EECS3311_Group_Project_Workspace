@@ -20,7 +20,7 @@ public class ManagementController {
     private JTextField employeePhone;
     private JTextField employeeAddress;
     private JTextField hourly;
-    private ManagementLogic management = new ManagementLogic(new RealDatabase());
+    private ManagementLogic management = new ManagementLogic(RealDatabase.getInstance());
     
 	public ManagementController(JTextField employeeNum, JTextField employeeFirstName, JTextField employeeLastName, JTextField jobType, JTextField employeeEmail, 
 			JTextField employeePhone, JTextField employeeAddress, JTextField hourly) {

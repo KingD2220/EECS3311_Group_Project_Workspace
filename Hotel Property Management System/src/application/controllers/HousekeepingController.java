@@ -8,7 +8,7 @@ import domain_objects_Rooms.Room;
 import persistence.RealDatabase;
 
 public class HousekeepingController {	
-    ManagementLogic managementLogic = new ManagementLogic(new RealDatabase());
+    ManagementLogic managementLogic = new ManagementLogic(RealDatabase.getInstance());
     String rangeStart;
     String rangeEnd;
     boolean dirty;

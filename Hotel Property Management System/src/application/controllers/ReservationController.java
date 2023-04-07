@@ -34,7 +34,7 @@ public class ReservationController implements ActionListener {
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
     public Reservation newRes;
-    public ReservationLogic reservationLogic = new ReservationLogic(new RealDatabase());
+    public ReservationLogic reservationLogic = new ReservationLogic(RealDatabase.getInstance());
 
 /*Constructor*/
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
