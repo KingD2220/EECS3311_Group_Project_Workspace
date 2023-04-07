@@ -47,6 +47,7 @@ public class ReservationLogicIntegration {
 	
 	@Test
 	public void testGetReservation() {
+		database.addReservation(res);
 		int resNum = database.getLastResNum();
 		res = reservationLogic.getReservation(resNum);
 		assertNotNull(res);
@@ -61,8 +62,8 @@ public class ReservationLogicIntegration {
 	
 	@Test
 	public void testRemoveReservation() {
-		res = reservationLogic.getReservation(database.getLastResNum());
 		database.addReservation(res);
+		res = database.getReservation(database.getLastResNum());
 		assertTrue(reservationLogic.removeReservation(res.getResNumber()));
 		assertNull(reservationLogic.getReservation(res.getResNumber()));
 	}
@@ -84,8 +85,10 @@ public class ReservationLogicIntegration {
 	
 	@Test 
 	public void testUpdateReservation() {
+		database.addReservation(res);
 		res = database.getReservation(database.getLastResNum());
 		assertTrue(reservationLogic.updatReservation(res));
+		database.removeReservation(res.getResNumber());
 	}
 	@Test
 	public void testGetReservationsByDate() {
