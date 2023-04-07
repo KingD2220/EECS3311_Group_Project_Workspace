@@ -166,19 +166,19 @@ public class ReservationController implements ActionListener {
 			valid = false;
 		}
 		//Check first name 
-		if (!fName.getText().matches("[a-zA-Z]+")) { //Invalid if not 16 digit number
+		if (!fName.getText().matches("[a-zA-Z]+")) { 
 			CreateReservationFrame.feedback.setText("Error: First name can only contain letters");
 			valid = false;
 		}
 		
 		//Check last name 
-		if (!lName.getText().matches("[a-zA-Z]+")) { //Invalid if not 16 digit number
+		if (!lName.getText().matches("[a-zA-Z]+")) { 
 			CreateReservationFrame.feedback.setText("Error: Last name can only contain letters");
 			valid = false;
 		}
 		
 		//check address 
-		if (adress.getText().equals("")) { //Invalid if not 16 digit number
+		if (adress.getText().equals("")) { 
 			CreateReservationFrame.feedback.setText("Error: Address must not be empty");
 			valid = false;
 		}
