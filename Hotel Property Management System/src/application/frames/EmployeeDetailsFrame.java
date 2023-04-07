@@ -3,33 +3,28 @@ package application.frames;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JRadioButton;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
 import java.awt.Font;
 
-import application.controllers.EmployeeDetailsController;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import application.controllers.ManagementController;
+
 
 public class EmployeeDetailsFrame implements ActionListener {
     
 	public JFrame frame = new JFrame();
     public JTextField employeeNum;
-    public JTextArea roleName;
-    public JTextArea firstName;
-    public JTextArea lastName;
-    public JTextArea phoneNum;
-    public JTextArea address;
-    public JTextArea email;
-    public JTextArea hoursWorked;
-    public JTextArea hourlyPay;
-    public JTextArea pay;
+    public JTextField roleName;
+    public JTextField firstName;
+    public JTextField lastName;
+    public JTextField phoneNum;
+    public JTextField address;
+    public JTextField email;
+    public JTextField hoursWorked;
+    public JTextField hourlyPay;
+    public JTextField pay;
     public JButton returnButton;
     public JButton submitJButton;
     
@@ -42,10 +37,6 @@ public class EmployeeDetailsFrame implements ActionListener {
 		address();
 		email();
 		hourlypay();
-		
-		//***************Delete if not needed (Hidden for now)
-		pay();
-		hoursWorked();
 		
 		role();
 		searchButton();
@@ -78,7 +69,7 @@ public class EmployeeDetailsFrame implements ActionListener {
 		firstLabel.setBounds(48, 133, 74, 20);
 		frame.getContentPane().add(firstLabel);
 		
-		firstName = new JTextArea();
+		firstName = new JTextField();
 		firstName.setEditable(false);
 		firstName.setBounds(162, 131, 150, 25);
 		frame.getContentPane().add(firstName);
@@ -87,7 +78,7 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lastLabel.setBounds(48, 172, 74, 14);
 		frame.getContentPane().add(lastLabel);
 		
-		lastName = new JTextArea();
+		lastName = new JTextField();
 		lastName.setEditable(false);
 		lastName.setBounds(162, 167, 150, 25);
 		frame.getContentPane().add(lastName);
@@ -100,7 +91,7 @@ public class EmployeeDetailsFrame implements ActionListener {
 		emailLabel.setBounds(48, 208, 101, 14);
 		frame.getContentPane().add(emailLabel);
 		
-		phoneNum = new JTextArea();
+		phoneNum = new JTextField();
 		phoneNum.setEditable(false);
 		phoneNum.setBounds(162, 203, 150, 25);
 		frame.getContentPane().add(phoneNum);
@@ -113,7 +104,7 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lblAddress.setBounds(48, 244, 60, 14);
 		frame.getContentPane().add(lblAddress);
 		
-		address = new JTextArea();
+		address = new JTextField();
 		address.setEditable(false);
 		address.setBounds(162, 239, 305, 25);
 		frame.getContentPane().add(address);
@@ -126,7 +117,7 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lblEmail.setBounds(48, 280, 43, 14);
 		frame.getContentPane().add(lblEmail);
 		
-		email = new JTextArea();
+		email = new JTextField();
 		email.setEditable(false);
 		email.setBounds(162, 275, 305, 25);
 		frame.getContentPane().add(email);
@@ -138,7 +129,7 @@ public class EmployeeDetailsFrame implements ActionListener {
     	lblRole.setBounds(48, 82, 43, 20);
     	frame.getContentPane().add(lblRole);
 	
-    	roleName = new JTextArea();
+    	roleName = new JTextField();
     	roleName.setEditable(false);
     	roleName.setBounds(162, 80, 150, 25);
     	frame.getContentPane().add(roleName);
@@ -150,42 +141,10 @@ public class EmployeeDetailsFrame implements ActionListener {
 		lblHourlyPay.setBounds(48, 340, 68, 14);
 		frame.getContentPane().add(lblHourlyPay);
 		
-		hourlyPay = new JTextArea();
+		hourlyPay = new JTextField();
 		hourlyPay.setEditable(false);
 		hourlyPay.setBounds(162, 335, 74, 25);
 		frame.getContentPane().add(hourlyPay);
-    }
-    
-    //Display hours worked
-    private void hoursWorked() {
-		JLabel lblHoursWorked = new JLabel("Hours Worked:");
-		lblHoursWorked.setBounds(48, 371, 101, 14);
-		frame.getContentPane().add(lblHoursWorked);
-		
-		hoursWorked = new JTextArea();
-		hoursWorked.setEditable(false);
-		hoursWorked.setBounds(162, 366, 74, 25);
-		frame.getContentPane().add(hoursWorked);
-		
-		//Delete method if no longer needed
-		lblHoursWorked.setVisible(false);
-		hoursWorked.setVisible(false);
-	}
-    
-    //display pay
-    private void pay() {
-		JLabel lblPay = new JLabel("Pay:");
-		lblPay.setBounds(48, 402, 34, 14);
-		frame.getContentPane().add(lblPay);
-		
-		pay = new JTextArea();
-		pay.setEditable(false);
-		pay.setBounds(162, 397, 115, 25);
-		frame.getContentPane().add(pay);
-		
-		//Delete method if no longer needed
-		lblPay.setVisible(false);
-		pay.setVisible(false);
     }
     
     //Button to search and display employee info
@@ -207,14 +166,13 @@ public class EmployeeDetailsFrame implements ActionListener {
     	
 	}
     
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		EmployeeDetailsController empDetails = new EmployeeDetailsController(employeeNum, roleName, firstName, lastName, 
-											   phoneNum, address, email, hoursWorked, hourlyPay, pay);
+		ManagementController empDetails = new ManagementController(employeeNum, firstName, lastName, roleName,
+											   email, phoneNum, address, hourlyPay);
 		
 		if (e.getSource() == submitJButton) {
-			empDetails.getAndDisplayEmployee();
+			empDetails.getAndDispEmpl();
 		}
 		if (e.getSource() == returnButton) {
 			NavigationFrame.showNav();
