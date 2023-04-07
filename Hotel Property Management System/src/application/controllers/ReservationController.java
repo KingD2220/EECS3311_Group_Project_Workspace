@@ -83,7 +83,7 @@ public class ReservationController implements ActionListener {
 		newRes.customer.setLast_name(lName.getText());
 		newRes.customer.setPhone_num(phoneNum.getText());
 		newRes.customer.setAddress(adress.getText());
-		if(reservationLogic.updatReservation(newRes)) {
+		if(reservationLogic.updatReservation(newRes) && (phoneNum.getText().matches("^[0-9]{10}$"))) {
 		UpdateFrame.feedback.setText(newRes.toString());
 		}
 	else {
