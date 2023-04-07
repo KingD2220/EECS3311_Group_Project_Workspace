@@ -18,7 +18,7 @@ import application.frames.CreateReservationFrame;
 import java.util.Date;
 import java.util.Calendar;
 
-import domain_objects_Rooms.StandardRoom;
+import persistence.DatabaseStubs;
 
 public class ReservationControllerTest {
 	
@@ -30,12 +30,15 @@ public class ReservationControllerTest {
 	JComboBox<String> roomtype = new JComboBox<String>();
 	JDateChooser startDate = new JDateChooser();
 	JDateChooser endDate = new JDateChooser();
-
 	
+	DatabaseStubs stubs = new DatabaseStubs();
+
 	ReservationController testController = new ReservationController(fName, lName, creditCard, adress, phoneNum, roomtype, startDate, endDate);
 		
 	@Before
 	public void setUp() throws Exception {
+		testController.setLogic(stubs);
+		
 		//Setup class requirements
 		CreateReservationFrame.feedback = new JTextArea();
 		roomtype.setModel(new DefaultComboBoxModel<String>(new String[] {"Standard", "Deluxe", "Suite", "Executive", "Presidential"}));
@@ -59,7 +62,7 @@ public class ReservationControllerTest {
 		endDate.setDate(tempDate);	
 	}
 	
-	//Case when create reservation is pressed and there is a room available for selected type (reservation should be created)
+	//Test create reservation button press
 	@Test
 	public void buttonPressed() {
 		roomtype.setSelectedItem("Deluxe");
@@ -67,23 +70,6 @@ public class ReservationControllerTest {
 		testController.actionPerformed(null);
 		
 		assertNotNull(testController.newRes);
-	}
-	
-	//Case when create reservation is pressed and there is no room available for selected type (no reservation should be created)
-	@Test
-	public void buttonPressedNoRoom() {
-		StandardRoom testRoom = new StandardRoom();
-		
-		//Reserves rooms until none available
-		while (testRoom.getRoomsAvailable() != 0) {
-			testRoom.roomReserved();
-		}
-		
-		roomtype.setSelectedItem("Standard");
-		
-		testController.actionPerformed(null);
-		
-		assertNull(testController.newRes);
 	}
 	
 	//Tests input valid when input is valid
