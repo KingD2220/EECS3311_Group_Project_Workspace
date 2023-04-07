@@ -165,7 +165,23 @@ public class ReservationController implements ActionListener {
 			CreateReservationFrame.feedback.setText("Error: Credit card entry needs to be 16 digits");
 			valid = false;
 		}
+		//Check first name 
+		if (!fName.getText().matches("[a-zA-Z]+")) { //Invalid if not 16 digit number
+			CreateReservationFrame.feedback.setText("Error: First name can only contain letters");
+			valid = false;
+		}
 		
+		//Check last name 
+		if (!lName.getText().matches("[a-zA-Z]+")) { //Invalid if not 16 digit number
+			CreateReservationFrame.feedback.setText("Error: Last name can only contain letters");
+			valid = false;
+		}
+		
+		//check address 
+		if (adress.getText().equals("")) { //Invalid if not 16 digit number
+			CreateReservationFrame.feedback.setText("Error: Address must not be empty");
+			valid = false;
+		}
 		return valid;
 	}
 	
