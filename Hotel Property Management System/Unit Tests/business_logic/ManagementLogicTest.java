@@ -45,10 +45,19 @@ public class ManagementLogicTest {
 	}
 	
 	@Test
+	public void testAddEmployee() {
+		Employee emp = new Employee();
+		
+		//Add employee to set database and store the return id for comparison
+		int empId = test.addEmployee(emp);
+		
+		assertEquals(Integer.parseInt(emp.getEmployeeID()), empId);
+	}
+	
+	@Test
 	public void testGetEmployee() {
 		//Add employee to test database
 		Employee emp = new Employee();
-		emp.setEmployeeID("1");
 		
 		stubs.addEmployee(emp);
 		
@@ -68,5 +77,4 @@ public class ManagementLogicTest {
 		
 		assertEquals(status, room.getRoomStatus());
 	}
-
 }
