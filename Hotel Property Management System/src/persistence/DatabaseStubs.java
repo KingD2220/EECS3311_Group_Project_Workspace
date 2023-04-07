@@ -204,9 +204,15 @@ public class DatabaseStubs implements Database {
 	}
 
 	@Override
-	public boolean setSalary(Employee epml) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean setSalary(Employee emp) {
+		try {
+		Employee update = employee.get(Integer.parseInt(emp.getEmployeeID()) - 1); 
+		update.setHourlyWage(emp.getHourlyWage());
+		update.setHoursWorked(emp.getHoursWorked());
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	
