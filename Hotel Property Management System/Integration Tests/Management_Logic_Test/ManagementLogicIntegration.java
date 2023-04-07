@@ -78,5 +78,4 @@ public class ManagementLogicIntegration {
 		
 		assertTrue(managementLogic.setSalary(emp));
 	}
-
 }
