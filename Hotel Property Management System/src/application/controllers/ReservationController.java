@@ -19,6 +19,7 @@ import domain_objects_Rooms.Reservation;
 import domain_objects_Rooms.Room;
 import persistence.Database;
 import persistence.RealDatabase;
+import persistence.Database;
 
 
 public class ReservationController implements ActionListener {
@@ -171,5 +172,7 @@ public class ReservationController implements ActionListener {
 	// for testing
 	public void setLogic(Database db) {
 		 reservationLogic = new ReservationLogic(db);
-	}
+}
+	
+
 }

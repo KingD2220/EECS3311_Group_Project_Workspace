@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 
 import business_logic.ManagementLogic;
 import domain_objects_Users.Employee;
+import persistence.Database;
 import persistence.RealDatabase;
 
 public class ManagementController {
@@ -115,7 +116,10 @@ public class ManagementController {
 	    employee.setHoursWorked(hoursWorked);
 	    employee.calculateWage();
 	    return management.setSalary(employee);
-	    
-		
 	}
+    
+    //for testing
+    public void setLogic (Database db) {
+    	management = new ManagementLogic(db);
+    }
 }
