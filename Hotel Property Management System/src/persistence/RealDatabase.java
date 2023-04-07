@@ -218,7 +218,6 @@ public class RealDatabase implements Database {
 			}
 			int changedRows= prepared.executeUpdate();
 			prepared.close();
-			System.out.println("Success "+ changedRows);
 		} catch (Exception e) {
 		  System.out.println("ERROR");
 		}

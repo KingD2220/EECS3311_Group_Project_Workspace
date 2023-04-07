@@ -89,7 +89,7 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(lblFirstName);
 		
 		firstInput = new JTextField();
-		firstInput.setBounds(134, 30, 108, 23);
+		firstInput.setBounds(134, 30, 108, 25);
 		frame.getContentPane().add(firstInput);
 		firstInput.setColumns(10);
     }
@@ -102,7 +102,7 @@ public class CreateReservationFrame implements ActionListener {
 		
 		lastInput = new JTextField();
 		lastInput.setColumns(10);
-		lastInput.setBounds(134, 55, 108, 23);
+		lastInput.setBounds(134, 55, 108, 26);
 		frame.getContentPane().add(lastInput);
     }
     
@@ -114,7 +114,7 @@ public class CreateReservationFrame implements ActionListener {
 		
 		phoneInput = new JTextField();
 		phoneInput.setColumns(10);
-		phoneInput.setBounds(134, 80, 108, 23);
+		phoneInput.setBounds(134, 80, 108, 25);
 		frame.getContentPane().add(phoneInput);
     }
     
@@ -126,7 +126,7 @@ public class CreateReservationFrame implements ActionListener {
 		
 		addressInput = new JTextField();
 		addressInput.setColumns(10);
-		addressInput.setBounds(134, 105, 427, 23);
+		addressInput.setBounds(134, 105, 427, 28);
 		frame.getContentPane().add(addressInput);
     }
     
@@ -137,7 +137,7 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(lblCreditCard);
 		
 		creditInput = new JPasswordField();
-		creditInput.setBounds(134, 130, 427, 23);
+		creditInput.setBounds(134, 130, 427, 28);
 		creditInput.setEchoChar('\u25cf');
 		frame.getContentPane().add(this.creditInput);
     }
@@ -150,7 +150,7 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(lblCheckinDate);
 		
 		checkInChooser = new JDateChooser();
-		checkInChooser.setBounds(397, 33, 164, 23);
+		checkInChooser.setBounds(397, 33, 164, 25);
 		frame.getContentPane().add(checkInChooser);
 		
 		//Check-out Date
@@ -159,7 +159,7 @@ public class CreateReservationFrame implements ActionListener {
 		frame.getContentPane().add(lblCheckoutDate);
 		
 		checkOutChooser = new JDateChooser();
-		checkOutChooser.setBounds(397, 58, 164, 23);
+		checkOutChooser.setBounds(397, 58, 164, 25);
 		frame.getContentPane().add(checkOutChooser);
     }
     
