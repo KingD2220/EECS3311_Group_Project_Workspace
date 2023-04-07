@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
-
 import application.frames.BillingFrame;
 import application.frames.CheckInCheckOutFrame;
 import business_logic.ReservationLogic;
 import domain_objects_Rooms.Reservation;
-import domain_objects_Rooms.Room;
 import persistence.RealDatabase;
 
 public class CheckInCheckOutController {
