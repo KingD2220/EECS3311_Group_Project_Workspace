@@ -9,7 +9,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableModel;
 
 import application.controllers.CheckInCheckOutController;
 import application.controllers.HousekeepingController;
@@ -17,18 +16,13 @@ import application.controllers.HousekeepingController;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -38,12 +32,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.awt.event.ItemEvent;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class CheckInCheckOutFrame implements ActionListener {
 	private JFrame frame = new JFrame();
@@ -228,7 +216,7 @@ public class CheckInCheckOutFrame implements ActionListener {
                     return super.getCellEditor(row, column);
                 }
             }
-        };;
+        };
 		table.setBounds(10, 288, 663, 264);
 		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);			
@@ -312,7 +300,7 @@ public class CheckInCheckOutFrame implements ActionListener {
 		}
 	}
 
-	//all action performed methods to action listeners for this class
+	//-------------------all action performed methods to action listeners for this class
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == returnButton) {
@@ -361,13 +349,13 @@ public class CheckInCheckOutFrame implements ActionListener {
 			if (rdbtnArr.isSelected() && resNumIsEmpty) {		//when user searches for all arrivals
 				model.setRowCount(0);
 				boolean flag = ctrl.getResByDate("Arrivals");
-				if (flag == false) this.alertMsg("There are no arrivals for today!");
+				if (!flag) this.alertMsg("There are no arrivals for today!");
 				
 			}
 			if (rdbtnDep.isSelected() && roomNumIsEmpty) {		//when user searches for all departures
 				model.setRowCount(0);
 				boolean flag = ctrl.getResByDate("Departures");
-				if (flag == false) this.alertMsg("There are no departures for today!");
+				if (!flag) this.alertMsg("There are no departures for today!");
 			}
 		}
 		
@@ -410,6 +398,22 @@ public class CheckInCheckOutFrame implements ActionListener {
 			}
 		}
 		
+		//cancel reservation for arrivals
+		if (e.getSource() == btnCancel) {
+			if (!table.getSelectionModel().isSelectionEmpty()) {
+				CheckInCheckOutController ctrl = new CheckInCheckOutController();
+				int column = 5;
+				int row = table.getSelectedRow();
+				String resNum = table.getValueAt(row, column).toString();
+				boolean flag = ctrl.cancelReservation(resNum);
+				if (flag == true) 
+					this.alertMsg("Reservation cancelled!");
+				model.removeRow(row);
+			}
+			else {
+				this.alertMsg("Please select a reservation!");
+			}
+		}
 	}
 
 }

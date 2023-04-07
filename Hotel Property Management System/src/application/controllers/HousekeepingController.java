@@ -78,7 +78,7 @@ public class HousekeepingController {
     // Place all bucket elements of rowValuesList into an array to insert as a row in HousekeepingFrame 
     private void insertRows(ArrayList<ArrayList<Object>> list) {
     	Object[] rowArray = new Object[6];
-    	if (list.size() != 0) {
+    	if (!list.isEmpty()) {
     		for (int i = 0; i < list.size(); i++) {
     			for (int j = 0; j < rowArray.length; j++) {
     				rowArray[j] = list.get(i).get(j);
