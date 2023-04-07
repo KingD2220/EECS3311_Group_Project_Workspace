@@ -15,19 +15,19 @@ import persistence.DatabaseStubs;
 
 public class ManagementControllerTest {
 	
-	private JTextField employeeNum = new JTextField();
-    private JTextField employeeFirstName = new JTextField();
-    private JTextField employeeLastName = new JTextField();
-    private JTextField jobType = new JTextField();
-    private JTextField employeeEmail = new JTextField();
-    private JTextField employeePhone = new JTextField();
-    private JTextField employeeAddress = new JTextField();
-    private JTextField hourly = new JTextField();
+	JTextField employeeNum = new JTextField();
+    JTextField employeeFirstName = new JTextField();
+    JTextField employeeLastName = new JTextField();
+    JTextField jobType = new JTextField();
+    JTextField employeeEmail = new JTextField();
+    JTextField employeePhone = new JTextField();
+    JTextField employeeAddress = new JTextField();
+    JTextField hourly = new JTextField();
     
-    private DatabaseStubs stubs = new DatabaseStubs();
+    DatabaseStubs stubs = new DatabaseStubs();
     
     
-    private ManagementController test = new ManagementController(employeeNum, employeeFirstName, employeeLastName, jobType, 
+    ManagementController test = new ManagementController(employeeNum, employeeFirstName, employeeLastName, jobType, 
     		employeeEmail, employeePhone, employeeAddress, hourly);
     
 	
