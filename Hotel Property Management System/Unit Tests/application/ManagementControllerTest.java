@@ -11,6 +11,8 @@ import org.junit.Test;
 import application.controllers.ManagementController;
 import application.frames.ManagerFrame;
 
+import persistence.DatabaseStubs;
+
 public class ManagementControllerTest {
 	
 	private JTextField employeeNum = new JTextField();
@@ -22,6 +24,8 @@ public class ManagementControllerTest {
     private JTextField employeeAddress = new JTextField();
     private JTextField hourly = new JTextField();
     
+    private DatabaseStubs stubs = new DatabaseStubs();
+    
     
     private ManagementController test = new ManagementController(employeeNum, employeeFirstName, employeeLastName, jobType, 
     		employeeEmail, employeePhone, employeeAddress, hourly);
@@ -29,6 +33,8 @@ public class ManagementControllerTest {
 	
     @Before
 	public void setUp() throws Exception {
+    	test.setLogic(stubs); //set database to stubs for testing
+    	
     	ManagerFrame.feedback = new JLabel();
     	
     	//Populate fields with valid data
@@ -42,8 +48,22 @@ public class ManagementControllerTest {
     	hourly.setText("10.25");
 	}
     
+    //Test add employee when input is valid
     @Test
+    public void addEmployeeValid() {
+    	assertTrue(test.addEmployee());
+    }
+    
+    //Test add employee when input is valid
+    @Test
+    public void addEmployeeInvalid() {
+    	employeeFirstName.setText(""); //set field to empty string
+    	
+    	assertFalse(test.addEmployee());
+    }
+    
     //Should accept when all input is valid
+    @Test
     public void inputValidTest() {
     	assertTrue("Error: Valid input not accepted.", test.inputValid());
     }
@@ -94,5 +114,14 @@ public class ManagementControllerTest {
 		hourly.setText("10.1"); //Change hourly wage to integer
 		
 		assertFalse("Error: Wrong decimal places accepted.", test.inputValid());
+	}
+	
+	@Test
+	public void salaryUpdateTest() {
+		test.addEmployee();
+		
+		String hoursWorked = "40";
+		
+		assertTrue(test.salaryUpdate(employeeNum.getText(), hoursWorked));
 	}
 }
