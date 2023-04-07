@@ -37,7 +37,7 @@ public class ReservationControllerTest {
 		
 	@Before
 	public void setUp() throws Exception {
-		testController.setLogic(stubs);
+		testController.setLogic(stubs); //setup stubs for testing
 		
 		//Setup class requirements
 		CreateReservationFrame.feedback = new JTextArea();
