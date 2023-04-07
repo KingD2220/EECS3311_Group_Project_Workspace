@@ -242,7 +242,6 @@ public class RealDatabase implements Database {
 		}
 		changedRows= prepared.executeUpdate();
 		prepared.close();
-		System.out.println("Success "+ changedRows);
 	    return retunedRows(changedRows);
 	} catch (Exception e) {
 		return retunedRows(changedRows);
