@@ -18,6 +18,7 @@ import business_logic.ReservationLogic;
 import domain_objects_Rooms.Reservation;
 import domain_objects_Rooms.Room;
 import persistence.RealDatabase;
+import persistence.Database;
 
 
 public class ReservationController implements ActionListener {
@@ -167,4 +168,9 @@ public class ReservationController implements ActionListener {
 		
 		return valid;
 	}
+	
+    //for testing
+    public void setLogic (Database db) {
+    	reservationLogic = new ReservationLogic(db);
+    }
 }
