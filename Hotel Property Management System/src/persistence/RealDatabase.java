@@ -218,7 +218,6 @@ public class RealDatabase implements Database {
 			}
 			int changedRows= prepared.executeUpdate();
 			prepared.close();
-			System.out.println("Success "+ changedRows);
 		} catch (Exception e) {
 		  System.out.println("ERROR");
 		}
@@ -243,7 +242,6 @@ public class RealDatabase implements Database {
 		}
 		changedRows= prepared.executeUpdate();
 		prepared.close();
-		System.out.println("Success "+ changedRows);
 	    return retunedRows(changedRows);
 	} catch (Exception e) {
 		return retunedRows(changedRows);
@@ -438,7 +436,7 @@ public class RealDatabase implements Database {
 			statement.setString(5, roomNum);
 			return retunedRows(statement.executeUpdate());
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return false;
 		}
 	}
@@ -460,7 +458,7 @@ public class RealDatabase implements Database {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("FAILED TO ADD EMPLOYEE");
 		}
 		return 0;
 	}
@@ -475,7 +473,7 @@ public class RealDatabase implements Database {
 				return emplNum;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			return 0;
 		}
 		return emplNum;
 	}
@@ -493,7 +491,7 @@ public class RealDatabase implements Database {
 				return inHouseList;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("FAILED");
 		}
 
 		return inHouseList;
@@ -510,7 +508,7 @@ public class RealDatabase implements Database {
 			return retunedRows(statement.executeUpdate());
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("FAILED TO ADD SALARY TO DATABASE");;
 		}
 		return false;
 	}

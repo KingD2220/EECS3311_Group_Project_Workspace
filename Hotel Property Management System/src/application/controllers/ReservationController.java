@@ -17,6 +17,7 @@ import application.frames.UpdateFrame;
 import business_logic.ReservationLogic;
 import domain_objects_Rooms.Reservation;
 import domain_objects_Rooms.Room;
+import persistence.Database;
 import persistence.RealDatabase;
 import persistence.Database;
 
@@ -33,7 +34,7 @@ public class ReservationController implements ActionListener {
     SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
     private JTextField resNum; 
     public Reservation newRes;
-    ReservationLogic reservationLogic = new ReservationLogic(new RealDatabase());
+    public ReservationLogic reservationLogic = new ReservationLogic(new RealDatabase());
 
 /*Constructor*/
 	public ReservationController(JTextField fName, JTextField lName, JPasswordField creditCard, JTextField adress,
@@ -184,9 +185,10 @@ public class ReservationController implements ActionListener {
 		}
 		return valid;
 	}
+	// for testing
+	public void setLogic(Database db) {
+		 reservationLogic = new ReservationLogic(db);
+}
 	
-    //for testing
-    public void setLogic (Database db) {
-    	reservationLogic = new ReservationLogic(db);
-    }
+
 }

@@ -40,6 +40,7 @@ public class DatabaseStubs implements Database {
 		}
 	}
 	
+	
 	public Room getRoomType(int i) {
 		if(i < 2) {
 			return new StandardRoom();
