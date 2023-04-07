@@ -84,7 +84,7 @@ public class ReservationController implements ActionListener {
 		newRes.customer.setLast_name(lName.getText());
 		newRes.customer.setPhone_num(phoneNum.getText());
 		newRes.customer.setAddress(adress.getText());
-		if(reservationLogic.updatReservation(newRes)) {
+		if(reservationLogic.updatReservation(newRes) && (phoneNum.getText().matches("^[0-9]{10}$"))) {
 		UpdateFrame.feedback.setText(newRes.toString());
 		}
 	else {
@@ -166,7 +166,23 @@ public class ReservationController implements ActionListener {
 			CreateReservationFrame.feedback.setText("Error: Credit card entry needs to be 16 digits");
 			valid = false;
 		}
+		//Check first name 
+		if (!fName.getText().matches("[a-zA-Z]+")) { 
+			CreateReservationFrame.feedback.setText("Error: First name can only contain letters");
+			valid = false;
+		}
 		
+		//Check last name 
+		if (!lName.getText().matches("[a-zA-Z]+")) { 
+			CreateReservationFrame.feedback.setText("Error: Last name can only contain letters");
+			valid = false;
+		}
+		
+		//check address 
+		if (adress.getText().equals("")) { 
+			CreateReservationFrame.feedback.setText("Error: Address must not be empty");
+			valid = false;
+		}
 		return valid;
 	}
 	// for testing
