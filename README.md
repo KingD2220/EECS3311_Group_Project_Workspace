@@ -17,6 +17,6 @@ Please use Use the database provided or login and passcode provided will not wor
 This project was developed in collaboration with other team members using agile development principles. A basic management system was quickly created and the initial system was continuously iterated upon as the scope of the project increased and more features were required. 
 
 ## Key Takeaways
-Regular communication is essential when collaborating with others to ensure that team members understand what is required of them and to ensure deadlines for those requirements are met.
+Regular communication is essential when collaborating with others to ensure that team members understand what is required of them and to ensure deadlines for those requirements are met. Proper documentation is also crucial so that each member of the team can easily understand what has already been worked on as well as well as what work still needs to be done.
 
 Agile development is best used when project requirements are not set in stone and can be expected to change as customer needs and expectations change.
