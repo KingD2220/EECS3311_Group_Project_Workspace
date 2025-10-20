@@ -18,4 +18,5 @@ This project was developed in collaboration with other team members using agile 
 
 ## Key Takeaways
 Regular communication is essential when collaborating with others.
+
 Agile development is best used when project requirements are not set in stone and can be expected to change as customer needs and expectations change.
